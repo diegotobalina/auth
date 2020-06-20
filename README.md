@@ -84,6 +84,16 @@ PUT /users/{userId}/password -> ROLE_ADMIN AND UPDATE
 DELETE /users/{userId}/roles -> ROLE_ADMIN AND DELETE
 ````
 **** Do not delete any initial role or scope !!
+## App profiles
+
+Current supported profiles
+````
+- test: used to run the application tests 
+- dev: used for development
+- pre: used in the pre-production enviroment
+- pro: used in the production enviroment
+````
+
 ## Application versioning
 Api version
 ````
