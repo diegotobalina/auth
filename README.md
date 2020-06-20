@@ -84,6 +84,17 @@ PUT /users/{userId}/password -> ROLE_ADMIN AND UPDATE
 DELETE /users/{userId}/roles -> ROLE_ADMIN AND DELETE
 ````
 **** Do not delete any initial role or scope !!
+## Application versioning
+Api version
+````
+application.properties -> api.version=X.X.X
+{major release}.{major change in a component}.{minor change in a component}
+````
+Api url versioning
+````
+/api/v0/{resource}
+** vX must match with the major release version
+````
 
 ## Code Structure
 ![alt text](https://reflectoring.io/assets/img/posts/spring-hexagonal/hexagonal-architecture.png)
