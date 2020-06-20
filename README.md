@@ -87,8 +87,8 @@ DELETE /users/{userId}/roles -> ROLE_ADMIN AND DELETE
 ## Application versioning
 Api version
 ````
-application.properties -> api.version=X.X.X
-{major release}.{major change in a component}.{minor change in a component}
+application.properties -> api.version=X.X.X.X
+{major release}.{major change in a component}.{minor change in a component}.{resolved bugs}
 ````
 Api url versioning
 ````
