@@ -1,0 +1,14 @@
+{
+  "properties": [
+    {
+      "name": "google.oauth2.client_id",
+      "type": "java.lang.String",
+      "description": "Google login client_id."
+    },
+    {
+      "name": "server.auth.secret-key",
+      "type": "java.lang.String",
+      "description": "Key used for jwt signing."
+    }
+  ]
+}
