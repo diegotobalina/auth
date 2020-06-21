@@ -3,7 +3,6 @@ package com.spring.auth.authorization.infrastructure.filter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -15,14 +14,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-@Profile("!dev")
+// @Profile("!dev")
 @Component
 public class ApiKeyFilter extends OncePerRequestFilter {
 
-  @Value("${api.key}")
-  public String apiKey;
+  @Value("${api.keys}")
+  public List<String> apiKeys;
 
   private ObjectMapper mapper;
 
@@ -35,7 +35,7 @@ public class ApiKeyFilter extends OncePerRequestFilter {
       final HttpServletRequest request, final HttpServletResponse response, final FilterChain chain)
       throws ServletException, IOException {
     String requestApiKey = request.getHeader("api-key");
-    if (StringUtils.isBlank(requestApiKey) || !requestApiKey.equals(apiKey)) {
+    if (StringUtils.isBlank(requestApiKey) || !apiKeys.contains(requestApiKey)) {
       Map<String, Object> errorDetails = new HashMap<>();
       errorDetails.put("message", "missing or invalid api-key header");
       response.setStatus(HttpStatus.FORBIDDEN.value());
