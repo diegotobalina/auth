@@ -3,6 +3,7 @@ package com.spring.auth.authorization.infrastructure.filter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -17,7 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-// @Profile("!dev")
+@Profile("!dev")
 @Component
 public class ApiKeyFilter extends OncePerRequestFilter {
 
