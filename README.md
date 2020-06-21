@@ -15,6 +15,12 @@ Dependency manager
 maven
 ````
 ## Important info
+Api-key
+````
+If application is not using "dev" profile checks for "api-key" header in every request.
+"api-key" its configured in the enviroment variables of the application.
+````
+
 Default admin user
 ````
 username: admin

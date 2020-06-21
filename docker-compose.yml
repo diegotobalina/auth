@@ -32,6 +32,9 @@ services:
     environment:
       GOOGLE_CLIENT_ID: "google_client_id"
       MONGODB_URI: "mongodb://mongo:password@mongo:27017/?retryWrites=true&w=majority"
+      SECRET_KEY: "jwt_secret_key_placeholder"
+      API_KEY: "api_key_placeholder"
+      PROFILE: "dev"
     restart: always
 networks:
   spring:
