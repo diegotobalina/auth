@@ -8,6 +8,7 @@ import com.spring.auth.user.application.ports.out.FindAllUsersByRoleIdPort;
 import com.spring.auth.user.application.ports.out.UpdateUsersRolePort;
 import com.spring.auth.user.domain.User;
 import lombok.AllArgsConstructor;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.transaction.event.TransactionalEventListener;
 
 import java.util.List;
@@ -21,6 +22,7 @@ public class RoleUpdatedEventListener {
   private UpdateUsersRolePort updateUsersRolePort;
 
   /** When a role is updated should be updated in the users */
+  @Async
   @TransactionalEventListener
   public void updatedRole(RoleUpdatedEvent roleUpdatedEvent) throws DuplicatedKeyException {
     Role role = roleUpdatedEvent.getSource();

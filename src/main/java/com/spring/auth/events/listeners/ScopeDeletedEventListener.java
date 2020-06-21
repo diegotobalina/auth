@@ -8,6 +8,7 @@ import com.spring.auth.role.application.ports.out.FindAllRolesByScopeIdPort;
 import com.spring.auth.role.domain.Role;
 import com.spring.auth.scope.domain.Scope;
 import lombok.AllArgsConstructor;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.transaction.event.TransactionalEventListener;
 
 import java.util.Collections;
@@ -22,6 +23,7 @@ public class ScopeDeletedEventListener {
   private FindAllRolesByScopeIdPort findAllRolesByScopeIdPort;
 
   /** When a scope is deleted should be removed from the roles */
+  @Async
   @TransactionalEventListener
   public void deletedScope(ScopeDeletedEvent scopeDeletedEvent) throws DuplicatedKeyException {
     Scope deletedScope = scopeDeletedEvent.getSource();

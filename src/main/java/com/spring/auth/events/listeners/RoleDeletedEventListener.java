@@ -6,6 +6,7 @@ import com.spring.auth.exceptions.application.DuplicatedKeyException;
 import com.spring.auth.role.domain.Role;
 import com.spring.auth.user.application.ports.in.RemoveRolesFromUsersPort;
 import lombok.AllArgsConstructor;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.transaction.event.TransactionalEventListener;
 
 import java.util.Collections;
@@ -18,6 +19,7 @@ public class RoleDeletedEventListener {
   private RemoveRolesFromUsersPort removeRolesFromUsersPort;
 
   /** When a role is deleted should be removed from the users */
+  @Async
   @TransactionalEventListener
   public void roleDeleted(RoleDeletedEvent roleDeletedEvent) throws DuplicatedKeyException {
     Role source = roleDeletedEvent.getSource();
