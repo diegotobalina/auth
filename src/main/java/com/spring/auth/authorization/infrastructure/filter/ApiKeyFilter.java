@@ -1,7 +1,6 @@
 package com.spring.auth.authorization.infrastructure.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
@@ -20,19 +19,21 @@ import java.util.Map;
 
 @Profile("!dev")
 @Component
-@AllArgsConstructor
 public class ApiKeyFilter extends OncePerRequestFilter {
 
   @Value("${api.key}")
   public String apiKey;
 
-  public ObjectMapper mapper;
+  private ObjectMapper mapper;
+
+  public ApiKeyFilter(ObjectMapper mapper) {
+    this.mapper = mapper;
+  }
 
   @Override
   protected void doFilterInternal(
       final HttpServletRequest request, final HttpServletResponse response, final FilterChain chain)
       throws ServletException, IOException {
-
     String requestApiKey = request.getHeader("api-key");
     if (StringUtils.isBlank(requestApiKey) || !requestApiKey.equals(apiKey)) {
       Map<String, Object> errorDetails = new HashMap<>();
