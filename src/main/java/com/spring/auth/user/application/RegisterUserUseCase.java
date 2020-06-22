@@ -31,11 +31,11 @@ public class RegisterUserUseCase implements RegisterUserPort {
    * @throws NotFoundException If some default role was not found
    */
   @Override
-  public User register(final String username, final String email, final String password)
+  public User register(String username, String email, String password)
       throws DuplicatedKeyException, NotFoundException {
 
-    final List<Role> roles = this.getDefaultRoles();
-    final User user = new User(username, email, password);
+    List<Role> roles = this.getDefaultRoles();
+    User user = new User(username, email, password);
     user.addRoles(roles);
     return createUserPort.create(user);
   }

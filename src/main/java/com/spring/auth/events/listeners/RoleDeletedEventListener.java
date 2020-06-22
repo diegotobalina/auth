@@ -22,7 +22,11 @@ public class RoleDeletedEventListener {
   @Async
   @TransactionalEventListener
   public void roleDeleted(RoleDeletedEvent roleDeletedEvent) throws DuplicatedKeyException {
-    Role source = roleDeletedEvent.getSource();
+    Role deletedRole = roleDeletedEvent.getSource();
+    removeRolesFromUsers(deletedRole);
+  }
+
+  private void removeRolesFromUsers(Role source) throws DuplicatedKeyException {
     removeRolesFromUsersPort.remove(Collections.singletonList(source.getId()));
   }
 }

@@ -2,7 +2,6 @@ package com.spring.auth.authorization.application;
 
 import com.spring.auth.anotations.components.UseCase;
 import com.spring.auth.authorization.application.ports.in.AccessPort;
-import com.spring.auth.authorization.domain.JwtWrapper;
 import com.spring.auth.exceptions.application.InvalidTokenException;
 import com.spring.auth.exceptions.application.NotFoundException;
 import com.spring.auth.session.application.ports.out.DeleteSessionPort;
@@ -13,8 +12,6 @@ import com.spring.auth.user.application.ports.out.FindUserByIdPort;
 import com.spring.auth.user.domain.User;
 import com.spring.auth.util.TokenUtil;
 import org.springframework.beans.factory.annotation.Value;
-
-import java.util.Date;
 
 @UseCase
 public class AccessUseCase implements AccessPort {
@@ -39,29 +36,23 @@ public class AccessUseCase implements AccessPort {
   }
 
   @Override
-  public JwtWrapper access(final String token) throws NotFoundException, InvalidTokenException {
-
+  public TokenUtil.JwtWrapper access(String token) throws NotFoundException, InvalidTokenException {
     // findAll session that will ve used for the jwt
-    final Session session = findSessionByTokenPort.find(token);
-
+    Session session = findSessionByTokenPort.find(token);
     // if is not valid should be removed
-    if (!session.isValid()) {
-      deleteSessionPort.delete(session);
-      throw new InvalidTokenException("token not valid");
-    }
-
+    checkValidSession(session);
     // when a session is used should get new expiration time
     refreshSessionPort.refresh(session);
-
     // need the user data for the jwt generation
-    final User user = findUserByIdPort.find(session.getUserId());
-
+    User user = findUserByIdPort.find(session.getUserId());
     // jwt generation
-    final TokenUtil.JwtWrapper jwtWrapper = TokenUtil.generateBearerJwt(user, secretKey);
+    return TokenUtil.generateBearerJwt(user, secretKey);
+  }
 
-    final String jwt = jwtWrapper.getToken();
-    final Date issuedAt = jwtWrapper.getIssuedAt();
-    final Date expiration = jwtWrapper.getExpiration();
-    return new JwtWrapper(jwt, issuedAt, expiration, user.getId());
+  private void checkValidSession(Session session) throws InvalidTokenException {
+    if (session.isValid()) return;
+
+    deleteSessionPort.delete(session);
+    throw new InvalidTokenException("token not valid");
   }
 }

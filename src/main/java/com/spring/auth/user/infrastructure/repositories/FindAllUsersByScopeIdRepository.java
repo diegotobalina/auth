@@ -25,7 +25,7 @@ public class FindAllUsersByScopeIdRepository implements FindAllUsersByScopeIdPor
    */
   @Override
   public List<User> findAll(final String scopeId) {
-    List<UserJpa> allByScopeId = this.userRepositoryJpa.findAllByScopesId(scopeId);
-    return allByScopeId.stream().map(UserMapper::parse).collect(Collectors.toList());
+    List<UserJpa> userJpas = this.userRepositoryJpa.findAllByScopesId(scopeId);
+    return userJpas.stream().map(UserMapper::parse).collect(Collectors.toList());
   }
 }

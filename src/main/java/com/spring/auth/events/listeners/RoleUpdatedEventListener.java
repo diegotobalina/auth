@@ -25,9 +25,13 @@ public class RoleUpdatedEventListener {
   @Async
   @TransactionalEventListener
   public void updatedRole(RoleUpdatedEvent roleUpdatedEvent) throws DuplicatedKeyException {
-    Role role = roleUpdatedEvent.getSource();
-    String roleId = role.getId();
+    Role updatedRole = roleUpdatedEvent.getSource();
+    updateUsersRole(updatedRole);
+  }
+
+  private void updateUsersRole(Role updatedRole) throws DuplicatedKeyException {
+    String roleId = updatedRole.getId();
     List<User> users = findAllUsersByRoleIdPort.findAll(roleId);
-    updateUsersRolePort.update(users, role);
+    updateUsersRolePort.update(users, updatedRole);
   }
 }

@@ -24,7 +24,7 @@ public class FindAllUsersRepository implements FindAllUsersPort {
    */
   @Override
   public List<User> findAll() {
-    List<UserJpa> all = this.userRepositoryJpa.findAll();
-    return all.stream().map(UserMapper::parse).collect(Collectors.toList());
+    List<UserJpa> userJpas = this.userRepositoryJpa.findAll();
+    return userJpas.stream().map(UserMapper::parse).collect(Collectors.toList());
   }
 }

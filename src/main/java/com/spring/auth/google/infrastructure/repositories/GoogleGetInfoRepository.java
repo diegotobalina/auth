@@ -6,6 +6,7 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
+import com.spring.auth.exceptions.application.GoogleGetInfoException;
 import com.spring.auth.google.application.ports.out.GoogleGetInfoPort;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,14 +28,21 @@ public class GoogleGetInfoRepository implements GoogleGetInfoPort {
   private JacksonFactory jsonFactory;
 
   @Override
-  public Payload get(final String jwt) throws GeneralSecurityException, IOException {
-    // instance only the first time
+  public Payload get(String jwt)
+      throws GeneralSecurityException, IOException, GoogleGetInfoException {
+
+    instanceSingleton();
+    GoogleIdTokenVerifier verifier = getVerifier();
+
+    GoogleIdToken idToken = verifier.verify(jwt);
+    if (idToken == null) throw new GoogleGetInfoException("google failed login");
+
+    return idToken.getPayload();
+  }
+
+  private void instanceSingleton() throws GeneralSecurityException, IOException {
     if (Objects.isNull(transport)) transport = GoogleNetHttpTransport.newTrustedTransport();
     if (Objects.isNull(jsonFactory)) jsonFactory = JacksonFactory.getDefaultInstance();
-    // verify google jwt
-    final GoogleIdTokenVerifier verifier = getVerifier();
-    final GoogleIdToken idToken = verifier.verify(jwt);
-    return (idToken == null) ? null : idToken.getPayload();
   }
 
   private GoogleIdTokenVerifier getVerifier() {

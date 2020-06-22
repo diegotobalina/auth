@@ -17,6 +17,10 @@ public class RefreshSessionRepository implements RefreshSessionPort {
   @Override
   public void refresh(Session session) {
     session.refresh(); // todo: check possible session modifications bug
+    saveSession(session);
+  }
+
+  private void saveSession(Session session) {
     SessionJpa sessionJpa = SessionMapper.parse(session);
     SessionJpa sessionJpaRefreshed = sessionRepositoryJpa.save(sessionJpa);
     SessionMapper.parse(sessionJpaRefreshed);

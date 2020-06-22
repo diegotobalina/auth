@@ -9,17 +9,17 @@ import java.util.UUID;
 
 public abstract class UserUtil {
 
-  public static User getUserFromPrincipal(final Principal principal) {
-    final UsernamePasswordAuthenticationToken authenticationToken =
+  public static User getUserFromPrincipal(Principal principal) {
+    UsernamePasswordAuthenticationToken authenticationToken =
         (UsernamePasswordAuthenticationToken) principal;
     return (User) authenticationToken.getPrincipal();
   }
 
-  public static String getUserIdFromPrincipal(final Principal principal) {
+  public static String getUserIdFromPrincipal(Principal principal) {
     return getUserFromPrincipal(principal).getId();
   }
 
-  public static String generateUsername(final String email) {
+  public static String generateUsername(String email) {
     if (StringUtils.isBlank(email)) return null;
     if (!RegexUtil.isEmail(email)) return null;
     return email.split("@")[0] + UUID.randomUUID().toString().substring(0, 4);

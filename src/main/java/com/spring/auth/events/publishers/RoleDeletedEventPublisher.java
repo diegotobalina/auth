@@ -1,9 +1,9 @@
 package com.spring.auth.events.publishers;
 
 import com.spring.auth.anotations.components.CustomEventPublisher;
-import com.spring.auth.role.domain.Role;
 import com.spring.auth.events.domain.RoleDeletedEvent;
 import com.spring.auth.events.ports.PublishRoleDeletedEventPort;
+import com.spring.auth.role.domain.Role;
 import org.springframework.context.ApplicationEventPublisher;
 
 /** @author diegotobalina created on 19/06/2020 */
@@ -17,6 +17,7 @@ public class RoleDeletedEventPublisher extends EventPublisher
 
   @Override
   public void publish(Role role) {
-    this.applicationEventPublisher.publishEvent(new RoleDeletedEvent(role));
+    RoleDeletedEvent roleDeletedEvent = new RoleDeletedEvent(role);
+    this.applicationEventPublisher.publishEvent(roleDeletedEvent);
   }
 }

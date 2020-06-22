@@ -26,13 +26,15 @@ public class FindUserByUsernameOrEmailRepository implements FindUserByUserNameOr
    * @throws NotFoundException When the user can not be found with the username or the email
    */
   @Override
-  public User find(final String username, final String email) throws NotFoundException {
-    // try to findAll user by username
-    final Optional<UserJpa> optionalByUsername = this.userRepositoryJpa.findByUsername(username);
+  public User find(String username, String email) throws NotFoundException {
+    // try to find user by username
+    Optional<UserJpa> optionalByUsername = this.userRepositoryJpa.findByUsername(username);
     if (optionalByUsername.isPresent()) return UserMapper.parse(optionalByUsername.get());
-    // try to findAll user by email
-    final Optional<UserJpa> optionalByEmail = this.userRepositoryJpa.findByEmail(email);
+
+    // try to find user by email
+    Optional<UserJpa> optionalByEmail = this.userRepositoryJpa.findByEmail(email);
     if (optionalByEmail.isPresent()) return UserMapper.parse(optionalByEmail.get());
+
     // username not found by username or email
     throw new NotFoundException("user not found by username: " + username + ", or email: " + email);
   }

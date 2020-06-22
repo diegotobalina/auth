@@ -2,7 +2,6 @@ package com.spring.auth.authorization.infrastructure.controllers;
 
 import com.spring.auth.anotations.components.controllers.AuthorizationController;
 import com.spring.auth.authorization.application.ports.in.AccessPort;
-import com.spring.auth.authorization.domain.JwtWrapper;
 import com.spring.auth.authorization.infrastructure.dto.input.AccessInputDto;
 import com.spring.auth.authorization.infrastructure.dto.output.AccessOutputDto;
 import com.spring.auth.exceptions.application.InvalidTokenException;
@@ -30,10 +29,10 @@ public class AccessController {
       value = "Access",
       notes = "Obtiene un token de acceso mediante el token recibido en la llamada login")
   @PostMapping("/access")
-  public AccessOutputDto access(@RequestBody @Valid final AccessInputDto accessInputDto)
+  public AccessOutputDto access(@RequestBody @Valid AccessInputDto accessInputDto)
       throws NotFoundException, InvalidTokenException {
-    final String token = TokenUtil.removeBearerPrefix(accessInputDto.getToken());
-    final JwtWrapper access = accessPort.access(token);
+    String token = TokenUtil.removeBearerPrefix(accessInputDto.getToken());
+    TokenUtil.JwtWrapper access = accessPort.access(token);
     return new AccessOutputDto(access);
   }
 }

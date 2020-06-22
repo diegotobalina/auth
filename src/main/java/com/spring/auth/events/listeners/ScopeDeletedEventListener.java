@@ -27,6 +27,10 @@ public class ScopeDeletedEventListener {
   @TransactionalEventListener
   public void deletedScope(ScopeDeletedEvent scopeDeletedEvent) throws DuplicatedKeyException {
     Scope deletedScope = scopeDeletedEvent.getSource();
+    removeScopesFromRoles(deletedScope);
+  }
+
+  private void removeScopesFromRoles(Scope deletedScope) throws DuplicatedKeyException {
     List<Role> rolesWithTheScope = findAllRolesByScopeIdPort.findAll(deletedScope.getId());
     removeScopesFromRolesPort.remove(
         rolesWithTheScope, Collections.singletonList(deletedScope.getId()));

@@ -28,8 +28,18 @@ public class UpdateUsersRepository implements UpdateUsersPort {
    */
   @Override
   public List<User> updateAll(List<User> users) throws DuplicatedKeyException {
-    List<String> ids = users.stream().map(User::getId).collect(Collectors.toList());
+    checkUsersConstraints(users);
+    return saveUsers(users);
+  }
 
+  private List<User> saveUsers(List<User> users) {
+    List<UserJpa> usersJpa = users.stream().map(UserMapper::parse).collect(Collectors.toList());
+    List<UserJpa> savedUsersJpa = userRepositoryJpa.saveAll(usersJpa);
+    return savedUsersJpa.stream().map(UserMapper::parse).collect(Collectors.toList());
+  }
+
+  private void checkUsersConstraints(List<User> users) throws DuplicatedKeyException {
+    List<String> ids = users.stream().map(User::getId).collect(Collectors.toList());
     // username must be unique in the database
     List<String> usernames = users.stream().map(User::getUsername).collect(Collectors.toList());
     if (userRepositoryJpa.existsByUsernameInAndIdNotIn(
@@ -40,9 +50,5 @@ public class UpdateUsersRepository implements UpdateUsersPort {
     List<String> emails = users.stream().map(User::getEmail).collect(Collectors.toList());
     if (userRepositoryJpa.existsByEmailInAndIdNotIn(emails, ids)) // todo: duplicated comprobation
     throw new DuplicatedKeyException("duplicated email in: " + emails);
-
-    List<UserJpa> usersJpa = users.stream().map(UserMapper::parse).collect(Collectors.toList());
-    List<UserJpa> savedUsersJpa = userRepositoryJpa.saveAll(usersJpa);
-    return savedUsersJpa.stream().map(UserMapper::parse).collect(Collectors.toList());
   }
 }

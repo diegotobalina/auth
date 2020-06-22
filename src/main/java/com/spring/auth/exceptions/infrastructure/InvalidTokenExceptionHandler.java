@@ -1,5 +1,6 @@
 package com.spring.auth.exceptions.infrastructure;
 
+import com.spring.auth.exceptions.application.InvalidTokenException;
 import com.spring.auth.exceptions.domain.ErrorResponse;
 import com.spring.auth.exceptions.util.ExceptionUtil;
 import org.springframework.http.HttpStatus;
@@ -12,13 +13,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @ControllerAdvice
-public class DefaultExceptionHandler {
+public class InvalidTokenExceptionHandler {
 
   @ResponseBody
-  @ExceptionHandler({Exception.class})
-  @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-  private ErrorResponse exception(
+  @ExceptionHandler({InvalidTokenException.class})
+  @ResponseStatus(HttpStatus.UNAUTHORIZED)
+  private ErrorResponse invalidTokenException(
       HttpServletRequest request, HttpServletResponse response, Exception ex) {
-    return ExceptionUtil.getErrorResponse(request, HttpStatus.INTERNAL_SERVER_ERROR, ex);
+    return ExceptionUtil.getErrorResponse(request, HttpStatus.UNAUTHORIZED, ex);
   }
 }

@@ -18,12 +18,12 @@ public class FindSessionByTokenRepository implements FindSessionByTokenPort {
   private SessionRepositoryJpa sessionRepositoryJpa;
 
   @Override
-  public Session find(final String value) throws NotFoundException {
-    final Optional<SessionJpa> optional = sessionRepositoryJpa.findByToken(value);
+  public Session find(String value) throws NotFoundException {
+    Optional<SessionJpa> optional = sessionRepositoryJpa.findByToken(value);
     if (optional.isEmpty()) {
       throw new NotFoundException("session not found with value: " + value);
     }
-    final SessionJpa sessionJpa = optional.get();
+    SessionJpa sessionJpa = optional.get();
     return SessionMapper.parse(sessionJpa);
   }
 }

@@ -10,15 +10,16 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.ConstraintViolationException;
 
 @ControllerAdvice
-public class DefaultExceptionHandler {
+public class ConstraintViolationExceptionHandler {
 
   @ResponseBody
-  @ExceptionHandler({Exception.class})
-  @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-  private ErrorResponse exception(
+  @ExceptionHandler({ConstraintViolationException.class})
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  private ErrorResponse constraintViolationExceptionHandler(
       HttpServletRequest request, HttpServletResponse response, Exception ex) {
-    return ExceptionUtil.getErrorResponse(request, HttpStatus.INTERNAL_SERVER_ERROR, ex);
+    return ExceptionUtil.getErrorResponse(request, HttpStatus.BAD_REQUEST, ex);
   }
 }

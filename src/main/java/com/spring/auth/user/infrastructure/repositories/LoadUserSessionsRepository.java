@@ -23,8 +23,8 @@ public class LoadUserSessionsRepository implements LoadUserSessionsPort {
    */
   @Override
   public User load(User user) {
-    final String id = user.getId();
-    final List<Session> allByUserId = findAllSessionsByUserIdPort.findAll(id);
+    String id = user.getId();
+    List<Session> allByUserId = findAllSessionsByUserIdPort.findAll(id);
     user.setSessions(allByUserId);
     return user;
   }

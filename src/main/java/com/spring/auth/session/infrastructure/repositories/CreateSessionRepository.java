@@ -26,23 +26,32 @@ public class CreateSessionRepository implements CreateSessionPort {
 
   @Override
   @Transactional(rollbackFor = Exception.class)
-  public Session create(final Session session) throws DuplicatedKeyException, NotFoundException {
+  public Session create(Session session) throws DuplicatedKeyException, NotFoundException {
+    checkSessionConstraints(session);
+    checkMaxUserSessions(session); // todo: move to event: SessionCreatedEvent
+    return saveSession(session);
+  }
 
-    // check duplicated tokens
-    final String token = session.getToken();
-    if (sessionRepositoryJpa.existsByToken(token)) {
-      throw new DuplicatedKeyException("duplicated token: " + token);
-    }
+  private Session saveSession(Session session) {
+    SessionJpa sessionJpa = SessionMapper.parse(session);
+    SessionJpa savedSessionJpa = sessionRepositoryJpa.save(sessionJpa);
+    return SessionMapper.parse(savedSessionJpa);
+  }
 
+  private void checkMaxUserSessions(Session session) throws NotFoundException {
     // if the user can´t have more open sessions the oldest one will be deleted
     String userId = session.getUserId();
     if (!canUserHaveMoreSessions(userId)) {
       deleteOlderSessionByUserIdPort.delete(userId);
     }
+  }
 
-    final SessionJpa sessionJpa = SessionMapper.parse(session);
-    final SessionJpa savedSessionJpa = sessionRepositoryJpa.save(sessionJpa);
-    return SessionMapper.parse(savedSessionJpa);
+  private void checkSessionConstraints(Session session) throws DuplicatedKeyException {
+    // check duplicated tokens
+    String token = session.getToken();
+    if (sessionRepositoryJpa.existsByToken(token)) {
+      throw new DuplicatedKeyException("duplicated token: " + token);
+    }
   }
 
   private boolean canUserHaveMoreSessions(String userId) throws NotFoundException {

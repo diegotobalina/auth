@@ -25,23 +25,29 @@ public class CreateUserRepository implements CreateUserPort {
    *     database
    */
   @Override
-  public User create(final User user) throws DuplicatedKeyException {
+  public User create(User user) throws DuplicatedKeyException {
     if (user.getId() != null) throw new IllegalArgumentException("user id must be null");
+    checkUserConstraints(user);
+    return saveUser(user);
+  }
 
+  private User saveUser(User user) {
+    UserJpa userJpa = UserMapper.parse(user);
+    UserJpa savedUser = this.userRepositoryJpa.save(userJpa);
+    return UserMapper.parse(savedUser);
+  }
+
+  private void checkUserConstraints(User user) throws DuplicatedKeyException {
     // username must be unique in the database
-    final String username = user.getUsername();
+    String username = user.getUsername();
     if (userRepositoryJpa.existsByUsername(username)) { // todo: duplicated comprobation
       throw new DuplicatedKeyException("duplicated username: " + username);
     }
 
     // email must be unique in the database
-    final String email = user.getEmail();
+    String email = user.getEmail();
     if (userRepositoryJpa.existsByEmail(email)) { // todo: duplicated comprobation
       throw new DuplicatedKeyException("duplicated email: " + email);
     }
-
-    final UserJpa userJpa = UserMapper.parse(user);
-    final UserJpa savedUser = this.userRepositoryJpa.save(userJpa);
-    return UserMapper.parse(savedUser);
   }
 }

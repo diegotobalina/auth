@@ -19,6 +19,7 @@ public class RolesUpdatedEventPublisher extends EventPublisher
 
   @Override
   public void publish(List<Role> roles) {
-    this.applicationEventPublisher.publishEvent(new RolesUpdatedEvent(roles));
+    RolesUpdatedEvent rolesUpdatedEvent = new RolesUpdatedEvent(roles);
+    this.applicationEventPublisher.publishEvent(rolesUpdatedEvent);
   }
 }

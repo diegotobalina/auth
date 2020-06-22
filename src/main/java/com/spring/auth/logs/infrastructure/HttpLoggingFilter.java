@@ -38,6 +38,7 @@ public class HttpLoggingFilter implements Filter {
 
       // log response
       if (isLoggableUri(httpServletRequest)) logResponse(bufferedResponse, requestTime);
+
     } catch (Throwable a) {
       log.error(a.getMessage());
     }

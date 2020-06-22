@@ -18,8 +18,8 @@ public class FindAllSessionsByUserIdRepository implements FindAllSessionsByUserI
   private SessionRepositoryJpa sessionRepositoryJpa;
 
   @Override
-  public List<Session> findAll(final String userId) {
-    final List<SessionJpa> sessionJpas = sessionRepositoryJpa.findAllByUserId(userId);
+  public List<Session> findAll(String userId) {
+    List<SessionJpa> sessionJpas = sessionRepositoryJpa.findAllByUserId(userId);
     return sessionJpas.stream().map(SessionMapper::parse).collect(Collectors.toList());
   }
 }

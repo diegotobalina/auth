@@ -21,17 +21,17 @@ public class LoginUseCase implements LoginUserPort {
 
   @Override
   @Transactional(rollbackFor = Exception.class)
-  public Session login(final String username, final String email, final String password)
+  public Session login(String username, String email, String password)
       throws NotFoundException, WrongPasswordException, DuplicatedKeyException {
 
     // findAll the user trying to login
-    final User user = findUserByUserNameOrEmailPort.find(username, email);
+    User user = findUserByUserNameOrEmailPort.find(username, email);
 
     // check if its de correct password
     if (!user.doPasswordsMatch(password)) throw new WrongPasswordException("invalid password");
 
     // creating session
-    final Session session = new Session(user.getId());
+    Session session = new Session(user.getId());
     return createSessionPort.create(session);
   }
 }

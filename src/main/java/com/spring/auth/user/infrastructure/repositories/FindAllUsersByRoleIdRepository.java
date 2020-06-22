@@ -25,7 +25,7 @@ public class FindAllUsersByRoleIdRepository implements FindAllUsersByRoleIdPort 
    */
   @Override
   public List<User> findAll(final String roleId) {
-    List<UserJpa> allByRoleId = this.userRepositoryJpa.findAllByRolesId(roleId);
-    return allByRoleId.stream().map(UserMapper::parse).collect(Collectors.toList());
+    List<UserJpa> userJpas = this.userRepositoryJpa.findAllByRolesId(roleId);
+    return userJpas.stream().map(UserMapper::parse).collect(Collectors.toList());
   }
 }

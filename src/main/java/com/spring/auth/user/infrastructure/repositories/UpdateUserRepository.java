@@ -24,24 +24,30 @@ public class UpdateUserRepository implements UpdateUserPort {
    * @throws DuplicatedKeyException When some constraint fails, for example duplicated username
    */
   @Override
-  public User update(final User user) throws DuplicatedKeyException {
+  public User update(User user) throws DuplicatedKeyException {
+    checkUserConstraints(user);
+    return saveUser(user);
+  }
 
+  private User saveUser(User user) {
+    UserJpa userJpa = UserMapper.parse(user);
+    UserJpa savedUser = this.userRepositoryJpa.save(userJpa);
+    return UserMapper.parse(savedUser);
+  }
+
+  private void checkUserConstraints(User user) throws DuplicatedKeyException {
     String userId = user.getId();
     // username must be unique in the database
-    final String username = user.getUsername();
+    String username = user.getUsername();
     if (userRepositoryJpa.existsByUsernameAndIdNot(
         username, userId)) { // todo: duplicated comprobation
       throw new DuplicatedKeyException("duplicated username: " + username);
     }
 
     // email must be unique in the database
-    final String email = user.getEmail();
+    String email = user.getEmail();
     if (userRepositoryJpa.existsByEmailAndIdNot(email, userId)) { // todo: duplicated comprobation
       throw new DuplicatedKeyException("duplicated email: " + email);
     }
-
-    final UserJpa userJpa = UserMapper.parse(user);
-    final UserJpa savedUser = this.userRepositoryJpa.save(userJpa);
-    return UserMapper.parse(savedUser);
   }
 }

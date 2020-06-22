@@ -20,9 +20,8 @@ public class FindAllExpiredRepository implements FindAllExpiredSessionsPort {
 
   @Override
   public List<Session> findAll() {
-    Date currentTime = new Date();
-    List<SessionJpa> allByExpirationBefore =
-        sessionRepositoryJpa.findAllByExpirationBefore(currentTime);
+    Date now = new Date();
+    List<SessionJpa> allByExpirationBefore = sessionRepositoryJpa.findAllByExpirationBefore(now);
     return allByExpirationBefore.stream().map(SessionMapper::parse).collect(Collectors.toList());
   }
 }

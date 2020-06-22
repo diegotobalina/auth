@@ -1,12 +1,16 @@
 package com.spring.auth.filters;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
-import com.spring.auth.util.AuthenticationUtil;
-import com.spring.auth.google.application.ports.out.GoogleGetInfoPort;
+import com.spring.auth.exceptions.application.DuplicatedKeyException;
+import com.spring.auth.exceptions.application.GoogleGetInfoException;
+import com.spring.auth.exceptions.application.InfiniteLoopException;
+import com.spring.auth.exceptions.application.NotFoundException;
 import com.spring.auth.google.application.ports.in.GoogleLoginPort;
+import com.spring.auth.google.application.ports.out.GoogleGetInfoPort;
+import com.spring.auth.user.domain.User;
+import com.spring.auth.util.AuthenticationUtil;
 import com.spring.auth.util.RegexUtil;
 import com.spring.auth.util.TokenUtil;
-import com.spring.auth.user.domain.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -15,22 +19,23 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.security.GeneralSecurityException;
 
 @Slf4j
 public class GoogleAuthenticationFilter extends OncePerRequestFilter {
 
-  private final GoogleGetInfoPort googleGetInfoPort;
-  private final GoogleLoginPort googleLoginPort;
+  private GoogleGetInfoPort googleGetInfoPort;
+  private GoogleLoginPort googleLoginPort;
 
   public GoogleAuthenticationFilter(
-          GoogleGetInfoPort googleGetInfoPort, GoogleLoginPort googleLoginPort) {
+      GoogleGetInfoPort googleGetInfoPort, GoogleLoginPort googleLoginPort) {
     this.googleGetInfoPort = googleGetInfoPort;
     this.googleLoginPort = googleLoginPort;
   }
 
   @Override
   protected void doFilterInternal(
-      final HttpServletRequest request, final HttpServletResponse response, final FilterChain chain)
+      HttpServletRequest request, HttpServletResponse response, FilterChain chain)
       throws ServletException, IOException {
 
     // check if should try to process the token
@@ -44,10 +49,8 @@ public class GoogleAuthenticationFilter extends OncePerRequestFilter {
 
     // try to login with the token
     try {
-      final String jwtWithoutPrefix = TokenUtil.removeGooglePrefix(jwtWithPrefix);
-      final GoogleIdToken.Payload googleInfo = this.googleGetInfoPort.get(jwtWithoutPrefix);
-      if (googleInfo == null) throw new Exception("google failed login");
-      final User user = this.googleLoginPort.login(googleInfo);
+      String jwtWithoutPrefix = TokenUtil.removeGooglePrefix(jwtWithPrefix);
+      User user = getUserFromGoogleJwt(jwtWithoutPrefix);
       AuthenticationUtil.authenticate(user);
       log.info("authentication ok for user {}", user.getId());
     } catch (Exception ex) {
@@ -55,5 +58,12 @@ public class GoogleAuthenticationFilter extends OncePerRequestFilter {
     } finally {
       chain.doFilter(request, response);
     }
+  }
+
+  private User getUserFromGoogleJwt(String jwtWithoutPrefix)
+      throws GeneralSecurityException, IOException, GoogleGetInfoException, InfiniteLoopException,
+          DuplicatedKeyException, NotFoundException {
+    GoogleIdToken.Payload googleInfo = this.googleGetInfoPort.get(jwtWithoutPrefix);
+    return this.googleLoginPort.login(googleInfo);
   }
 }

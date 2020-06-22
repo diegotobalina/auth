@@ -1,5 +1,6 @@
 package com.spring.auth.exceptions.infrastructure;
 
+import com.spring.auth.exceptions.application.DuplicatedKeyException;
 import com.spring.auth.exceptions.domain.ErrorResponse;
 import com.spring.auth.exceptions.util.ExceptionUtil;
 import org.springframework.http.HttpStatus;
@@ -12,13 +13,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @ControllerAdvice
-public class DefaultExceptionHandler {
-
+public class DuplicatedUsernameExceptionHandler {
   @ResponseBody
-  @ExceptionHandler({Exception.class})
-  @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-  private ErrorResponse exception(
+  @ExceptionHandler({DuplicatedKeyException.class})
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  private ErrorResponse duplicatedUsernameException(
       HttpServletRequest request, HttpServletResponse response, Exception ex) {
-    return ExceptionUtil.getErrorResponse(request, HttpStatus.INTERNAL_SERVER_ERROR, ex);
+    return ExceptionUtil.getErrorResponse(request, HttpStatus.BAD_REQUEST, ex);
   }
 }

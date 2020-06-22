@@ -27,7 +27,15 @@ public class UpdateUsersRolesRepository implements UpdateUsersRolesPort {
    */
   @Override
   public List<User> update(List<User> users, List<Role> roles) throws DuplicatedKeyException {
-    for (User user : users) roles.forEach(user::updateRole);
+    updateRoles(users, roles);
     return updateUsersPort.updateAll(users);
+  }
+
+  private void updateRoles(List<User> users, List<Role> roles) {
+    for (User user : users) {
+      for (Role role : roles) {
+        user.updateRole(role);
+      }
+    }
   }
 }

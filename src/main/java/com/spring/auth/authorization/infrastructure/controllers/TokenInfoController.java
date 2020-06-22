@@ -4,6 +4,7 @@ import com.spring.auth.anotations.components.controllers.AuthorizationController
 import com.spring.auth.authorization.application.ports.in.TokenInfoPort;
 import com.spring.auth.authorization.domain.TokenInfo;
 import com.spring.auth.authorization.infrastructure.dto.output.TokenInfoOutputDto;
+import com.spring.auth.exceptions.application.GoogleGetInfoException;
 import com.spring.auth.exceptions.application.InvalidTokenException;
 import com.spring.auth.exceptions.application.NotFoundException;
 import com.spring.auth.exceptions.application.UnknownTokenFormatException;
@@ -34,7 +35,7 @@ public class TokenInfoController {
   public TokenInfoOutputDto tokenInfo(
       @RequestParam @NotEmpty final String token) // todo: validate param
       throws NotFoundException, UnknownTokenFormatException, InvalidTokenException,
-          GeneralSecurityException, IOException {
+          GeneralSecurityException, IOException, GoogleGetInfoException {
     final TokenInfo tokenInfo = tokenInfoPort.tokenInfo(token);
     return new TokenInfoOutputDto(tokenInfo);
   }

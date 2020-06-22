@@ -18,15 +18,15 @@ public class AuthenticationUtil {
     return authentication != null && authentication.isAuthenticated();
   }
 
-  public static void authenticate(final User user) {
-    final List<SimpleGrantedAuthority> simpleGrantedAuthorities =
+  public static void authenticate(User user) {
+    List<SimpleGrantedAuthority> simpleGrantedAuthorities =
         getSimpleGrantedAuthorities(user.getRoles());
-    final UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
+    UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
         new UsernamePasswordAuthenticationToken(user, user.getScopes(), simpleGrantedAuthorities);
     SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
   }
 
-  private static List<SimpleGrantedAuthority> getSimpleGrantedAuthorities(final List<Role> roles) {
+  private static List<SimpleGrantedAuthority> getSimpleGrantedAuthorities(List<Role> roles) {
     return roles.stream()
         .map(role -> new SimpleGrantedAuthority(role.getValue()))
         .collect(Collectors.toList());

@@ -1,6 +1,5 @@
 package com.spring.auth.authorization.infrastructure.dto.output;
 
-import com.spring.auth.authorization.domain.JwtWrapper;
 import com.spring.auth.util.TokenUtil;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,7 +17,7 @@ public class AccessOutputDto {
   private Date expiration;
   private String userId;
 
-  public AccessOutputDto(JwtWrapper jwtWrapper) {
+  public AccessOutputDto(TokenUtil.JwtWrapper jwtWrapper) {
     this.token = TokenUtil.addBearerPrefix(jwtWrapper.getToken());
     this.issuedAt = jwtWrapper.getIssuedAt();
     this.expiration = jwtWrapper.getExpiration();

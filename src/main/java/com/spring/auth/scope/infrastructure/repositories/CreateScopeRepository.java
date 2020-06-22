@@ -16,14 +16,22 @@ public class CreateScopeRepository implements CreateScopePort {
   private ScopeRepositoryJpa scopeRepositoryJpa;
 
   @Override
-  public Scope create(final Scope scope) throws DuplicatedKeyException {
-    final String value = scope.getValue();
+  public Scope create(Scope scope) throws DuplicatedKeyException {
+    checkScopeConstraints(scope);
+    ScopeJpa savedScopeJpa = saveScope(scope);
+    return ScopeMapper.parse(savedScopeJpa);
+  }
+
+  private ScopeJpa saveScope(Scope scope) {
+    ScopeJpa scopeJpa = ScopeMapper.parse(scope);
+    return scopeRepositoryJpa.save(scopeJpa);
+  }
+
+  private void checkScopeConstraints(Scope scope) throws DuplicatedKeyException {
+    String value = scope.getValue();
     // scope value must be unique in the database
     if (scopeRepositoryJpa.existsByValue(value)) {
       throw new DuplicatedKeyException("duplicated value: " + value);
     }
-    final ScopeJpa scopeJpa = ScopeMapper.parse(scope);
-    final ScopeJpa savedScopeJpa = scopeRepositoryJpa.save(scopeJpa);
-    return ScopeMapper.parse(savedScopeJpa);
   }
 }
