@@ -1,4 +1,4 @@
-package com.spring.auth.shared.util;
+package com.spring.auth.util;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;

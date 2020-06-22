@@ -1,7 +1,7 @@
 package com.spring.auth.anotations.validations.validators;
 
 import com.spring.auth.anotations.validations.constraints.TokenConstraint;
-import com.spring.auth.shared.util.RegexUtil;
+import com.spring.auth.util.RegexUtil;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

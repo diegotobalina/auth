@@ -9,9 +9,9 @@ import com.spring.auth.session.application.ports.out.DeleteSessionPort;
 import com.spring.auth.session.application.ports.out.FindSessionByTokenPort;
 import com.spring.auth.session.application.ports.out.RefreshSessionPort;
 import com.spring.auth.session.domain.Session;
-import com.spring.auth.shared.util.TokenUtil;
 import com.spring.auth.user.application.ports.out.FindUserByIdPort;
 import com.spring.auth.user.domain.User;
+import com.spring.auth.util.TokenUtil;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.util.Date;

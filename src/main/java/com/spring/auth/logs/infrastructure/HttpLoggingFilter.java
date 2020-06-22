@@ -1,6 +1,6 @@
 package com.spring.auth.logs.infrastructure;
 
-import com.spring.auth.shared.util.StringUtil;
+import com.spring.auth.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;

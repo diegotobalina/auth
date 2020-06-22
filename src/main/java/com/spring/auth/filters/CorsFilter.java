@@ -1,6 +1,6 @@
-package com.spring.auth.cors.infrastructure;
+package com.spring.auth.filters;
 
-import com.spring.auth.cors.infrastructure.util.CorsUtil;
+import com.spring.auth.util.CorsUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;

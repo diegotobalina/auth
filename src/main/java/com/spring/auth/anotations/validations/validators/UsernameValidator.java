@@ -1,7 +1,7 @@
 package com.spring.auth.anotations.validations.validators;
 
 import com.spring.auth.anotations.validations.constraints.UsernameConstraint;
-import com.spring.auth.shared.util.RegexUtil;
+import com.spring.auth.util.RegexUtil;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.validation.ConstraintValidator;

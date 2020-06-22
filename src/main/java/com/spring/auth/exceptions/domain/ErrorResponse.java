@@ -1,4 +1,4 @@
-package com.spring.auth.exceptions.infrastructure;
+package com.spring.auth.exceptions.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

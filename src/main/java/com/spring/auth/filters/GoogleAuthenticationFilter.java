@@ -1,11 +1,11 @@
 package com.spring.auth.filters;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
-import com.spring.auth.shared.util.AuthenticationUtil;
+import com.spring.auth.util.AuthenticationUtil;
 import com.spring.auth.google.application.ports.out.GoogleGetInfoPort;
 import com.spring.auth.google.application.ports.in.GoogleLoginPort;
-import com.spring.auth.shared.util.RegexUtil;
-import com.spring.auth.shared.util.TokenUtil;
+import com.spring.auth.util.RegexUtil;
+import com.spring.auth.util.TokenUtil;
 import com.spring.auth.user.domain.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.filter.OncePerRequestFilter;

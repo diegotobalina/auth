@@ -1,4 +1,4 @@
-package com.spring.auth.shared.util;
+package com.spring.auth.util;
 
 import com.spring.auth.user.domain.User;
 import org.apache.commons.lang3.StringUtils;

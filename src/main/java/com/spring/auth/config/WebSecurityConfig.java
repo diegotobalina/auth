@@ -2,8 +2,8 @@ package com.spring.auth.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
-import com.spring.auth.cors.infrastructure.util.CorsUtil;
-import com.spring.auth.exceptions.infrastructure.ErrorResponse;
+import com.spring.auth.util.CorsUtil;
+import com.spring.auth.exceptions.domain.ErrorResponse;
 import com.spring.auth.filters.BearerAuthenticationFilter;
 import com.spring.auth.filters.GoogleAuthenticationFilter;
 import com.spring.auth.google.application.ports.out.GoogleGetInfoPort;

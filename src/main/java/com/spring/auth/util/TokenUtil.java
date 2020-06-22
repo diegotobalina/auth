@@ -1,4 +1,4 @@
-package com.spring.auth.shared.util;
+package com.spring.auth.util;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;

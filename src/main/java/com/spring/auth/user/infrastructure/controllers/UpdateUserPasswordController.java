@@ -4,7 +4,7 @@ import com.spring.auth.anotations.components.controllers.UserController;
 import com.spring.auth.exceptions.application.DuplicatedKeyException;
 import com.spring.auth.exceptions.application.NotFoundException;
 import com.spring.auth.exceptions.application.WrongPasswordException;
-import com.spring.auth.shared.util.UserUtil;
+import com.spring.auth.util.UserUtil;
 import com.spring.auth.user.application.ports.in.UpdateUserPasswordPort;
 import com.spring.auth.user.infrastructure.dto.input.UpdatePasswordAdminInputDto;
 import com.spring.auth.user.infrastructure.dto.input.UpdatePasswordInputDto;

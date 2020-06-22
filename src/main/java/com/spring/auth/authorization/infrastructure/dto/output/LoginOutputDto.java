@@ -1,7 +1,7 @@
 package com.spring.auth.authorization.infrastructure.dto.output;
 
 import com.spring.auth.session.domain.Session;
-import com.spring.auth.shared.util.TokenUtil;
+import com.spring.auth.util.TokenUtil;
 import lombok.Getter;
 import lombok.ToString;
 

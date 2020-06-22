@@ -10,9 +10,9 @@ import com.spring.auth.exceptions.application.UnknownTokenFormatException;
 import com.spring.auth.google.application.ports.out.GoogleGetInfoPort;
 import com.spring.auth.session.application.ports.out.FindSessionByTokenPort;
 import com.spring.auth.session.domain.Session;
-import com.spring.auth.shared.util.RegexUtil;
-import com.spring.auth.shared.util.TokenUtil;
-import com.spring.auth.shared.util.TokenUtil.JwtWrapper;
+import com.spring.auth.util.RegexUtil;
+import com.spring.auth.util.TokenUtil;
+import com.spring.auth.util.TokenUtil.JwtWrapper;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.io.IOException;

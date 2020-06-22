@@ -1,11 +1,11 @@
 package com.spring.auth.filters;
 
-import com.spring.auth.shared.util.AuthenticationUtil;
+import com.spring.auth.util.AuthenticationUtil;
 import com.spring.auth.role.domain.Role;
 import com.spring.auth.scope.domain.Scope;
-import com.spring.auth.shared.util.RegexUtil;
-import com.spring.auth.shared.util.TokenUtil;
-import com.spring.auth.shared.util.TokenUtil.JwtWrapper;
+import com.spring.auth.util.RegexUtil;
+import com.spring.auth.util.TokenUtil;
+import com.spring.auth.util.TokenUtil.JwtWrapper;
 import com.spring.auth.user.domain.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.filter.OncePerRequestFilter;

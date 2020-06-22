@@ -7,7 +7,7 @@ import com.spring.auth.role.infrastructure.repositories.jpa.RoleRepositoryJpa;
 import com.spring.auth.scope.application.ports.out.CreateScopePort;
 import com.spring.auth.scope.domain.Scope;
 import com.spring.auth.scope.infrastructure.repositories.jpa.ScopeRepositoryJpa;
-import com.spring.auth.shared.util.UserUtil;
+import com.spring.auth.util.UserUtil;
 import com.spring.auth.user.application.ports.out.CreateUserPort;
 import com.spring.auth.user.domain.User;
 import com.spring.auth.user.infrastructure.repositories.jpa.UserRepositoryJpa;

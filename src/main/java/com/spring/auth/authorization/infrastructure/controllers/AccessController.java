@@ -7,7 +7,7 @@ import com.spring.auth.authorization.infrastructure.dto.input.AccessInputDto;
 import com.spring.auth.authorization.infrastructure.dto.output.AccessOutputDto;
 import com.spring.auth.exceptions.application.InvalidTokenException;
 import com.spring.auth.exceptions.application.NotFoundException;
-import com.spring.auth.shared.util.TokenUtil;
+import com.spring.auth.util.TokenUtil;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

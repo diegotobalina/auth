@@ -6,7 +6,7 @@ import com.spring.auth.exceptions.application.DuplicatedKeyException;
 import com.spring.auth.exceptions.application.InfiniteLoopException;
 import com.spring.auth.exceptions.application.NotFoundException;
 import com.spring.auth.google.application.ports.in.GoogleLoginPort;
-import com.spring.auth.shared.util.UserUtil;
+import com.spring.auth.util.UserUtil;
 import com.spring.auth.user.application.ports.in.RegisterUserPort;
 import com.spring.auth.user.application.ports.out.ExistsUserByEmailPort;
 import com.spring.auth.user.application.ports.out.ExistsUserByUserNamePort;

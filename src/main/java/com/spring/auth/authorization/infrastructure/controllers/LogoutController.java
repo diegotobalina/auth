@@ -4,7 +4,7 @@ import com.spring.auth.anotations.components.controllers.AuthorizationController
 import com.spring.auth.authorization.application.ports.in.LogoutUserPort;
 import com.spring.auth.authorization.infrastructure.dto.input.LogoutInputDto;
 import com.spring.auth.exceptions.application.NotFoundException;
-import com.spring.auth.shared.util.TokenUtil;
+import com.spring.auth.util.TokenUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

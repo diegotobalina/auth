@@ -1,6 +1,7 @@
 package com.spring.auth.exceptions.infrastructure;
 
 import com.spring.auth.exceptions.application.*;
+import com.spring.auth.exceptions.domain.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.http.HttpStatus;
