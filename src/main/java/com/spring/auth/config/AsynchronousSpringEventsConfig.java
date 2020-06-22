@@ -1,4 +1,4 @@
-package com.spring.auth.shared.infrastructure.config;
+package com.spring.auth.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

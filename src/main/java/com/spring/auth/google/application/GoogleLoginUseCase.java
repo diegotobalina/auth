@@ -5,7 +5,7 @@ import com.spring.auth.anotations.components.UseCase;
 import com.spring.auth.exceptions.application.DuplicatedKeyException;
 import com.spring.auth.exceptions.application.InfiniteLoopException;
 import com.spring.auth.exceptions.application.NotFoundException;
-import com.spring.auth.google.application.ports.out.GoogleLoginPort;
+import com.spring.auth.google.application.ports.in.GoogleLoginPort;
 import com.spring.auth.shared.util.UserUtil;
 import com.spring.auth.user.application.ports.in.RegisterUserPort;
 import com.spring.auth.user.application.ports.out.ExistsUserByEmailPort;
@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @UseCase
 @AllArgsConstructor
-public class GoogleLoginImpl implements GoogleLoginPort {
+public class GoogleLoginUseCase implements GoogleLoginPort {
 
   private FindUserByEmailPort findUserByEmailPort;
   private ExistsUserByUserNamePort existsUserByUserNamePort;

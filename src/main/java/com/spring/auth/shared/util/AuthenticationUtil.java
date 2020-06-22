@@ -1,4 +1,4 @@
-package com.spring.auth.authorization.util;
+package com.spring.auth.shared.util;
 
 import com.spring.auth.role.domain.Role;
 import com.spring.auth.user.domain.User;

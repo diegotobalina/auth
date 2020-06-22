@@ -1,13 +1,13 @@
-package com.spring.auth.authorization.infrastructure;
+package com.spring.auth.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
-import com.spring.auth.authorization.infrastructure.filter.AuthenticationFilter;
-import com.spring.auth.authorization.infrastructure.filter.GoogleAuthenticationFilter;
-import com.spring.auth.authorization.util.CorsUtil;
+import com.spring.auth.cors.infrastructure.util.CorsUtil;
 import com.spring.auth.exceptions.infrastructure.ErrorResponse;
-import com.spring.auth.google.application.ports.out.GoogleInfoPort;
-import com.spring.auth.google.application.ports.out.GoogleLoginPort;
+import com.spring.auth.filters.BearerAuthenticationFilter;
+import com.spring.auth.filters.GoogleAuthenticationFilter;
+import com.spring.auth.google.application.ports.out.GoogleGetInfoPort;
+import com.spring.auth.google.application.ports.in.GoogleLoginPort;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
@@ -23,7 +23,7 @@ import java.sql.Timestamp;
 
 @Slf4j
 @EnableWebSecurity
-public class WebSecurity extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Value("${server.auth.secret-key}")
   private String secretKey;
@@ -31,11 +31,11 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
   @Value("${api.prefix}")
   private String apiPrefix;
 
-  private GoogleInfoPort googleInfoPort;
+  private GoogleGetInfoPort googleGetInfoPort;
   private GoogleLoginPort googleLoginPort;
 
-  public WebSecurity(GoogleInfoPort googleInfoPort, GoogleLoginPort googleLoginPort) {
-    this.googleInfoPort = googleInfoPort;
+  public WebSecurityConfig(GoogleGetInfoPort googleGetInfoPort, GoogleLoginPort googleLoginPort) {
+    this.googleGetInfoPort = googleGetInfoPort;
     this.googleLoginPort = googleLoginPort;
   }
 
@@ -43,10 +43,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
   protected void configure(final HttpSecurity http) throws Exception {
 
     // config
-    http.csrf()
-        .disable()
-        .sessionManagement()
-        .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+    http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
     // exception handler during the authentication process
     http.exceptionHandling()
@@ -69,9 +66,9 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
             });
 
     // custom authentication filters
-    final AuthenticationFilter filter = new AuthenticationFilter(secretKey);
+    final BearerAuthenticationFilter filter = new BearerAuthenticationFilter(secretKey);
     final GoogleAuthenticationFilter googleFilter =
-        new GoogleAuthenticationFilter(googleInfoPort, googleLoginPort);
+        new GoogleAuthenticationFilter(googleGetInfoPort, googleLoginPort);
 
     // validate routes
     http.antMatcher("/api/v0/**")

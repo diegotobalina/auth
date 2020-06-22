@@ -1,11 +1,11 @@
-package com.spring.auth.authorization.infrastructure.filter;
+package com.spring.auth.filters;
 
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
-import com.spring.auth.authorization.util.AuthenticationUtil;
-import com.spring.auth.google.application.ports.out.GoogleInfoPort;
-import com.spring.auth.google.application.ports.out.GoogleLoginPort;
+import com.spring.auth.shared.util.AuthenticationUtil;
+import com.spring.auth.role.domain.Role;
+import com.spring.auth.scope.domain.Scope;
 import com.spring.auth.shared.util.RegexUtil;
 import com.spring.auth.shared.util.TokenUtil;
+import com.spring.auth.shared.util.TokenUtil.JwtWrapper;
 import com.spring.auth.user.domain.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -15,17 +15,16 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
-public class GoogleAuthenticationFilter extends OncePerRequestFilter {
+public class BearerAuthenticationFilter extends OncePerRequestFilter {
 
-  private final GoogleInfoPort googleInfoPort;
-  private final GoogleLoginPort googleLoginPort;
+  private final String secretKey;
 
-  public GoogleAuthenticationFilter(
-      GoogleInfoPort googleInfoPort, GoogleLoginPort googleLoginPort) {
-    this.googleInfoPort = googleInfoPort;
-    this.googleLoginPort = googleLoginPort;
+  public BearerAuthenticationFilter(final String secretKey) {
+    this.secretKey = secretKey;
   }
 
   @Override
@@ -35,7 +34,7 @@ public class GoogleAuthenticationFilter extends OncePerRequestFilter {
 
     // check if should try to process the token
     String jwtWithPrefix = request.getHeader("Authorization");
-    boolean isGoogleJwt = RegexUtil.isGoogleJwt(jwtWithPrefix);
+    boolean isGoogleJwt = RegexUtil.isBearerJwt(jwtWithPrefix);
     boolean isAuthenticated = AuthenticationUtil.isAuthenticated();
     if (!isGoogleJwt || isAuthenticated) {
       chain.doFilter(request, response);
@@ -44,10 +43,14 @@ public class GoogleAuthenticationFilter extends OncePerRequestFilter {
 
     // try to login with the token
     try {
-      final String jwtWithoutPrefix = TokenUtil.removeGooglePrefix(jwtWithPrefix);
-      final GoogleIdToken.Payload googleInfo = this.googleInfoPort.get(jwtWithoutPrefix);
-      if (googleInfo == null) throw new Exception("google failed login");
-      final User user = this.googleLoginPort.login(googleInfo);
+      final String jwtWithoutPrefix = TokenUtil.removeBearerPrefix(jwtWithPrefix);
+      final JwtWrapper jwtWrapper = TokenUtil.getValues(jwtWithoutPrefix, secretKey);
+      final String userId = jwtWrapper.getUserId();
+      final List<String> rolesString = jwtWrapper.getRoles();
+      final List<Role> roles = rolesString.stream().map(Role::new).collect(Collectors.toList());
+      final List<String> scopesString = jwtWrapper.getScopes();
+      final List<Scope> scopes = scopesString.stream().map(Scope::new).collect(Collectors.toList());
+      final User user = new User(userId, roles, scopes);
       AuthenticationUtil.authenticate(user);
       log.info("authentication ok for user {}", user.getId());
     } catch (Exception ex) {

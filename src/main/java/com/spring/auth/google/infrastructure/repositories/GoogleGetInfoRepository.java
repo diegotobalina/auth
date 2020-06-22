@@ -1,4 +1,4 @@
-package com.spring.auth.google.application;
+package com.spring.auth.google.infrastructure.repositories;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
@@ -6,10 +6,10 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
-import com.spring.auth.anotations.components.UseCase;
-import com.spring.auth.google.application.ports.out.GoogleInfoPort;
+import com.spring.auth.google.application.ports.out.GoogleGetInfoPort;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -17,8 +17,8 @@ import java.util.Collections;
 import java.util.Objects;
 
 @Slf4j
-@UseCase
-public class GoogleInfoImpl implements GoogleInfoPort {
+@Repository
+public class GoogleGetInfoRepository implements GoogleGetInfoPort {
 
   @Value("${google.oauth2.client_id}")
   private String googleClientId;

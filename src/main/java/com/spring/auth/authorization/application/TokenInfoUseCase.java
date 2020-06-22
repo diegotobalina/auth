@@ -7,7 +7,7 @@ import com.spring.auth.authorization.domain.TokenInfo;
 import com.spring.auth.exceptions.application.InvalidTokenException;
 import com.spring.auth.exceptions.application.NotFoundException;
 import com.spring.auth.exceptions.application.UnknownTokenFormatException;
-import com.spring.auth.google.application.ports.out.GoogleInfoPort;
+import com.spring.auth.google.application.ports.out.GoogleGetInfoPort;
 import com.spring.auth.session.application.ports.out.FindSessionByTokenPort;
 import com.spring.auth.session.domain.Session;
 import com.spring.auth.shared.util.RegexUtil;
@@ -27,12 +27,12 @@ public class TokenInfoUseCase implements TokenInfoPort {
   private String secretKey;
 
   private FindSessionByTokenPort findSessionByTokenPort;
-  private GoogleInfoPort googleInfoPort;
+  private GoogleGetInfoPort googleGetInfoPort;
 
   public TokenInfoUseCase(
-      FindSessionByTokenPort findSessionByTokenPort, GoogleInfoPort googleInfoPort) {
+      FindSessionByTokenPort findSessionByTokenPort, GoogleGetInfoPort googleGetInfoPort) {
     this.findSessionByTokenPort = findSessionByTokenPort;
-    this.googleInfoPort = googleInfoPort;
+    this.googleGetInfoPort = googleGetInfoPort;
   }
 
   @Override
@@ -58,7 +58,7 @@ public class TokenInfoUseCase implements TokenInfoPort {
   }
 
   private TokenInfo getGoogleTokenInfo(String token) throws GeneralSecurityException, IOException {
-    final GoogleIdToken.Payload payload = googleInfoPort.get(token);
+    final GoogleIdToken.Payload payload = googleGetInfoPort.get(token);
     final Date issuedAt = new Date(payload.getIssuedAtTimeSeconds() * 1000);
     final Date expiration =
         new Date(System.currentTimeMillis() + (payload.getExpirationTimeSeconds() + 1000));

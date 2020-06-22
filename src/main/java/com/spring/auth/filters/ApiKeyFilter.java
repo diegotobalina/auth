@@ -1,4 +1,4 @@
-package com.spring.auth.authorization.infrastructure.filter;
+package com.spring.auth.filters;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.StringUtils;

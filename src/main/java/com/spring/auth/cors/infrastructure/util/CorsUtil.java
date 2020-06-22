@@ -1,4 +1,4 @@
-package com.spring.auth.authorization.util;
+package com.spring.auth.cors.infrastructure.util;
 
 import javax.servlet.http.HttpServletResponse;
 

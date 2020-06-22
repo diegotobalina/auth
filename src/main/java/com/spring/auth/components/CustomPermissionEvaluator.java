@@ -1,4 +1,4 @@
-package com.spring.auth.authorization.infrastructure;
+package com.spring.auth.components;
 
 import com.spring.auth.scope.domain.Scope;
 import lombok.extern.slf4j.Slf4j;

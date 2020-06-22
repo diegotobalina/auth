@@ -1,4 +1,4 @@
-package com.spring.auth.google.application.ports.out;
+package com.spring.auth.google.application.ports.in;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.spring.auth.exceptions.application.DuplicatedKeyException;
