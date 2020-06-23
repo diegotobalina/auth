@@ -49,7 +49,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
     // exception handler during the authentication process
-    http.exceptionHandling()
+    http.csrf()
+        .disable()
+        .exceptionHandling()
         .authenticationEntryPoint(
             (req, rsp, e) -> exceptionDuringAuthorizationProcess(req, rsp, e));
 
