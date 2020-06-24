@@ -10,8 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@SpringBootTest
-@ExtendWith(SpringExtension.class)
 class CorsUtilTest {
 
   @Test

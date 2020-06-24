@@ -2,12 +2,10 @@ package com.spring.auth.user.infrastructure.dto.output;
 
 import com.spring.auth.user.domain.User;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Getter
 @ToString
-@NoArgsConstructor
 public class RegisterOutputDto {
 
   private String userId; // user id of the new user

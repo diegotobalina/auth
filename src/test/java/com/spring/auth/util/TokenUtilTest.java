@@ -9,9 +9,6 @@ import com.spring.auth.user.domain.User;
 import lombok.SneakyThrows;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Arrays;
 import java.util.List;
@@ -19,8 +16,6 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-@SpringBootTest
-@ExtendWith(SpringExtension.class)
 class TokenUtilTest {
 
   RandomObjectFiller randomObjectFiller = new RandomObjectFiller();

@@ -17,8 +17,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest
-@ExtendWith(SpringExtension.class)
 class UpdateUserRepositoryTest {
 
   @InjectMocks UpdateUserRepository updateUserRepository;

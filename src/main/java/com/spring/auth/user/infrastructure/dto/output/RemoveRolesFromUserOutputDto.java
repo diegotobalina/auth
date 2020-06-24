@@ -4,14 +4,12 @@ import com.spring.auth.role.domain.Role;
 import com.spring.auth.scope.domain.Scope;
 import com.spring.auth.user.domain.User;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Getter
-@Setter
 @ToString
 public class RemoveRolesFromUserOutputDto {
 

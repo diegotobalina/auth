@@ -22,8 +22,6 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest
-@ExtendWith(SpringExtension.class)
 public class FindUserByIdTest {
 
   @InjectMocks FindUserByIdRepository findUserByIdRepository;

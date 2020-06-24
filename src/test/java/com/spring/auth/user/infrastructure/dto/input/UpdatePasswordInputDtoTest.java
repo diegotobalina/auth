@@ -9,8 +9,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@SpringBootTest
-@ExtendWith(SpringExtension.class)
 class UpdatePasswordInputDtoTest {
   RandomObjectFiller randomObjectFiller = new RandomObjectFiller();
 
