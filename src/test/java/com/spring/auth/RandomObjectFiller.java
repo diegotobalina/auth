@@ -2,10 +2,7 @@ package com.spring.auth;
 
 import java.lang.reflect.Field;
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 
 public class RandomObjectFiller {
 
@@ -43,6 +40,8 @@ public class RandomObjectFiller {
       return BigInteger.valueOf(random.nextInt());
     } else if (type.equals(List.class)) {
       return new ArrayList<>();
+    } else if (type.equals(Date.class)) {
+      return new Date();
     }
     return createAndFill(type);
   }

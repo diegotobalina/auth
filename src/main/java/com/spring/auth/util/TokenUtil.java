@@ -140,12 +140,5 @@ public abstract class TokenUtil {
     private String userId;
     private List<String> roles;
     private List<String> scopes;
-
-    public JwtWrapper(String token, Date issuedAt, Date expiration, String userId) {
-      this.token = token;
-      IssuedAt = issuedAt;
-      this.expiration = expiration;
-      this.userId = userId;
-    }
   }
 }

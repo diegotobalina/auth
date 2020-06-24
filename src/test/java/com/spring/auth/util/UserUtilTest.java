@@ -1,6 +1,5 @@
 package com.spring.auth.util;
 
-import com.spring.auth.ObjectFiller;
 import com.spring.auth.RandomObjectFiller;
 import com.spring.auth.user.domain.User;
 import lombok.SneakyThrows;
@@ -19,7 +18,6 @@ import static org.junit.Assert.assertTrue;
 class UserUtilTest {
 
   RandomObjectFiller randomObjectFiller = new RandomObjectFiller();
-  ObjectFiller objectFiller = new ObjectFiller();
 
   @Test
   @SneakyThrows
@@ -37,8 +35,9 @@ class UserUtilTest {
     User principal = randomObjectFiller.createAndFill(User.class);
     UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
         new UsernamePasswordAuthenticationToken(principal, null);
-    User userFromPrincipal = UserUtil.getUserFromPrincipal(usernamePasswordAuthenticationToken);
-    assertEquals(principal.getId(), userFromPrincipal.getId());
+    String userIdFromPrincipal =
+        UserUtil.getUserIdFromPrincipal(usernamePasswordAuthenticationToken);
+    assertEquals(principal.getId(), userIdFromPrincipal);
   }
 
   @Test
@@ -48,8 +47,8 @@ class UserUtilTest {
     String generatedUsername1 = UserUtil.generateUsername(email);
     Thread.sleep(1);
     String generatedUsername2 = UserUtil.generateUsername(email);
-    Assert.assertTrue(generatedUsername1.startsWith("testing"));
-    Assert.assertTrue(generatedUsername2.startsWith("testing"));
+    assertTrue(generatedUsername1.startsWith("testing"));
+    assertTrue(generatedUsername2.startsWith("testing"));
     assertTrue((!generatedUsername1.contains("@")));
     assertTrue((!generatedUsername2.contains("@")));
     assertTrue(!(generatedUsername1.equals(generatedUsername2)));
