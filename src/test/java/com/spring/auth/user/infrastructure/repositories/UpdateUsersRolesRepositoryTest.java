@@ -58,18 +58,19 @@ class UpdateUsersRolesRepositoryTest {
     user3.addRoles(Arrays.asList(role3, role4));
     List<User> users = Arrays.asList(user1, user2, user3);
 
-    Role roleForUpdate1 = SerializationUtils.clone(role1);
-    objectFiller.replace(roleForUpdate1, "name", "updated_role_name1");
-    Role roleForUpdate2 = SerializationUtils.clone(role2);
-    objectFiller.replace(roleForUpdate2, "name", "updated_role_name2");
-    List<Role> rolesForUpdate = Arrays.asList(roleForUpdate1, roleForUpdate2);
+    Role updatedRole1 = SerializationUtils.clone(role1);
+    objectFiller.replace(updatedRole1, "name", "updated_role_name1");
+    Role updatedRole2 = SerializationUtils.clone(role2);
+    objectFiller.replace(updatedRole2, "name", "updated_role_name2");
+    List<Role> rolesForUpdate = Arrays.asList(updatedRole1, updatedRole2);
 
     when(updateUsersPort.updateAll(Mockito.anyList())).then(AdditionalAnswers.returnsFirstArg());
 
     User updatedUser1 = SerializationUtils.clone(user1);
-    objectFiller.replace(updatedUser1, "roles", Arrays.asList(role2, role3, role4, roleForUpdate1));
+    objectFiller.replace(
+        updatedUser1, "roles", Arrays.asList(updatedRole1, updatedRole2, role3, role4));
     User updatedUser2 = SerializationUtils.clone(user2);
-    objectFiller.replace(updatedUser2, "roles", Arrays.asList(role3, role4, roleForUpdate2));
+    objectFiller.replace(updatedUser2, "roles", Arrays.asList(updatedRole2, role3, role4));
 
     List<User> expectedResponse = Arrays.asList(updatedUser1, updatedUser2, user3);
     List<User> response = updateUsersRolesRepository.update(users, rolesForUpdate);

@@ -94,7 +94,7 @@ class TokenUtilTest {
     objectFiller.replace(user, "roles", roles);
     objectFiller.replace(user, "scopes", scopes);
     String secretKey = "placeHolderSecretKey";
-    TokenUtil.JwtWrapper jwtWrapper = TokenUtil.generateJwt(user, secretKey);
+    TokenUtil.JwtWrapper jwtWrapper = TokenUtil.generateBearerJwt(user, secretKey);
 
     Assert.assertNotNull(jwtWrapper);
     Assert.assertEquals(user.getId(), jwtWrapper.getUserId());
@@ -119,7 +119,7 @@ class TokenUtilTest {
     objectFiller.replace(user, "roles", roles);
     objectFiller.replace(user, "scopes", scopes);
     String secretKey = "placeHolderSecretKey";
-    TokenUtil.JwtWrapper jwtWrapper = TokenUtil.generateJwt(user, secretKey);
+    TokenUtil.JwtWrapper jwtWrapper = TokenUtil.generateBearerJwt(user, secretKey);
     TokenUtil.JwtWrapper values = TokenUtil.getValues(jwtWrapper.getToken(), secretKey);
 
     assertEquals(jwtWrapper.getUserId(), values.getUserId());

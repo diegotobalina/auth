@@ -12,7 +12,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Matcher;
@@ -115,10 +114,13 @@ public class User implements Serializable {
     return coder.encode(p);
   }
 
-  public void updateRole(Role role) {
-    if (!containsRole(role, this.roles)) return;
-    removeRoles(Collections.singletonList(role.getId())); // to prevent duplicated
-    addRoles(Collections.singletonList(role));
+  public void updateRole(Role newRole) {
+    if (!containsRole(newRole, this.roles)) return;
+    for (Role role : roles) {
+      if (role.getId().equals(newRole.getId())) {
+        this.roles.set(roles.indexOf(role), newRole);
+      }
+    }
   }
 
   public void addRoles(List<Role> roles) {
