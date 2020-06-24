@@ -3,8 +3,10 @@ package com.spring.auth.role.domain;
 import com.spring.auth.scope.domain.Scope;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -12,7 +14,8 @@ import java.util.Optional;
 @Getter
 @ToString
 @AllArgsConstructor
-public class Role {
+@NoArgsConstructor
+public class Role implements Serializable {
 
   private String id;
   private String name;

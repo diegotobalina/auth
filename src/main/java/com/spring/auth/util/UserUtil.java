@@ -22,7 +22,8 @@ public abstract class UserUtil {
   public static String generateUsername(String email) {
     if (StringUtils.isBlank(email)) return null;
     if (!RegexUtil.isEmail(email)) return null;
-    return email.split("@")[0] + UUID.randomUUID().toString().substring(0, 4);
+    String randomSuffix = String.valueOf(System.currentTimeMillis());
+    return email.split("@")[0] + randomSuffix.substring(randomSuffix.length() - 4);
   }
 
   public static String generateRandomPassword() {

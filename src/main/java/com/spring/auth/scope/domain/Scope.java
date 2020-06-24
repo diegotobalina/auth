@@ -5,11 +5,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.io.Serializable;
+
 @Getter
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class Scope {
+public class Scope implements Serializable {
 
   private String id;
   private String name;

@@ -1,8 +1,11 @@
 package com.spring.auth.user.infrastructure.repositories;
 
+import com.spring.auth.RandomObjectFiller;
 import com.spring.auth.user.domain.User;
 import com.spring.auth.user.domain.UserJpa;
+import com.spring.auth.user.domain.UserMapper;
 import com.spring.auth.user.infrastructure.repositories.jpa.UserRepositoryJpa;
+import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,9 +15,9 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -26,6 +29,7 @@ public class FindAllUsersRepositoryTest {
 
   @InjectMocks FindAllUsersRepository findAllUsersRepository;
   @Mock UserRepositoryJpa userRepositoryJpa;
+  RandomObjectFiller randomObjectFiller = new RandomObjectFiller();
 
   @BeforeEach
   public void setUp() {
@@ -39,19 +43,16 @@ public class FindAllUsersRepositoryTest {
   }
 
   @Test
+  @SneakyThrows
   public void findAll() {
-
-    // users that will be returned from the database
-    UserJpa userJpa = new UserJpa("1", "", "", "", new ArrayList<>(), new ArrayList<>(), 0);
-    List<UserJpa> userJpaList = Arrays.asList(userJpa, userJpa);
-
-    // mock the database call
+    UserJpa userJpa1 = randomObjectFiller.createAndFill(UserJpa.class);
+    UserJpa userJpa2 = randomObjectFiller.createAndFill(UserJpa.class);
+    List<UserJpa> userJpaList = Arrays.asList(userJpa1, userJpa2);
     when(userRepositoryJpa.findAll()).thenReturn(userJpaList);
 
-    // call the method
-    List<User> users = findAllUsersRepository.findAll();
-
-    // check if are the same users count
-    assertEquals(userJpaList.size(), users.size());
+    List<User> expectedResponse =
+        userJpaList.stream().map(UserMapper::parse).collect(Collectors.toList());
+    List<User> response = findAllUsersRepository.findAll();
+    assertEquals(expectedResponse.toString(), response.toString());
   }
 }

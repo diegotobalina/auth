@@ -4,11 +4,13 @@ import com.spring.auth.role.domain.Role;
 import com.spring.auth.scope.domain.Scope;
 import com.spring.auth.session.domain.Session;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -18,7 +20,8 @@ import java.util.regex.Pattern;
 
 @Getter
 @ToString
-public class User {
+@NoArgsConstructor
+public class User implements Serializable {
 
   private String id;
   private String username = "";
@@ -39,7 +42,7 @@ public class User {
       final List<Scope> scopes) {
     this.username = username;
     this.email = email;
-    this.setPassword(password);
+    this.password = password;
     this.roles = roles;
     this.scopes = scopes;
   }
@@ -55,7 +58,7 @@ public class User {
     this.id = id;
     this.username = username;
     this.email = email;
-    this.setPassword(password);
+    this.password = password;
     this.roles = roles;
     this.scopes = scopes;
     this.maxSessions = maxSessions;

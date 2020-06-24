@@ -1,9 +1,12 @@
 package com.spring.auth.user.infrastructure.repositories;
 
-import com.spring.auth.exceptions.application.DuplicatedKeyException;
+import com.spring.auth.ObjectFiller;
+import com.spring.auth.RandomObjectFiller;
 import com.spring.auth.role.domain.Role;
 import com.spring.auth.user.application.ports.out.UpdateUsersPort;
 import com.spring.auth.user.domain.User;
+import lombok.SneakyThrows;
+import org.apache.commons.lang3.SerializationUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -11,7 +14,7 @@ import org.mockito.*;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -24,6 +27,8 @@ class UpdateUsersRoleRepositoryTest {
 
   @InjectMocks UpdateUsersRoleRepository updateUsersRoleRepository;
   @Mock UpdateUsersPort updateUsersPort;
+  RandomObjectFiller randomObjectFiller = new RandomObjectFiller();
+  ObjectFiller objectFiller = new ObjectFiller();
 
   @BeforeEach
   public void setUp() {
@@ -37,43 +42,29 @@ class UpdateUsersRoleRepositoryTest {
   }
 
   @Test
-  public void update() throws DuplicatedKeyException {
+  @SneakyThrows
+  public void update() {
 
-    // roles for the user 1
-    Role role1 = new Role("1", "", "", "", new ArrayList<>());
-    Role role2 = new Role("2", "", "", "", new ArrayList<>());
-    Role role3 = new Role("3", "", "", "", new ArrayList<>());
-    Role role4 = new Role("4", "", "", "", new ArrayList<>());
-    List<Role> roles = new ArrayList<>();
-    roles.add(role1);
-    roles.add(role2);
-    roles.add(role3);
-    roles.add(role4);
+    Role role1 = randomObjectFiller.createAndFill(Role.class);
+    Role role2 = randomObjectFiller.createAndFill(Role.class);
+    Role role3 = randomObjectFiller.createAndFill(Role.class);
+    Role role4 = randomObjectFiller.createAndFill(Role.class);
 
-    // users
-    User user1 = new User("1", "", "", "", roles, new ArrayList<>(), 10);
-    User user2 = new User("2", "", "", "", new ArrayList<>(), new ArrayList<>(), 10);
-    List<User> users = new ArrayList<>();
-    users.add(user1);
-    users.add(user2);
+    User user1 = randomObjectFiller.createAndFill(User.class);
+    user1.addRoles(Arrays.asList(role1, role2, role3, role4));
+    User user2 = randomObjectFiller.createAndFill(User.class);
+    user2.addRoles(Arrays.asList(role2, role3, role4));
+    List<User> users = Arrays.asList(user1, user2);
 
-    // update 1 of the roles in the user 1
-    Role updatedRole1 = new Role("2", "name", "", "", new ArrayList<>());
+    Role roleForUpdate = SerializationUtils.clone(role1);
+    objectFiller.replace(roleForUpdate, "name", "updated_role_name");
 
-    // mock database call
     when(updateUsersPort.updateAll(Mockito.anyList())).then(AdditionalAnswers.returnsFirstArg());
 
-    // execute the method
-    List<User> response = updateUsersRoleRepository.update(users, updatedRole1);
-    User responseUser1 = response.get(0);
-    User responseUser2 = response.get(1);
-
-    // check if only the role in the user 1 has been updated
-    assertEquals("", responseUser1.getRoleById("1").getName());
-    assertEquals("name", responseUser1.getRoleById("2").getName());
-    assertEquals("", responseUser1.getRoleById("3").getName());
-    assertEquals("", responseUser1.getRoleById("4").getName());
-    assertEquals(0, responseUser2.getRoles().size());
-    assertEquals(0, responseUser2.getRoles().size());
+    User updatedUser1 = SerializationUtils.clone(user1);
+    objectFiller.replace(updatedUser1, "roles", Arrays.asList(role2, role3, role4, roleForUpdate));
+    List<User> expectedResponse = Arrays.asList(updatedUser1, user2);
+    List<User> response = updateUsersRoleRepository.update(users, roleForUpdate);
+    assertEquals(expectedResponse.toString(), response.toString());
   }
 }

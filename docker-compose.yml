@@ -33,7 +33,6 @@ services:
       GOOGLE_CLIENT_ID: "google_client_id"
       MONGODB_URI: "mongodb://mongo:password@mongo:27017/?retryWrites=true&w=majority"
       SECRET_KEY: "jwt_secret_key_placeholder"
-      API_KEYS: "api_key_placeholder1,api_key_placeholder2,api_key_placeholder3"
       PROFILE: "dev"
     restart: always
 networks:

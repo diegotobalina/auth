@@ -42,7 +42,7 @@ public class AccessUseCase implements AccessPort {
     // if is not valid should be removed
     checkValidSession(session);
     // when a session is used should get new expiration time
-    refreshSessionPort.refresh(session);
+    refreshSessionPort.refresh(session); // todo: move to event
     // need the user data for the jwt generation
     User user = findUserByIdPort.find(session.getUserId());
     // jwt generation
