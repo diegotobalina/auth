@@ -1,26 +1,31 @@
 package com.spring.auth.util;
 
+import com.spring.auth.Instancer;
 import com.spring.auth.RandomObjectFiller;
 import com.spring.auth.user.domain.User;
 import lombok.SneakyThrows;
+import org.apache.commons.lang3.SerializationUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+
+import java.security.Principal;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 class UserUtilTest {
 
+  Instancer instancer = new Instancer();
   RandomObjectFiller randomObjectFiller = new RandomObjectFiller();
 
   @Test
   @SneakyThrows
   public void getUserFromPrincipal() {
-    User principal = randomObjectFiller.createAndFill(User.class);
-    UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
-        new UsernamePasswordAuthenticationToken(principal, null);
-    User userFromPrincipal = UserUtil.getUserFromPrincipal(usernamePasswordAuthenticationToken);
-    assertEquals(principal.toString(), userFromPrincipal.toString());
+    User user = instancer.user();
+    Principal principal = instancer.principal(user);
+    User expectedResponse = SerializationUtils.clone(user);
+    User response = UserUtil.getUserFromPrincipal(principal);
+    assertEquals(expectedResponse.toString(), response.toString());
   }
 
   @Test

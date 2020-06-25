@@ -1,8 +1,8 @@
 package com.spring.auth.user.infrastructure.repositories;
 
+import com.spring.auth.exceptions.application.DuplicatedKeyException;
 import com.spring.auth.ObjectFiller;
 import com.spring.auth.RandomObjectFiller;
-import com.spring.auth.exceptions.application.DuplicatedKeyException;
 import com.spring.auth.user.domain.User;
 import com.spring.auth.user.infrastructure.repositories.jpa.UserRepositoryJpa;
 import lombok.SneakyThrows;

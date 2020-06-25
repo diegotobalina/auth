@@ -1,8 +1,8 @@
 package com.spring.auth.user.infrastructure.repositories;
 
+import com.spring.auth.exceptions.application.NotFoundException;
 import com.spring.auth.ObjectFiller;
 import com.spring.auth.RandomObjectFiller;
-import com.spring.auth.exceptions.application.NotFoundException;
 import com.spring.auth.user.domain.User;
 import com.spring.auth.user.domain.UserJpa;
 import com.spring.auth.user.domain.UserMapper;
@@ -10,13 +10,10 @@ import com.spring.auth.user.infrastructure.repositories.jpa.UserRepositoryJpa;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Optional;
 

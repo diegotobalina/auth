@@ -1,8 +1,8 @@
 package com.spring.auth.user.infrastructure.repositories;
 
+import com.spring.auth.role.domain.Role;
 import com.spring.auth.ObjectFiller;
 import com.spring.auth.RandomObjectFiller;
-import com.spring.auth.role.domain.Role;
 import com.spring.auth.user.application.ports.out.UpdateUsersPort;
 import com.spring.auth.user.domain.User;
 import lombok.SneakyThrows;

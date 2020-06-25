@@ -1,18 +1,15 @@
 package com.spring.auth.user.infrastructure.repositories;
 
+import com.spring.auth.exceptions.application.DuplicatedKeyException;
 import com.spring.auth.ObjectFiller;
 import com.spring.auth.RandomObjectFiller;
-import com.spring.auth.exceptions.application.DuplicatedKeyException;
 import com.spring.auth.user.domain.User;
 import com.spring.auth.user.infrastructure.repositories.jpa.UserRepositoryJpa;
 import lombok.SneakyThrows;
 import org.apache.commons.lang3.SerializationUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;

@@ -1,10 +1,10 @@
 package com.spring.auth.util;
 
-import com.spring.auth.ObjectFiller;
-import com.spring.auth.RandomObjectFiller;
 import com.spring.auth.exceptions.application.InvalidTokenException;
 import com.spring.auth.role.domain.Role;
 import com.spring.auth.scope.domain.Scope;
+import com.spring.auth.ObjectFiller;
+import com.spring.auth.RandomObjectFiller;
 import com.spring.auth.user.domain.User;
 import lombok.SneakyThrows;
 import org.junit.Assert;
