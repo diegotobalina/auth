@@ -4,7 +4,6 @@ import com.spring.auth.Instancer;
 import com.spring.auth.user.domain.User;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 import java.security.Principal;
 
@@ -17,10 +16,10 @@ class UserUtilTest {
 
   @Test
   public void getUserFromPrincipal() {
-    Principal principal = instancer.principal(Mockito.any(User.class));
-    User expectedResponse = Mockito.any(User.class);
+    Principal principal = instancer.principal(instancer.user());
+    User expectedResponse = instancer.user();
     User response = UserUtil.getUserFromPrincipal(principal);
-    assertEquals(expectedResponse, response);
+    assertEquals(expectedResponse.toString(), response.toString());
   }
 
   @Test
