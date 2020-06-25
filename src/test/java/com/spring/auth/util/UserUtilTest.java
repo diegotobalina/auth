@@ -11,6 +11,7 @@ import java.security.Principal;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+/** @author diegotobalina created on 24/06/2020 */
 class UserUtilTest {
   Instancer instancer = new Instancer();
 

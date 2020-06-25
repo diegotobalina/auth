@@ -17,6 +17,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+/** @author diegotobalina created on 24/06/2020 */
 class TokenUtilTest {
 
   RandomObjectFiller randomObjectFiller = new RandomObjectFiller();
