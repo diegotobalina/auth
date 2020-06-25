@@ -5,6 +5,7 @@ import com.spring.auth.user.domain.User;
 
 import java.security.Principal;
 
+/** @author diegotobalina created on 24/06/2020 */
 public interface UserInfoPort {
   User userInfo(Principal principal) throws NotFoundException;
 }

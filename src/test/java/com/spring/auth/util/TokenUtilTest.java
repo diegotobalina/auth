@@ -1,10 +1,11 @@
 package com.spring.auth.util;
 
+import com.spring.auth.Instancer;
+import com.spring.auth.ObjectFiller;
+import com.spring.auth.RandomObjectFiller;
 import com.spring.auth.exceptions.application.InvalidTokenException;
 import com.spring.auth.role.domain.Role;
 import com.spring.auth.scope.domain.Scope;
-import com.spring.auth.ObjectFiller;
-import com.spring.auth.RandomObjectFiller;
 import com.spring.auth.user.domain.User;
 import lombok.SneakyThrows;
 import org.junit.Assert;
@@ -20,6 +21,7 @@ class TokenUtilTest {
 
   RandomObjectFiller randomObjectFiller = new RandomObjectFiller();
   ObjectFiller objectFiller = new ObjectFiller();
+  Instancer instancer = new Instancer();
 
   @Test
   public void addBearerPrefix() {
@@ -80,51 +82,42 @@ class TokenUtilTest {
   @Test
   @SneakyThrows
   public void generateJwt() {
-    Role role1 = randomObjectFiller.createAndFill(Role.class);
-    Role role2 = randomObjectFiller.createAndFill(Role.class);
-    List<Role> roles = Arrays.asList(role1, role2);
-    Scope scope1 = randomObjectFiller.createAndFill(Scope.class);
-    List<Scope> scopes = Arrays.asList(scope1);
-    User user = randomObjectFiller.createAndFill(User.class);
-    objectFiller.replace(user, "roles", roles);
-    objectFiller.replace(user, "scopes", scopes);
-    String secretKey = "placeHolderSecretKey";
-    TokenUtil.JwtWrapper jwtWrapper = TokenUtil.generateBearerJwt(user, secretKey);
+    String secretKey = "secret_key";
+    TokenUtil.JwtWrapper jwtWrapper = jwtWrapper(secretKey);
 
     Assert.assertNotNull(jwtWrapper);
-    Assert.assertEquals(user.getId(), jwtWrapper.getUserId());
-    Assert.assertEquals(
-        jwtWrapper.getIssuedAt().getTime() + (1000 * 60 * 5), jwtWrapper.getExpiration().getTime());
-    Assert.assertEquals(
-        String.format("[%s, %s]", role1.getValue(), role2.getValue()),
-        jwtWrapper.getRoles().toString());
-    Assert.assertEquals(
-        String.format("[%s]", scope1.getValue()), jwtWrapper.getScopes().toString());
+    Assert.assertEquals("id", jwtWrapper.getUserId());
+
+    long issuedAtTime = jwtWrapper.getIssuedAt().getTime();
+    long expectedExpirationTime = issuedAtTime + (1000 * 60 * 5);
+    Assert.assertEquals(expectedExpirationTime, jwtWrapper.getExpiration().getTime());
+    Assert.assertEquals("[value, value]", jwtWrapper.getRoles().toString());
+    Assert.assertEquals("[value, value]", jwtWrapper.getScopes().toString());
   }
 
   @Test
   @SneakyThrows
-  public void getValues() throws InvalidTokenException {
-    Role role1 = randomObjectFiller.createAndFill(Role.class);
-    Role role2 = randomObjectFiller.createAndFill(Role.class);
-    List<Role> roles = Arrays.asList(role1, role2);
-    Scope scope1 = randomObjectFiller.createAndFill(Scope.class);
-    List<Scope> scopes = Arrays.asList(scope1);
-    User user = randomObjectFiller.createAndFill(User.class);
-    objectFiller.replace(user, "roles", roles);
-    objectFiller.replace(user, "scopes", scopes);
-    String secretKey = "placeHolderSecretKey";
-    TokenUtil.JwtWrapper jwtWrapper = TokenUtil.generateBearerJwt(user, secretKey);
+  public void getValues() {
+    String secretKey = "secret_key";
+    TokenUtil.JwtWrapper jwtWrapper = jwtWrapper(secretKey);
     TokenUtil.JwtWrapper values = TokenUtil.getValues(jwtWrapper.getToken(), secretKey);
 
-    assertEquals(jwtWrapper.getUserId(), values.getUserId());
+    assertEquals("id", values.getUserId());
     assertEquals(jwtWrapper.getToken(), values.getToken());
     assertEquals(jwtWrapper.getIssuedAt().toString(), values.getIssuedAt().toString());
     assertEquals(jwtWrapper.getExpiration().toString(), values.getExpiration().toString());
-    Assert.assertEquals(
-        String.format("[%s, %s]", role1.getValue(), role2.getValue()),
-        values.getRoles().toString());
-    Assert.assertEquals(String.format("[%s]", scope1.getValue()), values.getScopes().toString());
+    Assert.assertEquals("[value, value]", values.getRoles().toString());
+    Assert.assertEquals("[value, value]", values.getScopes().toString());
+  }
+
+  @SneakyThrows
+  private TokenUtil.JwtWrapper jwtWrapper(String secretKey) {
+    List<Role> roles = Arrays.asList(instancer.role(), instancer.role());
+    List<Scope> scopes = Arrays.asList(instancer.scope(), instancer.scope());
+    User user = instancer.user();
+    objectFiller.replace(user, "roles", roles);
+    objectFiller.replace(user, "scopes", scopes);
+    return TokenUtil.generateBearerJwt(user, secretKey);
   }
 
   @Test

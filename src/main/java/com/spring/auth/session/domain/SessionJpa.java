@@ -7,11 +7,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
 
-/**
- * Token entity
- *
- * @author diegotobalina
- */
+
+/** @author diegotobalina created on 24/06/2020 */
 @NoArgsConstructor
 @Getter
 @Setter

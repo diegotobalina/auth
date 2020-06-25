@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
-/** Database operations for the UserJpa */
+/** @author diegotobalina created on 24/06/2020 Database operations for the UserJpa */
 @Repository
 public interface UserRepositoryJpa extends MongoRepository<UserJpa, String> {
 

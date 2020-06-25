@@ -8,11 +8,7 @@ import lombok.ToString;
 import java.util.Date;
 import java.util.UUID;
 
-/**
- * Token entity
- *
- * @author diegotobalina
- */
+/** @author diegotobalina created on 24/06/2020 */
 @NoArgsConstructor
 @Getter
 @ToString

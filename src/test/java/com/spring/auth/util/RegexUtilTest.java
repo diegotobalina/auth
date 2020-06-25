@@ -1,12 +1,9 @@
 package com.spring.auth.util;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
+/** @author diegotobalina created on 24/06/2020 */
 class RegexUtilTest {
 
   @Test
@@ -41,14 +38,14 @@ class RegexUtilTest {
 
   @Test
   public void isEmail() {
-    String email = "diego@gmail.com";
+    String email = "user@email.com";
     boolean response = RegexUtil.isEmail(email);
     assertEquals(true, response);
   }
 
   @Test
   public void isNotEmail() {
-    String email = "@gmail.com";
+    String email = "@email.com";
     boolean response = RegexUtil.isEmail(email);
     assertEquals(false, response);
   }

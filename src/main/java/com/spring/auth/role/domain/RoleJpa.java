@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
+/** @author diegotobalina created on 24/06/2020 */
 @Getter
 @ToString
 @AllArgsConstructor

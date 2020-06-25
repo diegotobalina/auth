@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
+/** @author diegotobalina created on 24/06/2020 */
 @Repository
 public interface RoleRepositoryJpa extends MongoRepository<RoleJpa, String> {
   Optional<RoleJpa> findByValue(String value);

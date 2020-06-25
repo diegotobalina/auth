@@ -11,13 +11,11 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.*;
 import java.util.stream.Collectors;
-
-@Slf4j
+/** @author diegotobalina created on 24/06/2020 */
 public abstract class TokenUtil {
 
   private static String PREFIX = "Bearer ";

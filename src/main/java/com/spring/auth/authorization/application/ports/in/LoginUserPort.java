@@ -5,6 +5,7 @@ import com.spring.auth.exceptions.application.NotFoundException;
 import com.spring.auth.exceptions.application.WrongPasswordException;
 import com.spring.auth.session.domain.Session;
 
+/** @author diegotobalina created on 24/06/2020 */
 public interface LoginUserPort {
   Session login(String username, String email, String password)
       throws NotFoundException, WrongPasswordException, DuplicatedKeyException;

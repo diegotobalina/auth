@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/** @author diegotobalina created on 24/06/2020 */
 @ControllerAdvice
 public class DefaultExceptionHandler {
 

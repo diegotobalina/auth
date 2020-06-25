@@ -19,6 +19,7 @@ import javax.validation.constraints.NotEmpty;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
+/** @author diegotobalina created on 24/06/2020 */
 @Slf4j
 @Validated
 @AllArgsConstructor

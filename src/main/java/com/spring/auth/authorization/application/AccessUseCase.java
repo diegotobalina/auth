@@ -13,6 +13,7 @@ import com.spring.auth.user.domain.User;
 import com.spring.auth.util.TokenUtil;
 import org.springframework.beans.factory.annotation.Value;
 
+/** @author diegotobalina created on 24/06/2020 */
 @UseCase
 public class AccessUseCase implements AccessPort {
 

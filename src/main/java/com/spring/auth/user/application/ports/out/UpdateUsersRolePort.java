@@ -6,6 +6,7 @@ import com.spring.auth.user.domain.User;
 
 import java.util.List;
 
+/** @author diegotobalina created on 24/06/2020 */
 /** Update all the roles in the user if the user have the role */
 public interface UpdateUsersRolePort {
   List<User> update(List<User> users, Role role) throws DuplicatedKeyException;

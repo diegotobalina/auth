@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 import java.math.BigInteger;
 import java.util.*;
 
+/** @author diegotobalina created on 24/06/2020 */
 public class RandomObjectFiller {
 
   private Random random = new Random();

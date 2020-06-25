@@ -21,6 +21,7 @@ import java.security.GeneralSecurityException;
 import java.util.Date;
 import java.util.List;
 
+/** @author diegotobalina created on 24/06/2020 */
 @UseCase
 public class TokenInfoUseCase implements TokenInfoPort {
 

@@ -22,6 +22,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
+/** @author diegotobalina created on 24/06/2020 */
 @RoleController
 @AllArgsConstructor
 @Validated

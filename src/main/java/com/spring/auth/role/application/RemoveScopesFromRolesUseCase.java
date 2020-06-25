@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 
 import java.util.List;
 
+/** @author diegotobalina created on 24/06/2020 */
 @UseCase
 @AllArgsConstructor
 public class RemoveScopesFromRolesUseCase implements RemoveScopesFromRolesPort {

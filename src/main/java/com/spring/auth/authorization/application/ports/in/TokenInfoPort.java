@@ -9,6 +9,7 @@ import com.spring.auth.exceptions.application.UnknownTokenFormatException;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
+/** @author diegotobalina created on 24/06/2020 */
 public interface TokenInfoPort {
   TokenInfo tokenInfo(String token)
           throws NotFoundException, UnknownTokenFormatException, InvalidTokenException,

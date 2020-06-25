@@ -9,6 +9,7 @@ import lombok.ToString;
 
 import javax.validation.constraints.Email;
 
+/** @author diegotobalina created on 24/06/2020 */
 @Getter
 @Setter
 @ToString

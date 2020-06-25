@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
-
+/** @author diegotobalina created on 24/06/2020 */
 class RequestUtilTest {
 
   @Test

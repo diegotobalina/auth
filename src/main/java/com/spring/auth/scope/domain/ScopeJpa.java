@@ -1,5 +1,6 @@
 package com.spring.auth.scope.domain;
 
+/** @author diegotobalina created on 24/06/2020 */
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

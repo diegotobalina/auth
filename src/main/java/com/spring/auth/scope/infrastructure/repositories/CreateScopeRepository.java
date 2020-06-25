@@ -9,6 +9,7 @@ import com.spring.auth.scope.infrastructure.repositories.jpa.ScopeRepositoryJpa;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+/** @author diegotobalina created on 24/06/2020 */
 @Repository
 @AllArgsConstructor
 public class CreateScopeRepository implements CreateScopePort {

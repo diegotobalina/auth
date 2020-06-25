@@ -2,10 +2,7 @@ package com.spring.auth;
 
 import com.spring.auth.role.domain.Role;
 import com.spring.auth.scope.domain.Scope;
-import com.spring.auth.session.domain.Session;
 import com.spring.auth.user.domain.User;
-import com.spring.auth.user.infrastructure.dto.input.UpdatePasswordAdminInputDto;
-import com.spring.auth.user.infrastructure.dto.input.UpdatePasswordInputDto;
 import lombok.SneakyThrows;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -13,7 +10,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 /** @author diegotobalina created on 24/06/2020 */
@@ -57,27 +53,8 @@ public class Instancer {
   }
 
   @SneakyThrows
-  public Session session() {
-    Session session = new Session();
-    objectFiller.replace(session, "id", "id");
-    objectFiller.replace(session, "token", "token");
-    objectFiller.replace(session, "issuedAt", new Date());
-    objectFiller.replace(session, "expiration", new Date());
-    objectFiller.replace(session, "userId", "userId");
-    return session;
-  }
-
-  @SneakyThrows
   public SimpleGrantedAuthority simpleGrantedAuthority() {
     return new SimpleGrantedAuthority("credential");
-  }
-
-  @SneakyThrows
-  public UpdatePasswordInputDto updatePasswordInputDto() {
-    UpdatePasswordInputDto updatePasswordInputDto = new UpdatePasswordInputDto();
-    objectFiller.replace(updatePasswordInputDto, "oldPassword", "oldPassword");
-    objectFiller.replace(updatePasswordInputDto, "newPassword", "newPassword");
-    return updatePasswordInputDto;
   }
 
   @SneakyThrows
@@ -85,12 +62,5 @@ public class Instancer {
     SimpleGrantedAuthority credential = simpleGrantedAuthority();
     List<SimpleGrantedAuthority> credentials = Arrays.asList(credential, credential);
     return new UsernamePasswordAuthenticationToken(user, credentials);
-  }
-
-  @SneakyThrows
-  public UpdatePasswordAdminInputDto updatePasswordAdminInputDto() {
-    UpdatePasswordAdminInputDto updatePasswordAdminInputDto = new UpdatePasswordAdminInputDto();
-    objectFiller.replace(updatePasswordAdminInputDto, "newPassword", "newPassword");
-    return updatePasswordAdminInputDto;
   }
 }

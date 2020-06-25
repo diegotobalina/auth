@@ -9,11 +9,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Evaluate scope permissions
- *
- * @author diegotobalina
- */
+/** @author diegotobalina created on 24/06/2020 */
 @Component
 public class CustomPermissionEvaluator implements PermissionEvaluator {
 

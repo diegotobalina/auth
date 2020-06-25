@@ -6,6 +6,7 @@ import com.spring.auth.util.RegexUtil;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
+/** @author diegotobalina created on 24/06/2020 */
 public class TokenValidator implements ConstraintValidator<TokenConstraint, String> {
 
   @Override

@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/** @author diegotobalina created on 24/06/2020 */
 @Repository
 @AllArgsConstructor
 public class FindAllExpiredRepository implements FindAllExpiredSessionsPort {

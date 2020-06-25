@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/** @author diegotobalina created on 24/06/2020 */
 @Slf4j
 public class BearerAuthenticationFilter extends OncePerRequestFilter {
 

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
+/** @author diegotobalina created on 24/06/2020 */
 @Repository
 @AllArgsConstructor
 public class FindSessionByTokenRepository implements FindSessionByTokenPort {

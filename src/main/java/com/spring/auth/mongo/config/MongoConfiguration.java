@@ -19,6 +19,7 @@ import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
 import org.springframework.data.mongodb.core.mapping.MongoPersistentEntity;
 import org.springframework.data.mongodb.core.mapping.MongoPersistentProperty;
 
+/** @author diegotobalina created on 24/06/2020 */
 @Configuration
 @RequiredArgsConstructor
 public class MongoConfiguration {

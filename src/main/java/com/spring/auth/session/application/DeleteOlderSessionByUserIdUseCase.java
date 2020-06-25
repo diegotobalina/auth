@@ -9,6 +9,7 @@ import com.spring.auth.session.domain.Session;
 import lombok.AllArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
+/** @author diegotobalina created on 24/06/2020 */
 @UseCase
 @AllArgsConstructor
 public class DeleteOlderSessionByUserIdUseCase implements DeleteOlderSessionByUserIdPort {

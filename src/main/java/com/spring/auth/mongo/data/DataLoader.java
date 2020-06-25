@@ -20,6 +20,7 @@ import org.springframework.stereotype.Component;
 import java.util.Arrays;
 import java.util.List;
 
+/** @author diegotobalina created on 24/06/2020 */
 @Slf4j
 @Component
 @AllArgsConstructor

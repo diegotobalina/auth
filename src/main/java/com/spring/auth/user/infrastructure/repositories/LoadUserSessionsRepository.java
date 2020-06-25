@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/** @author diegotobalina created on 24/06/2020 */
 @Repository
 @AllArgsConstructor
 public class LoadUserSessionsRepository implements LoadUserSessionsPort {

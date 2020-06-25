@@ -15,6 +15,7 @@ import com.spring.auth.user.domain.User;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+/** @author diegotobalina created on 24/06/2020 */
 @Slf4j
 @UseCase
 @AllArgsConstructor

@@ -5,6 +5,7 @@ import com.spring.auth.session.infrastructure.repositories.jpa.SessionRepository
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+/** @author diegotobalina created on 24/06/2020 */
 @Repository
 @AllArgsConstructor
 public class CountAllSessionsByUserIdRepository implements CountAllSessionsByUserIdPort {

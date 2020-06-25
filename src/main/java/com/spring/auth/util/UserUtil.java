@@ -6,7 +6,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 
 import java.security.Principal;
 import java.util.UUID;
-
+/** @author diegotobalina created on 24/06/2020 */
 public abstract class UserUtil {
 
   public static User getUserFromPrincipal(Principal principal) {

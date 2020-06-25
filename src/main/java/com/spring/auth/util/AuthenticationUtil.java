@@ -2,7 +2,6 @@ package com.spring.auth.util;
 
 import com.spring.auth.role.domain.Role;
 import com.spring.auth.user.domain.User;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -11,7 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Slf4j
+/** @author diegotobalina created on 24/06/2020 */
 public class AuthenticationUtil {
   public static boolean isAuthenticated() {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

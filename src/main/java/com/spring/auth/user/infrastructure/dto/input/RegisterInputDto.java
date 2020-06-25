@@ -10,6 +10,7 @@ import lombok.ToString;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
+/** @author diegotobalina created on 24/06/2020 */
 @Getter
 @Setter
 @ToString

@@ -1,7 +1,7 @@
 package com.spring.auth.util;
 
 import org.apache.commons.lang3.StringUtils;
-
+/** @author diegotobalina created on 24/06/2020 */
 public interface RegexUtil {
 
   static boolean isBearerJwt(String jwt) {

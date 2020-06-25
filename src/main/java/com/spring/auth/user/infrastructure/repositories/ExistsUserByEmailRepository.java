@@ -5,6 +5,7 @@ import com.spring.auth.user.infrastructure.repositories.jpa.UserRepositoryJpa;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+/** @author diegotobalina created on 24/06/2020 */
 @Repository
 @AllArgsConstructor
 public class ExistsUserByEmailRepository implements ExistsUserByEmailPort {

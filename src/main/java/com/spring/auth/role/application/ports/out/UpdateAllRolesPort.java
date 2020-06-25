@@ -5,6 +5,7 @@ import com.spring.auth.role.domain.Role;
 
 import java.util.List;
 
+/** @author diegotobalina created on 24/06/2020 */
 public interface UpdateAllRolesPort {
   List<Role> updateAll(List<Role> roles) throws DuplicatedKeyException;
 }

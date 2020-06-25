@@ -8,6 +8,7 @@ import com.spring.auth.session.application.ports.out.FindSessionByTokenPort;
 import com.spring.auth.session.domain.Session;
 import lombok.AllArgsConstructor;
 
+/** @author diegotobalina created on 24/06/2020 */
 @UseCase
 @AllArgsConstructor
 public class LogoutUseCase implements LogoutUserPort {

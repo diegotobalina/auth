@@ -9,6 +9,7 @@ import lombok.ToString;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/** @author diegotobalina created on 24/06/2020 */
 @Getter
 @ToString
 public class RemoveRolesFromUserOutputDto {

@@ -6,6 +6,7 @@ import lombok.ToString;
 import java.util.Date;
 import java.util.List;
 
+/** @author diegotobalina created on 24/06/2020 */
 @Getter
 @ToString
 public class TokenInfo {

@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
+/** @author diegotobalina created on 24/06/2020 */
 @Slf4j
 public class GoogleAuthenticationFilter extends OncePerRequestFilter {
 

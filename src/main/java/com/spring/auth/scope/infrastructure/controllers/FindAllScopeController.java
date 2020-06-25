@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/** @author diegotobalina created on 24/06/2020 */
 @ScopeController
 @AllArgsConstructor
 public class FindAllScopeController {

@@ -7,6 +7,7 @@ import com.spring.auth.scope.domain.ScopeMapper;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/** @author diegotobalina created on 24/06/2020 */
 public abstract class RoleMapper {
 
   public static Role parse(final RoleJpa roleJpa) {

@@ -12,6 +12,7 @@ import com.spring.auth.user.domain.User;
 import lombok.AllArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
+/** @author diegotobalina created on 24/06/2020 */
 @UseCase
 @AllArgsConstructor
 public class LoginUseCase implements LoginUserPort {

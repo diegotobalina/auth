@@ -17,6 +17,7 @@ import java.security.GeneralSecurityException;
 import java.util.Collections;
 import java.util.Objects;
 
+/** @author diegotobalina created on 24/06/2020 */
 @Slf4j
 @Repository
 public class GoogleGetInfoRepository implements GoogleGetInfoPort {

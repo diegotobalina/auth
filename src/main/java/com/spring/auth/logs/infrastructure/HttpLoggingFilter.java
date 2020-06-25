@@ -12,6 +12,7 @@ import javax.ws.rs.HttpMethod;
 import java.io.IOException;
 import java.util.*;
 
+/** @author diegotobalina created on 24/06/2020 */
 @Component
 public class HttpLoggingFilter implements Filter {
 

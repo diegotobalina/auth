@@ -7,6 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
+/** @author diegotobalina created on 24/06/2020 */
 public class PasswordValidator implements ConstraintValidator<PasswordConstraint, String> {
 
   @Override

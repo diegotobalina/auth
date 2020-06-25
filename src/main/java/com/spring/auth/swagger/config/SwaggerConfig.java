@@ -16,6 +16,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import java.security.Principal;
 import java.time.LocalDate;
 
+/** @author diegotobalina created on 24/06/2020 */
 @Profile("dev")
 @Configuration
 @EnableSwagger2
