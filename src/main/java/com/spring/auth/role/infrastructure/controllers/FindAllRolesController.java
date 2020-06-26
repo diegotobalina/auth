@@ -1,7 +1,7 @@
 package com.spring.auth.role.infrastructure.controllers;
 
 import com.spring.auth.anotations.components.controllers.RoleController;
-import com.spring.auth.role.application.ports.out.FindAllRolesPort;
+import com.spring.auth.role.application.ports.out.FindRolePort;
 import com.spring.auth.role.domain.Role;
 import com.spring.auth.role.infrastructure.dtos.output.FindAllRolesOutputDto;
 import io.swagger.annotations.ApiImplicitParam;
@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class FindAllRolesController {
 
-  private FindAllRolesPort findAllRolesPort;
+  private FindRolePort findRolePort;
 
   @ApiOperation(value = "Find all roles", notes = "Trae todos los roles de la base de datos")
   @ApiImplicitParams({
@@ -33,7 +33,7 @@ public class FindAllRolesController {
   @GetMapping
   @PreAuthorize("hasRole('ADMIN') and hasPermission('hasAccess','READ')")
   public List<FindAllRolesOutputDto> findAll() {
-    List<Role> allRoles = findAllRolesPort.findAll();
+    List<Role> allRoles = findRolePort.findAll();
     return allRoles.stream().map(FindAllRolesOutputDto::new).collect(Collectors.toList());
   }
 }

@@ -7,7 +7,7 @@ import com.spring.auth.exceptions.application.NotFoundException;
 import com.spring.auth.exceptions.application.WrongPasswordException;
 import com.spring.auth.session.application.ports.out.CreateSessionPort;
 import com.spring.auth.session.domain.Session;
-import com.spring.auth.user.application.ports.out.FindUserByUserNameOrEmailPort;
+import com.spring.auth.user.application.ports.out.FindUserPort;
 import com.spring.auth.user.domain.User;
 import lombok.AllArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 @AllArgsConstructor
 public class LoginUseCase implements LoginUserPort {
 
-  private FindUserByUserNameOrEmailPort findUserByUserNameOrEmailPort;
+  private FindUserPort findUserPort;
   private CreateSessionPort createSessionPort;
 
   @Override
@@ -26,7 +26,7 @@ public class LoginUseCase implements LoginUserPort {
       throws NotFoundException, WrongPasswordException, DuplicatedKeyException {
 
     // findAll the user trying to login
-    User user = findUserByUserNameOrEmailPort.find(username, email);
+    User user = findUserPort.findByUsernameOrEmail(username, email);
 
     // check if its de correct password
     if (!user.doPasswordsMatch(password)) throw new WrongPasswordException("invalid password");

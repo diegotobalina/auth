@@ -4,10 +4,10 @@ import com.spring.auth.anotations.components.UseCase;
 import com.spring.auth.exceptions.application.DuplicatedKeyException;
 import com.spring.auth.exceptions.application.NotFoundException;
 import com.spring.auth.role.application.ports.in.AddScopesToRolePort;
-import com.spring.auth.role.application.ports.out.FindRoleByIdPort;
+import com.spring.auth.role.application.ports.out.FindRolePort;
 import com.spring.auth.role.application.ports.out.UpdateRolePort;
 import com.spring.auth.role.domain.Role;
-import com.spring.auth.scope.application.ports.out.FindAllScopesByIdsPort;
+import com.spring.auth.scope.application.ports.out.FindScopePort;
 import com.spring.auth.scope.domain.Scope;
 import lombok.AllArgsConstructor;
 
@@ -18,13 +18,13 @@ import java.util.List;
 @AllArgsConstructor
 public class AddScopesToRoleUseCase implements AddScopesToRolePort {
 
-  private FindAllScopesByIdsPort findAllScopesByIdsPort;
-  private FindRoleByIdPort findRoleByIdPort;
+  private FindScopePort findScopePort;
+  private FindRolePort findRolePort;
   private UpdateRolePort updateRolePort;
 
   @Override
   public Role add(Role role, List<String> scopeIds) throws DuplicatedKeyException {
-    List<Scope> scopes = findAllScopesByIdsPort.findAll(scopeIds);
+    List<Scope> scopes = findScopePort.findAllByIds(scopeIds);
     role.addScopes(scopes);
     return updateRolePort.update(role);
   }
@@ -32,7 +32,7 @@ public class AddScopesToRoleUseCase implements AddScopesToRolePort {
   @Override
   public Role add(String roleId, List<String> scopeIds)
       throws NotFoundException, DuplicatedKeyException {
-    Role role = findRoleByIdPort.find(roleId);
+    Role role = findRolePort.findById(roleId);
     return add(role, scopeIds);
   }
 }

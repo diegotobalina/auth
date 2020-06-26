@@ -3,13 +3,13 @@ package com.spring.auth.session.infrastructure.repositories;
 import com.spring.auth.exceptions.application.DuplicatedKeyException;
 import com.spring.auth.exceptions.application.NotFoundException;
 import com.spring.auth.session.application.ports.in.DeleteOlderSessionByUserIdPort;
-import com.spring.auth.session.application.ports.out.CountAllSessionsByUserIdPort;
+import com.spring.auth.session.application.ports.out.CountSessionPort;
 import com.spring.auth.session.application.ports.out.CreateSessionPort;
 import com.spring.auth.session.domain.Session;
 import com.spring.auth.session.domain.SessionJpa;
 import com.spring.auth.session.domain.SessionMapper;
 import com.spring.auth.session.infrastructure.repositories.jpa.SessionRepositoryJpa;
-import com.spring.auth.user.application.ports.out.FindUserByIdPort;
+import com.spring.auth.user.application.ports.out.FindUserPort;
 import com.spring.auth.user.domain.User;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -21,8 +21,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class CreateSessionRepository implements CreateSessionPort {
 
   private SessionRepositoryJpa sessionRepositoryJpa;
-  private FindUserByIdPort findUserByIdPort;
-  private CountAllSessionsByUserIdPort countAllSessionsByUserIdPort;
+  private FindUserPort findUserPort;
+  private CountSessionPort countSessionPort;
   private DeleteOlderSessionByUserIdPort deleteOlderSessionByUserIdPort;
 
   @Override
@@ -56,8 +56,14 @@ public class CreateSessionRepository implements CreateSessionPort {
   }
 
   private boolean canUserHaveMoreSessions(String userId) throws NotFoundException {
-    User user = findUserByIdPort.find(userId);
-    int sessionCount = countAllSessionsByUserIdPort.countAll(userId);
+    User user = findUserById(userId);
+    int sessionCount = countSessionPort.countAllByUserId(userId);
     return user.canHaveMoreSessions(sessionCount);
+  }
+
+  private User findUserById(String userId) throws NotFoundException {
+    User user = findUserPort.findById(userId);
+    if (user == null) throw new NotFoundException("user not found with id: " + userId);
+    return user;
   }
 }

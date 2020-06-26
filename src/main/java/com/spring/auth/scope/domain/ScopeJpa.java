@@ -1,6 +1,5 @@
 package com.spring.auth.scope.domain;
 
-/** @author diegotobalina created on 24/06/2020 */
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,6 +8,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+/** @author diegotobalina created on 24/06/2020 */
 @Getter
 @ToString
 @AllArgsConstructor

@@ -4,7 +4,6 @@ import com.spring.auth.anotations.components.controllers.RoleController;
 import com.spring.auth.exceptions.application.DuplicatedKeyException;
 import com.spring.auth.exceptions.application.NotFoundException;
 import com.spring.auth.role.application.ports.out.DeleteRolePort;
-import com.spring.auth.role.application.ports.out.FindRoleByIdPort;
 import com.spring.auth.role.domain.Role;
 import com.spring.auth.role.infrastructure.dtos.output.DeleteRoleOutputDto;
 import io.swagger.annotations.ApiImplicitParam;
@@ -25,7 +24,6 @@ import javax.validation.constraints.NotEmpty;
 public class DeleteRoleController {
 
   private DeleteRolePort deleteRolePort;
-  private FindRoleByIdPort findRoleByIdPort;
 
   @ApiOperation(value = "Delete role", notes = "Borra un role de la base de datos")
   @ApiImplicitParams({

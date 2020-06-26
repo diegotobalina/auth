@@ -3,7 +3,7 @@ package com.spring.auth.authorization.application;
 import com.spring.auth.anotations.components.UseCase;
 import com.spring.auth.authorization.application.ports.in.UserInfoPort;
 import com.spring.auth.exceptions.application.NotFoundException;
-import com.spring.auth.user.application.ports.out.FindUserByIdPort;
+import com.spring.auth.user.application.ports.out.FindUserPort;
 import com.spring.auth.user.domain.User;
 import com.spring.auth.util.UserUtil;
 import lombok.AllArgsConstructor;
@@ -15,13 +15,13 @@ import java.security.Principal;
 @AllArgsConstructor
 public class UserInfoUseCase implements UserInfoPort {
 
-  private FindUserByIdPort findUserByIdPort;
+  private FindUserPort findUserPort;
 
   @Override
   public User userInfo(Principal principal) throws NotFoundException {
     // get the user id from the memory
     String userId = UserUtil.getUserIdFromPrincipal(principal);
     // find user details from the database
-    return findUserByIdPort.find(userId);
+    return findUserPort.findById(userId);
   }
 }

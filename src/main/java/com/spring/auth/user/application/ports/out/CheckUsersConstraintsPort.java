@@ -7,5 +7,7 @@ import java.util.List;
 
 /** @author diegotobalina created on 24/06/2020 */
 public interface CheckUsersConstraintsPort {
+  void check(User user) throws DuplicatedKeyException;
+
   void check(List<User> users) throws DuplicatedKeyException;
 }

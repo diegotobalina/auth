@@ -19,7 +19,7 @@ public class BufferedRequestWrapper extends HttpServletRequestWrapper implements
     // Read InputStream and store its content in a buffer.
     InputStream is = req.getInputStream();
     this.baos = new ByteArrayOutputStream();
-    byte buf[] = new byte[1024];
+    byte[] buf = new byte[1024];
     int read;
     while ((read = is.read(buf)) > 0) {
       this.baos.write(buf, 0, read);

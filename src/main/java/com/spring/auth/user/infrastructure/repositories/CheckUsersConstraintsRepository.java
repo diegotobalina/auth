@@ -18,14 +18,16 @@ public class CheckUsersConstraintsRepository implements CheckUsersConstraintsPor
   private UserRepositoryJpa userRepositoryJpa;
 
   @Override
+  public void check(User user) throws DuplicatedKeyException {
+    this.check(List.of(user));
+  }
+
+  @Override
   public void check(List<User> users) throws DuplicatedKeyException {
     List<String> ids = users.stream().map(User::getId).collect(Collectors.toList());
-    // username must be unique in the database
     List<String> usernames = users.stream().map(User::getUsername).collect(Collectors.toList());
     if (userRepositoryJpa.existsByUsernameInAndIdNotIn(usernames, ids))
       throw new DuplicatedKeyException("duplicated username in: " + usernames);
-
-    // email must be unique in the database
     List<String> emails = users.stream().map(User::getEmail).collect(Collectors.toList());
     if (userRepositoryJpa.existsByEmailInAndIdNotIn(emails, ids))
       throw new DuplicatedKeyException("duplicated email in: " + emails);

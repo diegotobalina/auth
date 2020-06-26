@@ -3,7 +3,7 @@ package com.spring.auth.role.infrastructure.repositories;
 import com.spring.auth.events.ports.PublishRoleDeletedEventPort;
 import com.spring.auth.exceptions.application.NotFoundException;
 import com.spring.auth.role.application.ports.out.DeleteRolePort;
-import com.spring.auth.role.application.ports.out.FindRoleByIdPort;
+import com.spring.auth.role.application.ports.out.FindRolePort;
 import com.spring.auth.role.domain.Role;
 import com.spring.auth.role.domain.RoleJpa;
 import com.spring.auth.role.domain.RoleMapper;
@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class DeleteRoleRepository implements DeleteRolePort {
 
   private RoleRepositoryJpa roleRepositoryJpa;
-  private FindRoleByIdPort findRoleByIdPort;
+  private FindRolePort findRolePort;
   private PublishRoleDeletedEventPort publishRoleDeletedEventPort;
 
   @Override
@@ -33,7 +33,7 @@ public class DeleteRoleRepository implements DeleteRolePort {
 
   @Override
   public Role delete(String roleId) throws NotFoundException {
-    Role role = findRoleByIdPort.find(roleId);
+    Role role = findRolePort.findById(roleId);
     return delete(role);
   }
 }

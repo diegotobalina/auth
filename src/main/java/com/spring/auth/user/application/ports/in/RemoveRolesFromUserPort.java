@@ -12,4 +12,6 @@ public interface RemoveRolesFromUserPort {
   User remove(User user, List<String> roleIds) throws DuplicatedKeyException;
 
   User remove(String userId, List<String> roleIds) throws NotFoundException, DuplicatedKeyException;
+
+  List<User> remove(List<User> User, List<String> roleIds) throws DuplicatedKeyException;
 }

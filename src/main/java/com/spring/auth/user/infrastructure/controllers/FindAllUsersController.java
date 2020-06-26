@@ -1,7 +1,7 @@
 package com.spring.auth.user.infrastructure.controllers;
 
 import com.spring.auth.anotations.components.controllers.UserController;
-import com.spring.auth.user.application.ports.out.FindAllUsersPort;
+import com.spring.auth.user.application.ports.out.FindUserPort;
 import com.spring.auth.user.domain.User;
 import com.spring.auth.user.infrastructure.dto.output.FindAllUsersOutputDto;
 import io.swagger.annotations.ApiImplicitParam;
@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class FindAllUsersController {
 
-  private FindAllUsersPort findAllUsersPort;
+  private FindUserPort findUserPort;
 
   @ApiOperation(value = "Find all users", notes = "Trae todos los usuarios")
   @ApiImplicitParams({
@@ -33,7 +33,7 @@ public class FindAllUsersController {
   @GetMapping
   @PreAuthorize("hasRole('ADMIN') and hasPermission('hasAccess','READ')")
   public List<FindAllUsersOutputDto> findAll() {
-    List<User> all = findAllUsersPort.findAll();
-    return all.stream().map(FindAllUsersOutputDto::new).collect(Collectors.toList());
+    List<User> users = findUserPort.findAll();
+    return users.stream().map(FindAllUsersOutputDto::new).collect(Collectors.toList());
   }
 }

@@ -3,7 +3,7 @@ package com.spring.auth.scope.infrastructure.repositories;
 import com.spring.auth.events.ports.PublishScopeDeletedEventPort;
 import com.spring.auth.exceptions.application.NotFoundException;
 import com.spring.auth.scope.application.ports.out.DeleteScopePort;
-import com.spring.auth.scope.application.ports.out.FindScopeByIdPort;
+import com.spring.auth.scope.application.ports.out.FindScopePort;
 import com.spring.auth.scope.domain.Scope;
 import com.spring.auth.scope.domain.ScopeJpa;
 import com.spring.auth.scope.domain.ScopeMapper;
@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class DeleteScopeRepository implements DeleteScopePort {
 
   private ScopeRepositoryJpa scopeRepositoryJpa;
-  private FindScopeByIdPort findScopeByIdPort;
+  private FindScopePort findScopePort;
   private PublishScopeDeletedEventPort publishScopeDeletedEventPort;
 
   @Override
@@ -31,7 +31,7 @@ public class DeleteScopeRepository implements DeleteScopePort {
 
   @Override
   public Scope delete(String scopeId) throws NotFoundException {
-    Scope scope = findScopeByIdPort.find(scopeId);
+    Scope scope = findScopePort.findById(scopeId);
     return delete(scope);
   }
 

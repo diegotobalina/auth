@@ -4,7 +4,7 @@ import com.spring.auth.anotations.components.UseCase;
 import com.spring.auth.authorization.application.ports.in.LogoutUserPort;
 import com.spring.auth.exceptions.application.NotFoundException;
 import com.spring.auth.session.application.ports.out.DeleteSessionPort;
-import com.spring.auth.session.application.ports.out.FindSessionByTokenPort;
+import com.spring.auth.session.application.ports.out.FindSessionPort;
 import com.spring.auth.session.domain.Session;
 import lombok.AllArgsConstructor;
 
@@ -13,13 +13,13 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class LogoutUseCase implements LogoutUserPort {
 
-  private FindSessionByTokenPort findSessionByTokenPort;
+  private FindSessionPort findSessionPort;
   private DeleteSessionPort deleteSessionPort;
 
   @Override
   public void logout(final String token) throws NotFoundException {
     // remove the session
-    Session session = findSessionByTokenPort.find(token);
+    Session session = findSessionPort.findByToken(token);
     deleteSessionPort.delete(session);
   }
 }

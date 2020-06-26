@@ -4,7 +4,6 @@ import com.spring.auth.anotations.components.controllers.RoleController;
 import com.spring.auth.exceptions.application.DuplicatedKeyException;
 import com.spring.auth.exceptions.application.NotFoundException;
 import com.spring.auth.role.application.ports.in.RemoveScopesFromRolePort;
-import com.spring.auth.role.application.ports.out.FindRoleByIdPort;
 import com.spring.auth.role.domain.Role;
 import com.spring.auth.role.infrastructure.dtos.input.RemoveScopesToRoleInputDto;
 import com.spring.auth.role.infrastructure.dtos.output.RemoveScopesToRoleOutputDto;
@@ -29,7 +28,6 @@ import java.util.List;
 public class RemoveScopesToRoleController {
 
   private RemoveScopesFromRolePort removeScopesFromRolePort;
-  private FindRoleByIdPort findRoleByIdPort;
 
   @ApiOperation(value = "Remove Scopes", notes = "Quita scopes a un role")
   @ApiImplicitParams({

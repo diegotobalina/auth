@@ -20,15 +20,6 @@ public class CreateUserRepository implements CreateUserPort {
   private UserRepositoryJpa userRepositoryJpa;
   private CheckUsersConstraintsPort checkUsersConstraintsPort;
 
-  /**
-   * Create a new user in the database, before saving the user checks for duplicated username or *
-   * duplicated email, if the user have some id throws IllegalArgumentException
-   *
-   * @param user User that will be created
-   * @return Created user
-   * @throws DuplicatedKeyException if there is already a user with same email or username in the
-   *     database
-   */
   @Override
   public User create(User user) throws DuplicatedKeyException {
     if (user.getId() != null) throw new IllegalArgumentException("user id must be null");

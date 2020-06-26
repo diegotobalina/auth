@@ -17,6 +17,9 @@ public interface UserRepositoryJpa extends MongoRepository<UserJpa, String> {
   /** Finds a user by the email */
   Optional<UserJpa> findByEmail(String email);
 
+  /** Finds a user by the username or email */
+  Optional<UserJpa> findByUsernameOrEmail(String username, String email);
+
   /** Finds all the users that have the role by the roleId */
   List<UserJpa> findAllByRolesId(String roleId);
 

@@ -9,7 +9,7 @@ import com.spring.auth.exceptions.application.InvalidTokenException;
 import com.spring.auth.exceptions.application.NotFoundException;
 import com.spring.auth.exceptions.application.UnknownTokenFormatException;
 import com.spring.auth.google.application.ports.out.GoogleGetInfoPort;
-import com.spring.auth.session.application.ports.out.FindSessionByTokenPort;
+import com.spring.auth.session.application.ports.out.FindSessionPort;
 import com.spring.auth.session.domain.Session;
 import com.spring.auth.util.RegexUtil;
 import com.spring.auth.util.TokenUtil;
@@ -28,12 +28,11 @@ public class TokenInfoUseCase implements TokenInfoPort {
   @Value("${server.auth.secret-key}")
   private String secretKey;
 
-  private FindSessionByTokenPort findSessionByTokenPort;
+  private FindSessionPort findSessionPort;
   private GoogleGetInfoPort googleGetInfoPort;
 
-  public TokenInfoUseCase(
-      FindSessionByTokenPort findSessionByTokenPort, GoogleGetInfoPort googleGetInfoPort) {
-    this.findSessionByTokenPort = findSessionByTokenPort;
+  public TokenInfoUseCase(FindSessionPort findSessionPort, GoogleGetInfoPort googleGetInfoPort) {
+    this.findSessionPort = findSessionPort;
     this.googleGetInfoPort = googleGetInfoPort;
   }
 
@@ -82,7 +81,7 @@ public class TokenInfoUseCase implements TokenInfoPort {
   }
 
   private TokenInfo getSessionTokenInfo(String token) throws NotFoundException {
-    Session session = findSessionByTokenPort.find(token);
+    Session session = findSessionPort.findByToken(token);
     Date issuedAt = session.getIssuedAt();
     Date expiration = session.getExpiration();
     String userId = session.getUserId();

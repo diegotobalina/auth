@@ -6,12 +6,11 @@ import com.spring.auth.exceptions.application.DuplicatedKeyException;
 import com.spring.auth.exceptions.application.InfiniteLoopException;
 import com.spring.auth.exceptions.application.NotFoundException;
 import com.spring.auth.google.application.ports.in.GoogleLoginPort;
-import com.spring.auth.util.UserUtil;
 import com.spring.auth.user.application.ports.in.RegisterUserPort;
-import com.spring.auth.user.application.ports.out.ExistsUserByEmailPort;
-import com.spring.auth.user.application.ports.out.ExistsUserByUserNamePort;
-import com.spring.auth.user.application.ports.out.FindUserByEmailPort;
+import com.spring.auth.user.application.ports.out.ExistsUserPort;
+import com.spring.auth.user.application.ports.out.FindUserPort;
 import com.spring.auth.user.domain.User;
+import com.spring.auth.util.UserUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -21,9 +20,8 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 public class GoogleLoginUseCase implements GoogleLoginPort {
 
-  private FindUserByEmailPort findUserByEmailPort;
-  private ExistsUserByUserNamePort existsUserByUserNamePort;
-  private ExistsUserByEmailPort existsUserByEmailPort;
+  private FindUserPort findUserPort;
+  private ExistsUserPort existsUserPort;
   private RegisterUserPort registerUserPort;
 
   @Override
@@ -31,7 +29,7 @@ public class GoogleLoginUseCase implements GoogleLoginPort {
       throws InfiniteLoopException, DuplicatedKeyException, NotFoundException {
     final String email = payload.getEmail();
     // if the user exists in the system should not be registered again
-    if (existsUserByEmailPort.exists(email)) return findUserByEmailPort.find(email);
+    if (existsUserPort.existsByEmail(email)) return findUserPort.findByEmail(email);
     // user not in the system, register the user
     final String username = this.findAvailableUsername(email);
     final String randomPassword = UserUtil.generateRandomPassword();
@@ -47,6 +45,6 @@ public class GoogleLoginUseCase implements GoogleLoginPort {
   }
 
   private boolean isAvailable(final String username) {
-    return !existsUserByUserNamePort.exists(username);
+    return !existsUserPort.existsByUsername(username);
   }
 }

@@ -1,7 +1,7 @@
 package com.spring.auth.scope.infrastructure.controllers;
 
 import com.spring.auth.anotations.components.controllers.ScopeController;
-import com.spring.auth.scope.application.ports.out.FindAllScopesPort;
+import com.spring.auth.scope.application.ports.out.FindScopePort;
 import com.spring.auth.scope.domain.Scope;
 import com.spring.auth.scope.infrastructure.dtos.output.FindAllScopesOutputDto;
 import io.swagger.annotations.ApiImplicitParam;
@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class FindAllScopeController {
 
-  private FindAllScopesPort findAllScopesPort;
+  private FindScopePort findScopePort;
 
   @ApiOperation(value = "Find scopes", notes = "Trae todas las scopes")
   @ApiImplicitParams({
@@ -33,7 +33,7 @@ public class FindAllScopeController {
   @GetMapping
   @PreAuthorize("hasRole('ADMIN') and hasPermission('hasAccess','READ')")
   public List<FindAllScopesOutputDto> findAll() {
-    List<Scope> all = findAllScopesPort.findAll();
-    return all.stream().map(FindAllScopesOutputDto::new).collect(Collectors.toList());
+    List<Scope> scopes = findScopePort.findAll();
+    return scopes.stream().map(FindAllScopesOutputDto::new).collect(Collectors.toList());
   }
 }

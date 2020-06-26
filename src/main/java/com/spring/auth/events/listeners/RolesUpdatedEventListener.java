@@ -4,8 +4,8 @@ import com.spring.auth.anotations.components.CustomEventListener;
 import com.spring.auth.events.domain.RolesUpdatedEvent;
 import com.spring.auth.exceptions.application.DuplicatedKeyException;
 import com.spring.auth.role.domain.Role;
-import com.spring.auth.user.application.ports.out.FindAllUsersByRoleIdsPort;
-import com.spring.auth.user.application.ports.out.UpdateUsersRolesPort;
+import com.spring.auth.user.application.ports.out.FindUserPort;
+import com.spring.auth.user.application.ports.out.UpdateUserPort;
 import com.spring.auth.user.domain.User;
 import lombok.AllArgsConstructor;
 import org.springframework.scheduling.annotation.Async;
@@ -19,10 +19,9 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class RolesUpdatedEventListener {
 
-  private FindAllUsersByRoleIdsPort findAllUsersByRoleIdsPort;
-  private UpdateUsersRolesPort updateUsersRolesPort;
+  private FindUserPort findUserPort;
+  private UpdateUserPort updateUserPort;
 
-  /** When a role is updated should be updated in the users */
   @Async
   @TransactionalEventListener
   public void rolesUpdated(RolesUpdatedEvent rolesUpdatedEvent) throws DuplicatedKeyException {
@@ -30,9 +29,15 @@ public class RolesUpdatedEventListener {
     updateUsersRoles(updatedRoles);
   }
 
+  /** When a role is updated should be updated in the users */
   private void updateUsersRoles(List<Role> updatedRoles) throws DuplicatedKeyException {
     List<String> roleIds = updatedRoles.stream().map(Role::getId).collect(Collectors.toList());
-    List<User> users = findAllUsersByRoleIdsPort.findAll(roleIds);
-    updateUsersRolesPort.update(users, updatedRoles);
+    List<User> users = findUserPort.findAllByRoleIds(roleIds);
+    for (User user : users) {
+      for (Role role : updatedRoles) {
+        user.updateRole(role);
+      }
+    }
+    updateUserPort.updateAll(users);
   }
 }

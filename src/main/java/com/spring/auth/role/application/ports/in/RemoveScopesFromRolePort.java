@@ -11,4 +11,6 @@ public interface RemoveScopesFromRolePort {
   Role remove(Role role, List<String> scopes) throws DuplicatedKeyException;
 
   Role remove(String roleId, List<String> scopes) throws DuplicatedKeyException, NotFoundException;
+
+  List<Role> removeFromAll(List<Role> roles, List<String> scopes) throws DuplicatedKeyException;
 }

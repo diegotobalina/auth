@@ -5,7 +5,7 @@ import com.spring.auth.exceptions.application.DuplicatedKeyException;
 import com.spring.auth.exceptions.application.NotFoundException;
 import com.spring.auth.exceptions.application.WrongPasswordException;
 import com.spring.auth.user.application.ports.in.UpdateUserPasswordPort;
-import com.spring.auth.user.application.ports.out.FindUserByIdPort;
+import com.spring.auth.user.application.ports.out.FindUserPort;
 import com.spring.auth.user.application.ports.out.UpdateUserPort;
 import com.spring.auth.user.domain.User;
 import lombok.AllArgsConstructor;
@@ -16,7 +16,7 @@ import lombok.AllArgsConstructor;
 public class UpdateUserPasswordUseCase implements UpdateUserPasswordPort {
 
   private UpdateUserPort updateUserPort;
-  private FindUserByIdPort findUserByIdPort;
+  private FindUserPort findUserPort;
 
   /**
    * @param user User which needs the password update
@@ -65,7 +65,7 @@ public class UpdateUserPasswordUseCase implements UpdateUserPasswordPort {
   @Override
   public void update(String userId, String oldPassword, String newPassword)
       throws NotFoundException, DuplicatedKeyException, WrongPasswordException {
-    User user = findUserByIdPort.find(userId);
+    User user = findUserPort.findById(userId);
     update(user, oldPassword, newPassword);
   }
 
@@ -81,7 +81,7 @@ public class UpdateUserPasswordUseCase implements UpdateUserPasswordPort {
   @Override
   public void update(String userId, String newPassword)
       throws NotFoundException, DuplicatedKeyException {
-    User user = findUserByIdPort.find(userId);
+    User user = findUserPort.findById(userId);
     update(user, newPassword);
   }
 }

@@ -13,6 +13,14 @@ import java.util.stream.Collectors;
 /** @author diegotobalina created on 24/06/2020 */
 public abstract class UserMapper {
 
+  public static List<User> parseUserJpaList(List<UserJpa> userJpas) {
+    return userJpas.stream().map(UserMapper::parse).collect(Collectors.toList());
+  }
+
+  public static List<UserJpa> parseUserList(List<User> users) {
+    return users.stream().map(UserMapper::parse).collect(Collectors.toList());
+  }
+
   public static User parse(UserJpa userJpa) {
     final String id = userJpa.getId();
     final String username = userJpa.getUsername();

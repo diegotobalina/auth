@@ -10,6 +10,16 @@ import java.util.stream.Collectors;
 /** @author diegotobalina created on 24/06/2020 */
 public abstract class RoleMapper {
 
+  public static List<Role> parseRoleJpaList(List<RoleJpa> roleJpaList) {
+    return roleJpaList.stream()
+        .map(roleJpa -> RoleMapper.parse(roleJpa))
+        .collect(Collectors.toList());
+  }
+
+  public static List<RoleJpa> parseRoleList(List<Role> roleList) {
+    return roleList.stream().map(role -> RoleMapper.parse(role)).collect(Collectors.toList());
+  }
+
   public static Role parse(final RoleJpa roleJpa) {
     final String id = roleJpa.getId();
     final String name = roleJpa.getName();

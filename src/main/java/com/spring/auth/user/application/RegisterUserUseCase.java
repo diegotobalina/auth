@@ -3,7 +3,7 @@ package com.spring.auth.user.application;
 import com.spring.auth.anotations.components.UseCase;
 import com.spring.auth.exceptions.application.DuplicatedKeyException;
 import com.spring.auth.exceptions.application.NotFoundException;
-import com.spring.auth.role.application.ports.out.FindRoleByValuePort;
+import com.spring.auth.role.application.ports.out.FindRolePort;
 import com.spring.auth.role.domain.Role;
 import com.spring.auth.user.application.ports.in.RegisterUserPort;
 import com.spring.auth.user.application.ports.out.CreateUserPort;
@@ -19,7 +19,7 @@ import java.util.List;
 public class RegisterUserUseCase implements RegisterUserPort {
 
   private CreateUserPort createUserPort;
-  private FindRoleByValuePort findRoleByValuePort;
+  private FindRolePort findRolePort;
 
   /**
    * Create a new user in the database
@@ -42,6 +42,6 @@ public class RegisterUserUseCase implements RegisterUserPort {
   }
 
   private List<Role> getDefaultRoles() throws NotFoundException {
-    return Collections.singletonList(findRoleByValuePort.find("ROLE_USER"));
+    return Collections.singletonList(findRolePort.findByValue("ROLE_USER"));
   }
 }

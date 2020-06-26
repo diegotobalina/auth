@@ -3,7 +3,6 @@ package com.spring.auth.scope.infrastructure.controllers;
 import com.spring.auth.anotations.components.controllers.ScopeController;
 import com.spring.auth.exceptions.application.NotFoundException;
 import com.spring.auth.scope.application.ports.out.DeleteScopePort;
-import com.spring.auth.scope.application.ports.out.FindScopeByIdPort;
 import com.spring.auth.scope.domain.Scope;
 import com.spring.auth.scope.infrastructure.dtos.output.DeleteScopeOutputDto;
 import io.swagger.annotations.ApiImplicitParam;
@@ -24,7 +23,6 @@ import javax.validation.constraints.NotEmpty;
 public class DeleteScopeController {
 
   private DeleteScopePort deleteScopePort;
-  private FindScopeByIdPort findScopeByIdPort;
 
   @ApiOperation(value = "Delete scope", notes = "Borra una scope de la base de datos")
   @ApiImplicitParams({

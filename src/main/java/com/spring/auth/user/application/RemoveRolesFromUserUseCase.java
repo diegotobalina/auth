@@ -4,7 +4,7 @@ import com.spring.auth.anotations.components.UseCase;
 import com.spring.auth.exceptions.application.DuplicatedKeyException;
 import com.spring.auth.exceptions.application.NotFoundException;
 import com.spring.auth.user.application.ports.in.RemoveRolesFromUserPort;
-import com.spring.auth.user.application.ports.out.FindUserByIdPort;
+import com.spring.auth.user.application.ports.out.FindUserPort;
 import com.spring.auth.user.application.ports.out.UpdateUserPort;
 import com.spring.auth.user.domain.User;
 import lombok.AllArgsConstructor;
@@ -16,7 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 public class RemoveRolesFromUserUseCase implements RemoveRolesFromUserPort {
 
-  private FindUserByIdPort findUserByIdPort;
+  private FindUserPort findUserPort;
   private UpdateUserPort updateUserPort;
 
   /**
@@ -47,7 +47,14 @@ public class RemoveRolesFromUserUseCase implements RemoveRolesFromUserPort {
   @Override
   public User remove(String userId, List<String> roleIds)
       throws NotFoundException, DuplicatedKeyException {
-    User user = findUserByIdPort.find(userId);
+    User user = findUserPort.findById(userId);
     return remove(user, roleIds);
+  }
+
+  @Override
+  public List<User> remove(List<User> User, List<String> roleIds) throws DuplicatedKeyException {
+    List<User> users = findUserPort.findAllByRoleIds(roleIds);
+    for (User user : users) user.removeRoles(roleIds);
+    return updateUserPort.updateAll(users);
   }
 }
