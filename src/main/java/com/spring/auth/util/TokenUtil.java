@@ -47,7 +47,7 @@ public abstract class TokenUtil {
     Map<String, Object> claims = generateJwtClaims(user);
     String userId = user.getId();
     Date issuedAt = new Date(System.currentTimeMillis());
-    long expirationTime = Long.valueOf(1000 * 60 * 5); // 1s > 1m > 5m
+    long expirationTime = (long) (1000 * 60 * 5); // 1s > 1m > 5m
     Date expiration = new Date(issuedAt.getTime() + expirationTime);
     byte[] secretKeyBytes = secretKey.getBytes();
     String jwt = generateBearerJwt(userId, claims, issuedAt, expiration, secretKeyBytes);

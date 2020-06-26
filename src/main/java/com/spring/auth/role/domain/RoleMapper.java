@@ -12,12 +12,12 @@ public abstract class RoleMapper {
 
   public static List<Role> parseRoleJpaList(List<RoleJpa> roleJpaList) {
     return roleJpaList.stream()
-        .map(roleJpa -> RoleMapper.parse(roleJpa))
+        .map(RoleMapper::parse)
         .collect(Collectors.toList());
   }
 
   public static List<RoleJpa> parseRoleList(List<Role> roleList) {
-    return roleList.stream().map(role -> RoleMapper.parse(role)).collect(Collectors.toList());
+    return roleList.stream().map(RoleMapper::parse).collect(Collectors.toList());
   }
 
   public static Role parse(final RoleJpa roleJpa) {

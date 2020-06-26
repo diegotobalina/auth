@@ -18,7 +18,7 @@ public class CustomPermissionEvaluator implements PermissionEvaluator {
       Authentication authentication, Object accessType, Object permission) {
     String requiredPermission = String.valueOf(permission);
     List<Scope> validScopes = getValidScopes(authentication, requiredPermission);
-    return (validScopes.isEmpty()) ? false : true;
+    return !validScopes.isEmpty();
   }
 
   private List<Scope> getValidScopes(Authentication authentication, String requiredPermission) {

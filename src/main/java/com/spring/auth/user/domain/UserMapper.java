@@ -43,7 +43,7 @@ public abstract class UserMapper {
         user.getRoles().stream().map(RoleMapper::parse).collect(Collectors.toList());
     final List<ScopeJpa> scopesJpa =
         user.getScopes().stream().map(ScopeMapper::parse).collect(Collectors.toList());
-    final Integer maxSessions = user.getMaxSessions();
+    final int maxSessions = user.getMaxSessions();
     return new UserJpa(id, username, email, password, rolesJpa, scopesJpa, maxSessions);
   }
 }

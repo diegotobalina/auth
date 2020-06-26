@@ -24,11 +24,11 @@ public abstract class ScopeMapper {
 
   public static List<Scope> parseScopeJpaList(List<ScopeJpa> scopeJpaList) {
     return scopeJpaList.stream()
-        .map(scopeJpa -> ScopeMapper.parse(scopeJpa))
+        .map(ScopeMapper::parse)
         .collect(Collectors.toList());
   }
 
   public static List<ScopeJpa> parseScopeList(List<Scope> scopeList) {
-    return scopeList.stream().map(scope -> ScopeMapper.parse(scope)).collect(Collectors.toList());
+    return scopeList.stream().map(ScopeMapper::parse).collect(Collectors.toList());
   }
 }

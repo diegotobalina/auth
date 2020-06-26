@@ -6,7 +6,7 @@ import com.spring.auth.role.domain.Role;
 
 /** @author diegotobalina created on 24/06/2020 */
 public interface DeleteRolePort {
-  Role delete(Role role) throws DuplicatedKeyException;
+  Role delete(Role role);
 
-  Role delete(String roleId) throws NotFoundException, DuplicatedKeyException;
+  Role delete(String roleId) throws NotFoundException;
 }

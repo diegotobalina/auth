@@ -28,7 +28,7 @@ public class SwaggerConfig {
     return new Docket(DocumentationType.SWAGGER_2)
         .apiInfo(apiInfo(swaggerConfigProperties))
         .ignoredParameterTypes(Principal.class)
-        .enable(Boolean.valueOf(swaggerConfigProperties.getEnabled()))
+        .enable(Boolean.parseBoolean(swaggerConfigProperties.getEnabled()))
         .select()
         .apis(RequestHandlerSelectors.basePackage(basePackage))
         .paths(PathSelectors.any())
@@ -37,8 +37,8 @@ public class SwaggerConfig {
         .directModelSubstitute(LocalDate.class, String.class)
         .genericModelSubstitutes(ResponseEntity.class)
         .useDefaultResponseMessages(
-            Boolean.valueOf(swaggerConfigProperties.getUseDefaultResponseMessages()))
-        .enableUrlTemplating(Boolean.valueOf(swaggerConfigProperties.getEnableUrlTemplating()));
+            Boolean.parseBoolean(swaggerConfigProperties.getUseDefaultResponseMessages()))
+        .enableUrlTemplating(Boolean.parseBoolean(swaggerConfigProperties.getEnableUrlTemplating()));
   }
 
   @Bean

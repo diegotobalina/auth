@@ -54,7 +54,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .disable()
         .exceptionHandling()
         .authenticationEntryPoint(
-            (req, rsp, e) -> exceptionDuringAuthorizationProcess(req, rsp, e));
+                this::exceptionDuringAuthorizationProcess);
 
     // custom authentication filters
     BearerAuthenticationFilter bearerAuthenticationFilter =
