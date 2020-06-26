@@ -2,19 +2,20 @@ package com.spring.auth.user.infrastructure.repositories;
 
 import com.spring.auth.exceptions.application.DuplicatedKeyException;
 import com.spring.auth.user.application.ports.out.UpdateUserPort;
+import com.spring.auth.user.application.ports.out.UpdateUsersPort;
 import com.spring.auth.user.domain.User;
-import com.spring.auth.user.domain.UserJpa;
-import com.spring.auth.user.domain.UserMapper;
-import com.spring.auth.user.infrastructure.repositories.jpa.UserRepositoryJpa;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
+
+import java.util.Collections;
+import java.util.List;
 
 /** @author diegotobalina created on 24/06/2020 */
 @Repository
 @AllArgsConstructor
 public class UpdateUserRepository implements UpdateUserPort {
 
-  private UserRepositoryJpa userRepositoryJpa;
+  private UpdateUsersPort updateUsersPort;
 
   /**
    * Save the existing user in the database with the new data. Before save the user check for
@@ -26,29 +27,7 @@ public class UpdateUserRepository implements UpdateUserPort {
    */
   @Override
   public User update(User user) throws DuplicatedKeyException {
-    checkUserConstraints(user);
-    return saveUser(user);
-  }
-
-  private User saveUser(User user) {
-    UserJpa userJpa = UserMapper.parse(user);
-    UserJpa savedUser = this.userRepositoryJpa.save(userJpa);
-    return UserMapper.parse(savedUser);
-  }
-
-  private void checkUserConstraints(User user) throws DuplicatedKeyException {
-    String userId = user.getId();
-    // username must be unique in the database
-    String username = user.getUsername();
-    if (userRepositoryJpa.existsByUsernameAndIdNot(
-        username, userId)) { // todo: duplicated comprobation
-      throw new DuplicatedKeyException("duplicated username: " + username);
-    }
-
-    // email must be unique in the database
-    String email = user.getEmail();
-    if (userRepositoryJpa.existsByEmailAndIdNot(email, userId)) { // todo: duplicated comprobation
-      throw new DuplicatedKeyException("duplicated email: " + email);
-    }
+    List<User> updatedUsers = updateUsersPort.updateAll(Collections.singletonList(user));
+    return updatedUsers.stream().findFirst().get();
   }
 }

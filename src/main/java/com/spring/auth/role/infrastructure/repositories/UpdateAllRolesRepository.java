@@ -2,6 +2,7 @@ package com.spring.auth.role.infrastructure.repositories;
 
 import com.spring.auth.events.ports.PublishRolesUpdatedEventPort;
 import com.spring.auth.exceptions.application.DuplicatedKeyException;
+import com.spring.auth.role.application.ports.out.CheckRolesConstraintsPort;
 import com.spring.auth.role.application.ports.out.UpdateAllRolesPort;
 import com.spring.auth.role.domain.Role;
 import com.spring.auth.role.domain.RoleJpa;
@@ -21,11 +22,12 @@ public class UpdateAllRolesRepository implements UpdateAllRolesPort {
 
   private RoleRepositoryJpa roleRepositoryJpa;
   private PublishRolesUpdatedEventPort publishRolesUpdatedEventPort;
+  private CheckRolesConstraintsPort checkRolesConstraintsPort;
 
   @Override
   @Transactional(rollbackFor = Exception.class)
   public List<Role> updateAll(List<Role> roles) throws DuplicatedKeyException {
-    checkRolesConstraints(roles);
+    checkRolesConstraintsPort.check(roles);
     List<Role> updatedRoles = updateRoles(roles);
     publishRolesUpdatedEventPort.publish(updatedRoles);
     return updatedRoles;
@@ -35,14 +37,5 @@ public class UpdateAllRolesRepository implements UpdateAllRolesPort {
     List<RoleJpa> rolesJpa = roles.stream().map(RoleMapper::parse).collect(Collectors.toList());
     List<RoleJpa> updatedRolesJpa = roleRepositoryJpa.saveAll(rolesJpa);
     return updatedRolesJpa.stream().map(RoleMapper::parse).collect(Collectors.toList());
-  }
-
-  private void checkRolesConstraints(List<Role> roles) throws DuplicatedKeyException {
-    List<String> roleIds = roles.stream().map(Role::getId).collect(Collectors.toList());
-    List<String> roleValues = roles.stream().map(Role::getValue).collect(Collectors.toList());
-    if (roleRepositoryJpa.existsByValueInAndIdNotIn(
-        roleValues, roleIds)) { // todo: duplicated comprobation
-      throw new DuplicatedKeyException("duplicated value in: " + roleValues);
-    }
   }
 }

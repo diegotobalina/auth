@@ -1,6 +1,7 @@
 package com.spring.auth.user.infrastructure.repositories;
 
 import com.spring.auth.exceptions.application.DuplicatedKeyException;
+import com.spring.auth.user.application.ports.out.CheckUsersConstraintsPort;
 import com.spring.auth.user.application.ports.out.UpdateUsersPort;
 import com.spring.auth.user.domain.User;
 import com.spring.auth.user.domain.UserJpa;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 public class UpdateUsersRepository implements UpdateUsersPort {
 
   private UserRepositoryJpa userRepositoryJpa;
+  private CheckUsersConstraintsPort checkUsersConstraintsPort;
 
   /**
    * Save all the existing users in the database with the new data. Before save the users check for
@@ -29,7 +31,7 @@ public class UpdateUsersRepository implements UpdateUsersPort {
    */
   @Override
   public List<User> updateAll(List<User> users) throws DuplicatedKeyException {
-    checkUsersConstraints(users);
+    checkUsersConstraintsPort.check(users);
     return saveUsers(users);
   }
 
@@ -37,19 +39,5 @@ public class UpdateUsersRepository implements UpdateUsersPort {
     List<UserJpa> usersJpa = users.stream().map(UserMapper::parse).collect(Collectors.toList());
     List<UserJpa> savedUsersJpa = userRepositoryJpa.saveAll(usersJpa);
     return savedUsersJpa.stream().map(UserMapper::parse).collect(Collectors.toList());
-  }
-
-  private void checkUsersConstraints(List<User> users) throws DuplicatedKeyException {
-    List<String> ids = users.stream().map(User::getId).collect(Collectors.toList());
-    // username must be unique in the database
-    List<String> usernames = users.stream().map(User::getUsername).collect(Collectors.toList());
-    if (userRepositoryJpa.existsByUsernameInAndIdNotIn(
-        usernames, ids)) // todo: duplicated comprobation
-    throw new DuplicatedKeyException("duplicated username in: " + usernames);
-
-    // email must be unique in the database
-    List<String> emails = users.stream().map(User::getEmail).collect(Collectors.toList());
-    if (userRepositoryJpa.existsByEmailInAndIdNotIn(emails, ids)) // todo: duplicated comprobation
-    throw new DuplicatedKeyException("duplicated email in: " + emails);
   }
 }

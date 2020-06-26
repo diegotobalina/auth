@@ -1,6 +1,7 @@
 package com.spring.auth.user.infrastructure.repositories;
 
 import com.spring.auth.exceptions.application.DuplicatedKeyException;
+import com.spring.auth.user.application.ports.out.CheckUsersConstraintsPort;
 import com.spring.auth.user.application.ports.out.CreateUserPort;
 import com.spring.auth.user.domain.User;
 import com.spring.auth.user.domain.UserJpa;
@@ -9,12 +10,15 @@ import com.spring.auth.user.infrastructure.repositories.jpa.UserRepositoryJpa;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collections;
+
 /** @author diegotobalina created on 24/06/2020 */
 @Repository
 @AllArgsConstructor
 public class CreateUserRepository implements CreateUserPort {
 
   private UserRepositoryJpa userRepositoryJpa;
+  private CheckUsersConstraintsPort checkUsersConstraintsPort;
 
   /**
    * Create a new user in the database, before saving the user checks for duplicated username or *
@@ -28,7 +32,7 @@ public class CreateUserRepository implements CreateUserPort {
   @Override
   public User create(User user) throws DuplicatedKeyException {
     if (user.getId() != null) throw new IllegalArgumentException("user id must be null");
-    checkUserConstraints(user);
+    checkUsersConstraintsPort.check(Collections.singletonList(user));
     return saveUser(user);
   }
 
@@ -36,19 +40,5 @@ public class CreateUserRepository implements CreateUserPort {
     UserJpa userJpa = UserMapper.parse(user);
     UserJpa savedUser = this.userRepositoryJpa.save(userJpa);
     return UserMapper.parse(savedUser);
-  }
-
-  private void checkUserConstraints(User user) throws DuplicatedKeyException {
-    // username must be unique in the database
-    String username = user.getUsername();
-    if (userRepositoryJpa.existsByUsername(username)) { // todo: duplicated comprobation
-      throw new DuplicatedKeyException("duplicated username: " + username);
-    }
-
-    // email must be unique in the database
-    String email = user.getEmail();
-    if (userRepositoryJpa.existsByEmail(email)) { // todo: duplicated comprobation
-      throw new DuplicatedKeyException("duplicated email: " + email);
-    }
   }
 }
