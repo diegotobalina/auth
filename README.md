@@ -94,6 +94,8 @@ POST /users -> ROLE_ADMIN AND CREATE
 PUT /users/{userId}/roles -> ROLE_ADMIN AND UPDATE
 PUT /users/password -> ( ROLE_ADMIN OR ROLE_USER ) AND UPDATE_USER
 PUT /users/{userId}/password -> ROLE_ADMIN AND UPDATE
+PUT /users/{userId}/lock -> ROLE_ADMIN AND UPDATE
+PUT /users/{userId}/unlock -> ROLE_ADMIN AND UPDATE
 DELETE /users/{userId}/roles -> ROLE_ADMIN AND DELETE
 ````
 **** Do not delete any initial role or scope !!
