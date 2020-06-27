@@ -60,7 +60,8 @@ public class GoogleAuthenticationFilter extends OncePerRequestFilter {
 
   private User getUserFromGoogleJwt(String jwtWithoutPrefix)
       throws GeneralSecurityException, IOException, GoogleGetInfoException, InfiniteLoopException,
-          DuplicatedKeyException, NotFoundException, LockedUserException {
+          DuplicatedKeyException, NotFoundException, LockedUserException,
+          EmailDoesNotExistsException {
     GoogleIdToken.Payload googleInfo = this.googleGetInfoPort.get(jwtWithoutPrefix);
     return this.googleLoginPort.login(googleInfo);
   }

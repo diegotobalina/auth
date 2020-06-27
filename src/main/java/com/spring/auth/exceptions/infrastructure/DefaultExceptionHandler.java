@@ -43,6 +43,14 @@ public class DefaultExceptionHandler {
   }
 
   @ResponseBody
+  @ExceptionHandler({EmailDoesNotExistsException.class})
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  private ErrorResponse emailDoesNotExistsExceptionHandler(
+      HttpServletRequest request, HttpServletResponse response, EmailDoesNotExistsException ex) {
+    return ExceptionUtil.getErrorResponse(request, HttpStatus.BAD_REQUEST, ex);
+  }
+
+  @ResponseBody
   @ExceptionHandler({DuplicatedKeyException.class})
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   private ErrorResponse duplicatedKeyException(
