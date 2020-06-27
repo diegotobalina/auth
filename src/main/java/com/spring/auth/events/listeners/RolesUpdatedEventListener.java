@@ -8,6 +8,7 @@ import com.spring.auth.user.application.ports.out.FindUserPort;
 import com.spring.auth.user.application.ports.out.UpdateUserPort;
 import com.spring.auth.user.domain.User;
 import lombok.AllArgsConstructor;
+import org.springframework.core.annotation.Order;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.transaction.event.TransactionalEventListener;
 
@@ -22,15 +23,12 @@ public class RolesUpdatedEventListener {
   private FindUserPort findUserPort;
   private UpdateUserPort updateUserPort;
 
-  @Async
-  @TransactionalEventListener
-  public void rolesUpdated(RolesUpdatedEvent rolesUpdatedEvent) throws DuplicatedKeyException {
-    List<Role> updatedRoles = rolesUpdatedEvent.getSource();
-    updateUsersRoles(updatedRoles);
-  }
-
   /** When a role is updated should be updated in the users */
-  private void updateUsersRoles(List<Role> updatedRoles) throws DuplicatedKeyException {
+  @Async
+  @Order(1)
+  @TransactionalEventListener
+  public void updateUsersRoles(RolesUpdatedEvent rolesUpdatedEvent) throws DuplicatedKeyException {
+    List<Role> updatedRoles = rolesUpdatedEvent.getSource();
     List<String> roleIds = updatedRoles.stream().map(Role::getId).collect(Collectors.toList());
     List<User> users = findUserPort.findAllByRoleIds(roleIds);
     for (User user : users) {

@@ -9,6 +9,7 @@ import com.spring.auth.session.domain.Session;
 import com.spring.auth.user.application.ports.out.FindUserPort;
 import com.spring.auth.user.domain.User;
 import lombok.AllArgsConstructor;
+import org.springframework.core.annotation.Order;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.transaction.event.TransactionalEventListener;
 
@@ -22,15 +23,13 @@ public class SessionCreatedEventListener {
   private CountSessionPort countSessionPort;
 
   @Async
+  @Order(1)
   @TransactionalEventListener
-  public void sessionCreated(SessionCreatedEvent sessionCreatedEvent) throws NotFoundException {
+  public void checkMaxUserSessions(SessionCreatedEvent sessionCreatedEvent)
+      throws NotFoundException {
     Session createdSession = sessionCreatedEvent.getSource();
-    checkMaxUserSessions(createdSession);
-  }
-
-  private void checkMaxUserSessions(Session session) throws NotFoundException {
     // if the user can´t have more open sessions the oldest one will be deleted
-    String userId = session.getUserId();
+    String userId = createdSession.getUserId();
     if (!canUserHaveMoreSessions(userId)) {
       deleteOlderSessionByUserIdPort.delete(userId);
     }
