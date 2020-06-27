@@ -53,11 +53,12 @@ UPDATE_USER: user scope for update objects info
 ````
 When a user is locked will not have permissions to call:
 
-- login endpoint
-- access endpoint
-- userInfo endpoint
+- login use case
+- access use case
+- user info use case
+- google login use case
 
-** can use another endpoints so the "lock" process will be completed when the curren "access token" expires ( by default 5 min )
+** can use another endpoints if have a valid jwt so the "lock" process will be completed when the current "access token" expires ( by default 5 min )
 ````
 
 

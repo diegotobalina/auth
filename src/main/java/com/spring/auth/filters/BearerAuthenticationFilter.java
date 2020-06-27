@@ -46,7 +46,7 @@ public class BearerAuthenticationFilter extends OncePerRequestFilter {
     // try to login with the token
     try {
       String jwtWithoutPrefix = TokenUtil.removeBearerPrefix(jwtWithPrefix);
-      User user = getUserFromBearerJwt(jwtWithoutPrefix);
+      User user = getUserFromBearerJwt(jwtWithoutPrefix); // get user data only from jwt
       AuthenticationUtil.authenticate(user);
       log.info("authentication ok for user {}", user.getId());
     } catch (Exception ex) {

@@ -1,10 +1,7 @@
 package com.spring.auth.filters;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
-import com.spring.auth.exceptions.application.DuplicatedKeyException;
-import com.spring.auth.exceptions.application.GoogleGetInfoException;
-import com.spring.auth.exceptions.application.InfiniteLoopException;
-import com.spring.auth.exceptions.application.NotFoundException;
+import com.spring.auth.exceptions.application.*;
 import com.spring.auth.google.application.ports.in.GoogleLoginPort;
 import com.spring.auth.google.application.ports.out.GoogleGetInfoPort;
 import com.spring.auth.user.domain.User;
@@ -51,7 +48,7 @@ public class GoogleAuthenticationFilter extends OncePerRequestFilter {
     // try to login with the token
     try {
       String jwtWithoutPrefix = TokenUtil.removeGooglePrefix(jwtWithPrefix);
-      User user = getUserFromGoogleJwt(jwtWithoutPrefix);
+      User user = getUserFromGoogleJwt(jwtWithoutPrefix); // get full user from database
       AuthenticationUtil.authenticate(user);
       log.info("authentication ok for user {}", user.getId());
     } catch (Exception ex) {
@@ -63,7 +60,7 @@ public class GoogleAuthenticationFilter extends OncePerRequestFilter {
 
   private User getUserFromGoogleJwt(String jwtWithoutPrefix)
       throws GeneralSecurityException, IOException, GoogleGetInfoException, InfiniteLoopException,
-          DuplicatedKeyException, NotFoundException {
+          DuplicatedKeyException, NotFoundException, LockedUserException {
     GoogleIdToken.Payload googleInfo = this.googleGetInfoPort.get(jwtWithoutPrefix);
     return this.googleLoginPort.login(googleInfo);
   }
