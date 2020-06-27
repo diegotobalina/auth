@@ -3,6 +3,7 @@ package com.spring.auth.authorization.infrastructure.controllers;
 import com.spring.auth.anotations.components.controllers.AuthorizationController;
 import com.spring.auth.authorization.application.ports.in.UserInfoPort;
 import com.spring.auth.authorization.infrastructure.dto.output.UserInfoOutPutDto;
+import com.spring.auth.exceptions.application.LockedUserException;
 import com.spring.auth.exceptions.application.NotFoundException;
 import com.spring.auth.user.domain.User;
 import io.swagger.annotations.ApiImplicitParam;
@@ -37,7 +38,7 @@ public class UserInfoController {
   })
   @GetMapping("/userInfo")
   @PreAuthorize("(hasRole('ADMIN') or hasRole('USER')) and hasPermission('hasAccess','READ_USER')")
-  public UserInfoOutPutDto userInfo(final Principal principal) throws NotFoundException {
+  public UserInfoOutPutDto userInfo(final Principal principal) throws NotFoundException, LockedUserException {
     final User user = userInfoPort.userInfo(principal);
     return new UserInfoOutPutDto(user);
   }

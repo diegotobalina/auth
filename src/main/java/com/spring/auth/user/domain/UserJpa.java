@@ -30,4 +30,5 @@ public class UserJpa {
   @Indexed private List<RoleJpa> roles;
   @Indexed private List<ScopeJpa> scopes;
   private int maxSessions = 10;
+  private boolean locked = false;
 }

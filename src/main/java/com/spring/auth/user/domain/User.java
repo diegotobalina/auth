@@ -3,10 +3,7 @@ package com.spring.auth.user.domain;
 import com.spring.auth.role.domain.Role;
 import com.spring.auth.scope.domain.Scope;
 import com.spring.auth.session.domain.Session;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -21,6 +18,7 @@ import java.util.regex.Pattern;
 @Getter
 @ToString
 @NoArgsConstructor
+@AllArgsConstructor
 public class User implements Serializable {
 
   private String id;
@@ -30,6 +28,7 @@ public class User implements Serializable {
   private List<Role> roles = new ArrayList<>();
   private List<Scope> scopes = new ArrayList<>();
   private int maxSessions = 10;
+  private boolean locked = false;
 
   // not loaded by default, call LoadUserSessionsPort
   @Setter private List<Session> sessions;
@@ -45,23 +44,6 @@ public class User implements Serializable {
     this.password = password;
     this.roles = roles;
     this.scopes = scopes;
-  }
-
-  public User(
-      String id,
-      String username,
-      String email,
-      String password,
-      List<Role> roles,
-      List<Scope> scopes,
-      Integer maxSessions) {
-    this.id = id;
-    this.username = username;
-    this.email = email;
-    this.password = password;
-    this.roles = roles;
-    this.scopes = scopes;
-    this.maxSessions = maxSessions;
   }
 
   public User(final String id, final List<Role> roles, final List<Scope> scopes) {
@@ -172,5 +154,13 @@ public class User implements Serializable {
   public Role getRoleById(String id) {
     for (Role role : roles) if (role.getId().equals(id)) return role;
     return null;
+  }
+
+  public void lock() {
+    this.locked = true;
+  }
+
+  public void unlock() {
+    this.locked = false;
   }
 }

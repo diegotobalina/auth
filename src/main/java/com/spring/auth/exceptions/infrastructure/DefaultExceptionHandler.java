@@ -105,4 +105,12 @@ public class DefaultExceptionHandler {
       HttpServletRequest request, HttpServletResponse response, Exception ex) {
     return ExceptionUtil.getErrorResponse(request, HttpStatus.FORBIDDEN, ex);
   }
+
+  @ResponseBody
+  @ExceptionHandler({LockedUserException.class})
+  @ResponseStatus(HttpStatus.FORBIDDEN)
+  private ErrorResponse lockedUserException(
+      HttpServletRequest request, HttpServletResponse response, LockedUserException ex) {
+    return ExceptionUtil.getErrorResponse(request, HttpStatus.FORBIDDEN, ex);
+  }
 }
