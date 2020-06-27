@@ -49,6 +49,18 @@ DELETE: admin scope for object deleting
 READ_USER: user scope for data reading
 UPDATE_USER: user scope for update objects info
 ````
+### Users locking
+````
+When a user is locked will not have permissions to call:
+
+- login endpoint
+- access endpoint
+- userInfo endpoint
+
+** can use another endpoints so the "lock" process will be completed when the curren "access token" expires ( by default 5 min )
+````
+
+
 ### Default calls security
 oauth2
 ````

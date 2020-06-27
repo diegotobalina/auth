@@ -3,6 +3,7 @@ package com.spring.auth.authorization.application;
 import com.spring.auth.anotations.components.UseCase;
 import com.spring.auth.authorization.application.ports.in.LoginUserPort;
 import com.spring.auth.exceptions.application.DuplicatedKeyException;
+import com.spring.auth.exceptions.application.LockedUserException;
 import com.spring.auth.exceptions.application.NotFoundException;
 import com.spring.auth.exceptions.application.WrongPasswordException;
 import com.spring.auth.session.application.ports.out.CreateSessionPort;
@@ -23,13 +24,14 @@ public class LoginUseCase implements LoginUserPort {
   @Override
   @Transactional(rollbackFor = Exception.class)
   public Session login(String username, String email, String password)
-      throws NotFoundException, WrongPasswordException, DuplicatedKeyException {
+      throws NotFoundException, WrongPasswordException, DuplicatedKeyException,
+          LockedUserException {
 
     // findAll the user trying to login
     User user = findUserPort.findByUsernameOrEmail(username, email);
 
-    // check if its de correct password
-    if (!user.doPasswordsMatch(password)) throw new WrongPasswordException("invalid password");
+    // check if the user is locked
+    if (user.isLocked()) throw new LockedUserException("this user is locked");
 
     // creating session
     Session session = new Session(user.getId());

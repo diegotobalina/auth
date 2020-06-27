@@ -31,7 +31,8 @@ public abstract class UserMapper {
     final List<Scope> scopes =
         userJpa.getScopes().stream().map(ScopeMapper::parse).collect(Collectors.toList());
     final Integer maxSessions = userJpa.getMaxSessions();
-    return new User(id, username, email, password, roles, scopes, maxSessions);
+    boolean locked = userJpa.isLocked();
+    return new User(id, username, email, password, roles, scopes, maxSessions, locked, null);
   }
 
   public static UserJpa parse(User user) {
@@ -43,7 +44,8 @@ public abstract class UserMapper {
         user.getRoles().stream().map(RoleMapper::parse).collect(Collectors.toList());
     final List<ScopeJpa> scopesJpa =
         user.getScopes().stream().map(ScopeMapper::parse).collect(Collectors.toList());
-    final int maxSessions = user.getMaxSessions();
-    return new UserJpa(id, username, email, password, rolesJpa, scopesJpa, maxSessions);
+    final Integer maxSessions = user.getMaxSessions();
+    boolean locked = user.isLocked();
+    return new UserJpa(id, username, email, password, rolesJpa, scopesJpa, maxSessions, locked);
   }
 }

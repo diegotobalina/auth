@@ -5,6 +5,7 @@ import com.spring.auth.authorization.application.ports.in.LoginUserPort;
 import com.spring.auth.authorization.infrastructure.dto.input.LoginInputDto;
 import com.spring.auth.authorization.infrastructure.dto.output.LoginOutputDto;
 import com.spring.auth.exceptions.application.DuplicatedKeyException;
+import com.spring.auth.exceptions.application.LockedUserException;
 import com.spring.auth.exceptions.application.NotFoundException;
 import com.spring.auth.exceptions.application.WrongPasswordException;
 import com.spring.auth.session.domain.Session;
@@ -39,7 +40,8 @@ public class LoginController {
   @ResponseStatus(HttpStatus.CREATED)
   @PostMapping("/login")
   public LoginOutputDto login(@RequestBody @Valid final LoginInputDto loginInputDto)
-      throws DuplicatedKeyException, NotFoundException, WrongPasswordException {
+      throws DuplicatedKeyException, NotFoundException, WrongPasswordException,
+          LockedUserException {
     final String username = loginInputDto.getUsername();
     final String email = loginInputDto.getEmail();
     final String password = loginInputDto.getPassword();
