@@ -7,7 +7,6 @@ import com.spring.auth.session.application.ports.out.DeleteSessionPort;
 import com.spring.auth.session.application.ports.out.FindSessionPort;
 import com.spring.auth.session.domain.Session;
 import lombok.AllArgsConstructor;
-import lombok.Synchronized;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,7 +20,6 @@ public class DeleteOlderSessionByUserIdUseCase implements DeleteOlderSessionByUs
 
   @Async
   @Override
-  @Synchronized
   @Transactional(rollbackFor = Exception.class)
   public void delete(final String userId) throws NotFoundException {
     Session olderSession = findSessionPort.findOlderByUserId(userId);
