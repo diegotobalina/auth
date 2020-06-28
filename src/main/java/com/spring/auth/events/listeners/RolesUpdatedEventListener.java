@@ -25,7 +25,6 @@ public class RolesUpdatedEventListener {
 
   /** When a role is updated should be updated in the users */
   @Async
-  @Order(1)
   @TransactionalEventListener
   public void updateUsersRoles(RolesUpdatedEvent rolesUpdatedEvent) throws DuplicatedKeyException {
     List<Role> updatedRoles = rolesUpdatedEvent.getSource();

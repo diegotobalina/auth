@@ -24,7 +24,6 @@ public class RoleDeletedEventListener {
 
   /** When a role is deleted should be removed from the users */
   @Async
-  @Order(1)
   @TransactionalEventListener
   public void removeRolesFromUsers(RoleDeletedEvent roleDeletedEvent)
       throws DuplicatedKeyException {
