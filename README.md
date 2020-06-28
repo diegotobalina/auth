@@ -1,6 +1,11 @@
 # Auth server
 Auth server using spring and Google login
 
+## Actual version
+````
+0.1.3.2
+````
+
 ## General information
 Deployed app
 ````
