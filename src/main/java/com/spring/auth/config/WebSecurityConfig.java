@@ -25,7 +25,6 @@ import java.io.IOException;
 
 /** @author diegotobalina created on 24/06/2020 */
 @Slf4j
-@RefreshScope
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 

@@ -21,7 +21,6 @@ import java.util.Objects;
 /** @author diegotobalina created on 24/06/2020 */
 @Slf4j
 @Repository
-@RefreshScope
 public class GoogleGetInfoRepository implements GoogleGetInfoPort {
 
   @Value("${google.oauth2.client_id}")

@@ -16,7 +16,6 @@ import java.util.*;
 /** @author diegotobalina created on 24/06/2020 */
 @Slf4j
 @Component
-@RefreshScope
 public class HttpLoggingFilter implements Filter {
 
   @Value("${logging.include}")

@@ -24,7 +24,6 @@ import java.util.List;
 
 /** @author diegotobalina created on 24/06/2020 */
 @UseCase
-@RefreshScope
 public class TokenInfoUseCase implements TokenInfoPort {
 
   @Value("${server.auth.secret-key}")
