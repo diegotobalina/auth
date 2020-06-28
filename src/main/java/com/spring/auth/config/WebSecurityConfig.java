@@ -9,6 +9,7 @@ import com.spring.auth.google.application.ports.out.GoogleGetInfoPort;
 import com.spring.auth.util.RequestUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -24,6 +25,7 @@ import java.io.IOException;
 
 /** @author diegotobalina created on 24/06/2020 */
 @Slf4j
+@RefreshScope
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 

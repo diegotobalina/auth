@@ -10,6 +10,7 @@ import com.spring.auth.exceptions.application.GoogleGetInfoException;
 import com.spring.auth.google.application.ports.out.GoogleGetInfoPort;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
@@ -20,6 +21,7 @@ import java.util.Objects;
 /** @author diegotobalina created on 24/06/2020 */
 @Slf4j
 @Repository
+@RefreshScope
 public class GoogleGetInfoRepository implements GoogleGetInfoPort {
 
   @Value("${google.oauth2.client_id}")

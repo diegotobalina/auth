@@ -14,9 +14,11 @@ import com.spring.auth.user.application.ports.out.FindUserPort;
 import com.spring.auth.user.domain.User;
 import com.spring.auth.util.TokenUtil;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 
 /** @author diegotobalina created on 24/06/2020 */
 @UseCase
+@RefreshScope
 public class AccessUseCase implements AccessPort {
 
   @Value("${server.auth.secret-key}")
