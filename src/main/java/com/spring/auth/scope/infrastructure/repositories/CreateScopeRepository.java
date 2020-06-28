@@ -30,9 +30,10 @@ public class CreateScopeRepository implements CreateScopePort {
 
   private void checkScopeConstraints(Scope scope) throws DuplicatedKeyException {
     String value = scope.getValue();
-    // scope value must be unique in the database
-    if (scopeRepositoryJpa.existsByValue(value)) {
-      throw new DuplicatedKeyException("duplicated value: " + value);
-    }
+    if (isValueDuplicated(value)) throw new DuplicatedKeyException("duplicated value: " + value);
+  }
+
+  private boolean isValueDuplicated(String value) {
+    return scopeRepositoryJpa.existsByValue(value);
   }
 }

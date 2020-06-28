@@ -23,8 +23,8 @@ public class CreateRoleRepository implements CreateRolePort {
   @Override
   public Role create(Role role) throws DuplicatedKeyException {
     checkRolesConstraintsPort.check(List.of(role));
-    final RoleJpa roleJpa = RoleMapper.parse(role);
-    final RoleJpa savedRoleJpa = roleRepositoryJpa.save(roleJpa);
+    RoleJpa roleJpa = RoleMapper.parse(role);
+    RoleJpa savedRoleJpa = roleRepositoryJpa.save(roleJpa);
     return RoleMapper.parse(savedRoleJpa);
   }
 }

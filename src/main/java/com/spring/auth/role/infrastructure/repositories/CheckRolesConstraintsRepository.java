@@ -18,10 +18,22 @@ public class CheckRolesConstraintsRepository implements CheckRolesConstraintsPor
   private RoleRepositoryJpa roleRepositoryJpa;
 
   public void check(List<Role> roles) throws DuplicatedKeyException {
-    List<String> roleIds = roles.stream().map(Role::getId).collect(Collectors.toList());
-    List<String> roleValues = roles.stream().map(Role::getValue).collect(Collectors.toList());
-    if (roleRepositoryJpa.existsByValueInAndIdNotIn(roleValues, roleIds)) {
+    List<String> roleIds = getRoleIds(roles);
+    List<String> roleValues = getRoleValues(roles);
+    if (isValueDuplicated(roleIds, roleValues)) {
       throw new DuplicatedKeyException("duplicated value in: " + roleValues);
     }
+  }
+
+  private List<String> getRoleValues(List<Role> roles) {
+    return roles.stream().map(Role::getValue).collect(Collectors.toList());
+  }
+
+  private List<String> getRoleIds(List<Role> roles) {
+    return roles.stream().map(Role::getId).collect(Collectors.toList());
+  }
+
+  private boolean isValueDuplicated(List<String> roleIds, List<String> roleValues) {
+    return roleRepositoryJpa.existsByValueInAndIdNotIn(roleValues, roleIds);
   }
 }

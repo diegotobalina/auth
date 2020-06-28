@@ -28,26 +28,20 @@ public class GoogleLoginUseCase implements GoogleLoginPort {
           EmailDoesNotExistsException {
     final String email = payload.getEmail();
     // if the user exists in the system should not be registered again
-    if (existsUserPort.existsByEmail(email)) {
-      User user = findUserPort.findByEmail(email);
-      if (user.isLocked()) throw new LockedUserException("this user is locked");
-      return user;
-    }
+    if (isUserInTheSystem(email)) return getUserIfNotLocked(email);
     // user not in the system, register the user
-    final String username = this.findAvailableUsername(email);
+    final String username = findUserPort.findAvailableUsername(email);
     final String randomPassword = UserUtil.generateRandomPassword();
     return registerUserPort.register(username, email, randomPassword);
   }
 
-  private String findAvailableUsername(final String email) throws InfiniteLoopException {
-    for (int i = 0; i < 10; i++) { // loop for limited attempts
-      final String username = UserUtil.generateUsername(email);
-      if (isAvailable(username)) return username;
-    }
-    throw new InfiniteLoopException("can not find an empty username");
+  private User getUserIfNotLocked(String email) throws NotFoundException, LockedUserException {
+    User user = findUserPort.findByEmail(email);
+    if (user.isLocked()) throw new LockedUserException("this user is locked");
+    return user;
   }
 
-  private boolean isAvailable(final String username) {
-    return !existsUserPort.existsByUsername(username);
+  private boolean isUserInTheSystem(String email) {
+    return existsUserPort.existsByEmail(email);
   }
 }

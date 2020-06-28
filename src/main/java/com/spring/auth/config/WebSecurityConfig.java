@@ -1,14 +1,12 @@
 package com.spring.auth.config;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
 import com.spring.auth.exceptions.domain.ErrorResponse;
 import com.spring.auth.exceptions.util.ExceptionUtil;
 import com.spring.auth.filters.BearerAuthenticationFilter;
 import com.spring.auth.filters.GoogleAuthenticationFilter;
 import com.spring.auth.google.application.ports.in.GoogleLoginPort;
 import com.spring.auth.google.application.ports.out.GoogleGetInfoPort;
-import com.spring.auth.util.CorsUtil;
+import com.spring.auth.util.RequestUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
@@ -46,42 +44,40 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(final HttpSecurity http) throws Exception {
 
-    // config
     http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
-    // exception handler during the authentication process
-    http.csrf()
-        .disable()
-        .exceptionHandling()
-        .authenticationEntryPoint(
-                this::exceptionDuringAuthorizationProcess);
+    http.csrf().disable();
+    http.exceptionHandling().authenticationEntryPoint(this::exceptionDuringAuthorizationProcess);
 
     // custom authentication filters
-    BearerAuthenticationFilter bearerAuthenticationFilter =
-        new BearerAuthenticationFilter(secretKey);
-    GoogleAuthenticationFilter googleAuthenticationFilter =
-        new GoogleAuthenticationFilter(googleGetInfoPort, googleLoginPort);
+    var bearerAuthFilter = new BearerAuthenticationFilter(secretKey);
+    var googleAuthFilter = new GoogleAuthenticationFilter(googleGetInfoPort, googleLoginPort);
 
-    // validate routes
-    http.antMatcher(apiPrefix + "/**")
+    String apiContext = String.format("%s/**", apiPrefix);
+    String accessEndpoint = String.format("%s/oauth2/access", apiContext);
+    String loginEndpoint = String.format("%s/oauth2/login", apiContext);
+    String logoutEndpoint = String.format("%s/oauth2/logout", apiContext);
+    String tokenInfoEndpoint = String.format("%s/oauth2/tokenInfo", apiContext);
+    String usersEndpoint = String.format("%s/users", apiContext);
+
+    http.antMatcher(apiContext)
         .authorizeRequests()
-        .antMatchers(HttpMethod.POST, apiPrefix + "/oauth2/access")
+        .antMatchers(HttpMethod.POST, accessEndpoint)
         .permitAll()
-        .antMatchers(HttpMethod.POST, apiPrefix + "/oauth2/login")
+        .antMatchers(HttpMethod.POST, loginEndpoint)
         .permitAll()
-        .antMatchers(HttpMethod.DELETE, apiPrefix + "/oauth2/logout")
+        .antMatchers(HttpMethod.DELETE, logoutEndpoint)
         .permitAll()
-        .antMatchers(HttpMethod.GET, apiPrefix + "/oauth2/tokenInfo")
+        .antMatchers(HttpMethod.GET, tokenInfoEndpoint)
         .permitAll()
-        .antMatchers(HttpMethod.POST, apiPrefix + "/users")
+        .antMatchers(HttpMethod.POST, usersEndpoint)
         .permitAll()
         .antMatchers(HttpMethod.OPTIONS)
         .permitAll()
         .anyRequest()
         .authenticated()
         .and()
-        .addFilterBefore(bearerAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-        .addFilterBefore(googleAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+        .addFilterBefore(bearerAuthFilter, UsernamePasswordAuthenticationFilter.class)
+        .addFilterBefore(googleAuthFilter, UsernamePasswordAuthenticationFilter.class);
   }
 
   private void exceptionDuringAuthorizationProcess(
@@ -89,16 +85,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
       throws IOException {
     log.info("UNAUTHORIZED {} {}", req.getMethod(), req.getRequestURI());
     ErrorResponse errorResponse = ExceptionUtil.getErrorResponse(req, HttpStatus.UNAUTHORIZED, e);
-    returnErrorResponse(rsp, errorResponse);
-  }
-
-  private void returnErrorResponse(HttpServletResponse rsp, ErrorResponse errorResponse)
-      throws IOException {
-    ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-    String json = ow.writeValueAsString(errorResponse);
-    CorsUtil.setHeaders(rsp);
-    rsp.setContentType("application/json");
-    rsp.setStatus(errorResponse.getStatus());
-    rsp.getOutputStream().println(json);
+    RequestUtil.returnErrorResponse(rsp, errorResponse);
   }
 }

@@ -13,7 +13,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /** @author diegotobalina created on 24/06/2020 */
 @Repository
@@ -35,14 +34,14 @@ public class UpdateRoleRepository implements UpdateRolePort {
   @Transactional(rollbackFor = Exception.class)
   public List<Role> updateAll(List<Role> roles) throws DuplicatedKeyException {
     checkRolesConstraintsPort.check(roles);
-    List<Role> updatedRoles = updateRoles(roles);
+    List<Role> updatedRoles = saveRoles(roles);
     publishRolesUpdatedEventPort.publish(updatedRoles);
     return updatedRoles;
   }
 
-  private List<Role> updateRoles(List<Role> roles) {
-    List<RoleJpa> rolesJpa = roles.stream().map(RoleMapper::parse).collect(Collectors.toList());
+  private List<Role> saveRoles(List<Role> roles) {
+    List<RoleJpa> rolesJpa = RoleMapper.parseRoleList(roles);
     List<RoleJpa> updatedRolesJpa = roleRepositoryJpa.saveAll(rolesJpa);
-    return updatedRolesJpa.stream().map(RoleMapper::parse).collect(Collectors.toList());
+    return RoleMapper.parseRoleJpaList(updatedRolesJpa);
   }
 }

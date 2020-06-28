@@ -1,5 +1,6 @@
 package com.spring.auth.user.application.ports.out;
 
+import com.spring.auth.exceptions.application.InfiniteLoopException;
 import com.spring.auth.exceptions.application.NotFoundException;
 import com.spring.auth.user.domain.User;
 
@@ -23,4 +24,6 @@ public interface FindUserPort {
   User findById(String id) throws NotFoundException;
 
   User findByUsernameOrEmail(String username, String email) throws NotFoundException;
+
+  String findAvailableUsername(String email) throws InfiniteLoopException;
 }

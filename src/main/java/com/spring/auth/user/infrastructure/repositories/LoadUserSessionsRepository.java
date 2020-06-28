@@ -19,8 +19,8 @@ public class LoadUserSessionsRepository implements LoadUserSessionsPort {
   @Override
   public User load(User user) {
     String userId = user.getId();
-    List<Session> allByUserId = findSessionPort.findAllByUserId(userId);
-    user.setSessions(allByUserId);
+    List<Session> sessionsByUserId = findSessionPort.findAllByUserId(userId);
+    user.setSessions(sessionsByUserId);
     return user;
   }
 }

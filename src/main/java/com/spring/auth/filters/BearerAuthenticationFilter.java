@@ -60,9 +60,17 @@ public class BearerAuthenticationFilter extends OncePerRequestFilter {
     JwtWrapper jwtWrapper = TokenUtil.getValues(jwtWithoutPrefix, secretKey);
     String userId = jwtWrapper.getUserId();
     List<String> rolesString = jwtWrapper.getRoles();
-    List<Role> roles = rolesString.stream().map(Role::new).collect(Collectors.toList());
+    List<Role> roles = getRolesFromString(rolesString);
     List<String> scopesString = jwtWrapper.getScopes();
-    List<Scope> scopes = scopesString.stream().map(Scope::new).collect(Collectors.toList());
+    List<Scope> scopes = getScopesFromString(scopesString);
     return new User(userId, roles, scopes);
+  }
+
+  private List<Scope> getScopesFromString(List<String> scopesString) {
+    return scopesString.stream().map(Scope::new).collect(Collectors.toList());
+  }
+
+  private List<Role> getRolesFromString(List<String> rolesString) {
+    return rolesString.stream().map(Role::new).collect(Collectors.toList());
   }
 }
