@@ -84,7 +84,7 @@ public class User implements Serializable {
   }
 
   public boolean canHaveMoreSessions(int sessionCount) {
-    return sessionCount < maxSessions;
+    return sessionCount <= maxSessions;
   }
 
   // use lazy collection sessions, load before use
