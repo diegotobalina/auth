@@ -9,7 +9,7 @@ Auth server using spring and Google login
 ## General information
 Deployed app
 ````
-https://xbidi-auth.herokuapp.com
+http://auth.dwebservices.com/
 ````
 Code formatter
 ````
