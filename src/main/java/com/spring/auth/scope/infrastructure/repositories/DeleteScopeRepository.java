@@ -37,7 +37,7 @@ public class DeleteScopeRepository implements DeleteScopePort {
 
   private Scope deleteScope(Scope scope) {
     ScopeJpa scopeJpa = ScopeMapper.parse(scope);
-    scopeRepositoryJpa.delete(scopeJpa);
+    scopeRepositoryJpa.deleteById(scopeJpa.getId());
     return ScopeMapper.parse(scopeJpa);
   }
 }

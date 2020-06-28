@@ -1,8 +1,9 @@
 package com.spring.auth.logs.infrastructure;
 
 import com.spring.auth.util.StringUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
@@ -13,10 +14,12 @@ import java.io.IOException;
 import java.util.*;
 
 /** @author diegotobalina created on 24/06/2020 */
+@Slf4j
 @Component
 public class HttpLoggingFilter implements Filter {
 
-  private static final Logger log = LoggerFactory.getLogger(HttpLoggingFilter.class);
+  @Value("${logging.include}")
+  List<String> loggingIncludes;
 
   @Override
   public void init(FilterConfig filterConfig) {}
@@ -30,7 +33,8 @@ public class HttpLoggingFilter implements Filter {
       BufferedResponseWrapper bufferedResponse = new BufferedResponseWrapper(httpServletResponse);
 
       // log request
-      if (isLoggableUri(httpServletRequest)) logRequest(bufferedRequest);
+      if (isLoggableUri(httpServletRequest) && loggingIncludes.contains("request"))
+        logRequest(bufferedRequest);
 
       long requestMillisStart = System.currentTimeMillis();
       chain.doFilter(bufferedRequest, bufferedResponse);
@@ -38,7 +42,8 @@ public class HttpLoggingFilter implements Filter {
       long requestTime = responseMillisStart - requestMillisStart;
 
       // log response
-      if (isLoggableUri(httpServletRequest)) logResponse(bufferedResponse, requestTime);
+      if (isLoggableUri(httpServletRequest) && loggingIncludes.contains("response"))
+        logResponse(bufferedResponse, requestTime);
 
     } catch (Throwable a) {
       log.error(a.getMessage());

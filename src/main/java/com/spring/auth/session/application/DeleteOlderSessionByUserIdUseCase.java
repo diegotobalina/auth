@@ -1,13 +1,13 @@
 package com.spring.auth.session.application;
 
 import com.spring.auth.anotations.components.UseCase;
-import com.spring.auth.exceptions.application.NotFoundException;
 import com.spring.auth.session.application.ports.in.DeleteOlderSessionByUserIdPort;
-import com.spring.auth.session.application.ports.out.DeleteSessionPort;
-import com.spring.auth.session.application.ports.out.FindSessionPort;
-import com.spring.auth.session.domain.Session;
+import com.spring.auth.session.domain.SessionJpa;
 import lombok.AllArgsConstructor;
-import lombok.Synchronized;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,15 +16,16 @@ import org.springframework.transaction.annotation.Transactional;
 @AllArgsConstructor
 public class DeleteOlderSessionByUserIdUseCase implements DeleteOlderSessionByUserIdPort {
 
-  private FindSessionPort findSessionPort;
-  private DeleteSessionPort deleteSessionPort;
+  private MongoTemplate mongoTemplate;
 
   @Async
   @Override
-  @Synchronized
   @Transactional(rollbackFor = Exception.class)
-  public void delete(final String userId) throws NotFoundException {
-    Session olderSession = findSessionPort.findOlderByUserId(userId);
-    deleteSessionPort.delete(olderSession);
+  public void delete(final String userId) {
+    Query query = new Query();
+    query.addCriteria(Criteria.where("userId").is(userId));
+    query.with(Sort.by(Sort.Direction.ASC, "expiration"));
+    query.limit(1);
+    mongoTemplate.remove(query, SessionJpa.class);
   }
 }

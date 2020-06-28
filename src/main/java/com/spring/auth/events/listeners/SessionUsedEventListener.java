@@ -18,7 +18,6 @@ public class SessionUsedEventListener {
 
   /** When a session is used expiration time should be changed */
   @Async
-  @Order(1)
   @TransactionalEventListener
   public void refreshSession(SessionUsedEvent sessionUsedEvent) {
     Session usedSession = sessionUsedEvent.getSource();

@@ -24,7 +24,6 @@ public class ScopeDeletedEventListener {
 
   /** When a scope is deleted should be removed from the roles */
   @Async
-  @Order(1)
   @TransactionalEventListener
   public void removeScopesFromRoles(ScopeDeletedEvent scopeDeletedEvent)
       throws DuplicatedKeyException {

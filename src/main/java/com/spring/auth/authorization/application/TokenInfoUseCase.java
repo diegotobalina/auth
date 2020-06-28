@@ -15,6 +15,7 @@ import com.spring.auth.util.RegexUtil;
 import com.spring.auth.util.TokenUtil;
 import com.spring.auth.util.TokenUtil.JwtWrapper;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;

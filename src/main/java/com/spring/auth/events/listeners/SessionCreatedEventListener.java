@@ -23,7 +23,6 @@ public class SessionCreatedEventListener {
   private CountSessionPort countSessionPort;
 
   @Async
-  @Order(1)
   @TransactionalEventListener
   public void checkMaxUserSessions(SessionCreatedEvent sessionCreatedEvent)
       throws NotFoundException {
