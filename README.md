@@ -3,7 +3,7 @@ Auth server using spring and Google login
 
 ## Actual version
 ````
-0.1.4.4
+0.1.5.0
 ````
 
 ## General information
