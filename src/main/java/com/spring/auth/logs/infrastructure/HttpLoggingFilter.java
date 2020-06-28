@@ -46,31 +46,35 @@ public class HttpLoggingFilter implements Filter {
   }
 
   private void logRequest(BufferedRequestWrapper bufferedRequest) throws IOException {
-
     String requestMethod = StringUtil.removeRowJumps(bufferedRequest.getMethod());
     String requestUri = StringUtil.removeRowJumps(bufferedRequest.getRequestURI());
     Map<String, String> requestMap = this.getTypesafeRequestMap(bufferedRequest);
     String requestParams = StringUtil.removeRowJumps(requestMap.toString());
     String requestBody = StringUtil.removeRowJumps(bufferedRequest.getRequestBody());
     String requestHeaders = StringUtil.removeRowJumps(getHeaders(bufferedRequest).toString());
-
-    log.info("Request method: {}", requestMethod);
-    log.info("Request url: {}", requestUri);
-    log.info("Request params: {}", requestParams);
-    log.info("Request body: {}", requestBody);
-    log.info("Request headers: {}", requestHeaders);
+    new Thread(
+            () -> {
+              log.info("Request method: {}", requestMethod);
+              log.info("Request url: {}", requestUri);
+              log.info("Request params: {}", requestParams);
+              log.info("Request body: {}", requestBody);
+              log.info("Request headers: {}", requestHeaders);
+            })
+        .start();
   }
 
   private void logResponse(BufferedResponseWrapper bufferedResponse, long requestTime) {
-
     int responseStatus = bufferedResponse.getStatus();
     String responseHeaders = StringUtil.removeRowJumps(getHeaders(bufferedResponse).toString());
     String responseBody = bufferedResponse.getContent();
-
-    log.info("Response Code: {}", responseStatus);
-    log.info("Response Headers: {}", responseHeaders);
-    log.info("Response Body Text: {}", StringUtil.removeRowJumps(responseBody));
-    log.info("Total Request Time: {} ms", requestTime);
+    new Thread(
+            () -> {
+              log.info("Response Code: {}", responseStatus);
+              log.info("Response Headers: {}", responseHeaders);
+              log.info("Response Body Text: {}", StringUtil.removeRowJumps(responseBody));
+              log.info("Total Request Time: {} ms", requestTime);
+            })
+        .start();
   }
 
   private boolean isLoggableUri(final HttpServletRequest httpServletRequest) {

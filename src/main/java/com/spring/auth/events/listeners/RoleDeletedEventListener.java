@@ -8,6 +8,7 @@ import com.spring.auth.user.application.ports.in.RemoveRolesFromUserPort;
 import com.spring.auth.user.application.ports.out.FindUserPort;
 import com.spring.auth.user.domain.User;
 import lombok.AllArgsConstructor;
+import org.springframework.core.annotation.Order;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.transaction.event.TransactionalEventListener;
 
@@ -21,15 +22,13 @@ public class RoleDeletedEventListener {
   private RemoveRolesFromUserPort removeRolesFromUserPort;
   private FindUserPort findUserPort;
 
-  @Async
-  @TransactionalEventListener
-  public void roleDeleted(RoleDeletedEvent roleDeletedEvent) throws DuplicatedKeyException {
-    Role deletedRole = roleDeletedEvent.getSource();
-    removeRolesFromUsers(deletedRole);
-  }
-
   /** When a role is deleted should be removed from the users */
-  private void removeRolesFromUsers(Role deletedRole) throws DuplicatedKeyException {
+  @Async
+  @Order(1)
+  @TransactionalEventListener
+  public void removeRolesFromUsers(RoleDeletedEvent roleDeletedEvent)
+      throws DuplicatedKeyException {
+    Role deletedRole = roleDeletedEvent.getSource();
     List<User> users = findUserPort.findAllByRoleId(deletedRole.getId());
     removeRolesFromUserPort.remove(users, List.of(deletedRole.getId()));
   }

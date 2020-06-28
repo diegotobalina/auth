@@ -2,6 +2,7 @@ package com.spring.auth.user.infrastructure.controllers;
 
 import com.spring.auth.anotations.components.controllers.UserController;
 import com.spring.auth.exceptions.application.DuplicatedKeyException;
+import com.spring.auth.exceptions.application.EmailDoesNotExistsException;
 import com.spring.auth.exceptions.application.NotFoundException;
 import com.spring.auth.user.application.ports.in.RegisterUserPort;
 import com.spring.auth.user.domain.User;
@@ -27,7 +28,7 @@ public class RegisterController {
   @ResponseStatus(HttpStatus.CREATED)
   @PostMapping
   public RegisterOutputDto register(@RequestBody @Valid RegisterInputDto registerInputDto)
-      throws DuplicatedKeyException, NotFoundException {
+      throws DuplicatedKeyException, NotFoundException, EmailDoesNotExistsException {
     final String username = registerInputDto.getUsername();
     final String email = registerInputDto.getEmail();
     final String password = registerInputDto.getPassword();

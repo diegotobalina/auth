@@ -38,7 +38,8 @@ public class UserInfoController {
   })
   @GetMapping("/userInfo")
   @PreAuthorize("(hasRole('ADMIN') or hasRole('USER')) and hasPermission('hasAccess','READ_USER')")
-  public UserInfoOutPutDto userInfo(final Principal principal) throws NotFoundException, LockedUserException {
+  public UserInfoOutPutDto userInfo(final Principal principal)
+      throws NotFoundException, LockedUserException {
     final User user = userInfoPort.userInfo(principal);
     return new UserInfoOutPutDto(user);
   }

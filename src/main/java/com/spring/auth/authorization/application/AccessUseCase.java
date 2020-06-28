@@ -2,6 +2,7 @@ package com.spring.auth.authorization.application;
 
 import com.spring.auth.anotations.components.UseCase;
 import com.spring.auth.authorization.application.ports.in.AccessPort;
+import com.spring.auth.events.ports.PublishSessionUsedEventPort;
 import com.spring.auth.exceptions.application.InvalidTokenException;
 import com.spring.auth.exceptions.application.LockedUserException;
 import com.spring.auth.exceptions.application.NotFoundException;
@@ -23,18 +24,19 @@ public class AccessUseCase implements AccessPort {
 
   private FindUserPort findUserPort;
   private FindSessionPort findSessionPort;
-  private RefreshSessionPort refreshSessionPort;
   private DeleteSessionPort deleteSessionPort;
+  private PublishSessionUsedEventPort publishSessionUsedEventPort;
 
   public AccessUseCase(
       FindUserPort findUserPort,
       FindSessionPort findSessionPort,
       RefreshSessionPort refreshSessionPort,
-      DeleteSessionPort deleteSessionPort) {
+      DeleteSessionPort deleteSessionPort,
+      PublishSessionUsedEventPort publishSessionUsedEventPort) {
     this.findUserPort = findUserPort;
     this.findSessionPort = findSessionPort;
-    this.refreshSessionPort = refreshSessionPort;
     this.deleteSessionPort = deleteSessionPort;
+    this.publishSessionUsedEventPort = publishSessionUsedEventPort;
   }
 
   @Override
@@ -48,8 +50,8 @@ public class AccessUseCase implements AccessPort {
     User user = findUserPort.findById(session.getUserId());
     // check if the user is locked
     if (user.isLocked()) throw new LockedUserException("this user is locked");
-    // when a session is used should get new expiration time
-    refreshSessionPort.refresh(session); // todo: move to event
+    // session used event
+    publishSessionUsedEventPort.publish(session);
     // jwt generation
     return TokenUtil.generateBearerJwt(user, secretKey);
   }
