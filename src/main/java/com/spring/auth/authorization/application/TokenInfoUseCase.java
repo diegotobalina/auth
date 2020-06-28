@@ -62,8 +62,7 @@ public class TokenInfoUseCase implements TokenInfoPort {
       throws GeneralSecurityException, IOException, GoogleGetInfoException {
     GoogleIdToken.Payload payload = googleGetInfoPort.get(token);
     Date issuedAt = new Date(payload.getIssuedAtTimeSeconds() * 1000);
-    long payloadExpiration = payload.getExpirationTimeSeconds() * 1000;
-    Date expiration = new Date(System.currentTimeMillis() + payloadExpiration);
+    Date expiration = new Date(payload.getExpirationTimeSeconds() * 1000);
     String userId = payload.getEmail();
     String googleTokenWithPrefix = TokenUtil.addGooglePrefix(token);
     return new TokenInfo(googleTokenWithPrefix, issuedAt, expiration, userId);

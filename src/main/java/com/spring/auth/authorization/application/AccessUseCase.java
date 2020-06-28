@@ -31,10 +31,12 @@ public class AccessUseCase implements AccessPort {
       FindUserPort findUserPort,
       FindSessionPort findSessionPort,
       RefreshSessionPort refreshSessionPort,
-      DeleteSessionPort deleteSessionPort) {
+      DeleteSessionPort deleteSessionPort,
+      PublishSessionUsedEventPort publishSessionUsedEventPort) {
     this.findUserPort = findUserPort;
     this.findSessionPort = findSessionPort;
     this.deleteSessionPort = deleteSessionPort;
+    this.publishSessionUsedEventPort = publishSessionUsedEventPort;
   }
 
   @Override
