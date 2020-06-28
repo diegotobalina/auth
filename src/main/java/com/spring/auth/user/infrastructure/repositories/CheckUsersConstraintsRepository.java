@@ -24,12 +24,32 @@ public class CheckUsersConstraintsRepository implements CheckUsersConstraintsPor
 
   @Override
   public void check(List<User> users) throws DuplicatedKeyException {
-    List<String> ids = users.stream().map(User::getId).collect(Collectors.toList());
-    List<String> usernames = users.stream().map(User::getUsername).collect(Collectors.toList());
-    if (userRepositoryJpa.existsByUsernameInAndIdNotIn(usernames, ids))
+    List<String> ids = getIds(users);
+    List<String> usernames = getUsernames(users);
+    if (isUsernameDuplicated(ids, usernames))
       throw new DuplicatedKeyException("duplicated username in: " + usernames);
-    List<String> emails = users.stream().map(User::getEmail).collect(Collectors.toList());
-    if (userRepositoryJpa.existsByEmailInAndIdNotIn(emails, ids))
+    List<String> emails = getEmails(users);
+    if (isEmailDuplicated(ids, emails))
       throw new DuplicatedKeyException("duplicated email in: " + emails);
+  }
+
+  private boolean isEmailDuplicated(List<String> ids, List<String> emails) {
+    return userRepositoryJpa.existsByEmailInAndIdNotIn(emails, ids);
+  }
+
+  private boolean isUsernameDuplicated(List<String> ids, List<String> usernames) {
+    return userRepositoryJpa.existsByUsernameInAndIdNotIn(usernames, ids);
+  }
+
+  private List<String> getIds(List<User> users) {
+    return users.stream().map(User::getId).collect(Collectors.toList());
+  }
+
+  private List<String> getUsernames(List<User> users) {
+    return users.stream().map(User::getUsername).collect(Collectors.toList());
+  }
+
+  private List<String> getEmails(List<User> users) {
+    return users.stream().map(User::getEmail).collect(Collectors.toList());
   }
 }

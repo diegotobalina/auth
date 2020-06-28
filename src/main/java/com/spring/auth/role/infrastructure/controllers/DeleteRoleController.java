@@ -1,7 +1,6 @@
 package com.spring.auth.role.infrastructure.controllers;
 
 import com.spring.auth.anotations.components.controllers.RoleController;
-import com.spring.auth.exceptions.application.DuplicatedKeyException;
 import com.spring.auth.exceptions.application.NotFoundException;
 import com.spring.auth.role.application.ports.out.DeleteRolePort;
 import com.spring.auth.role.domain.Role;
@@ -38,7 +37,7 @@ public class DeleteRoleController {
   @PreAuthorize("hasRole('ADMIN') and hasPermission('hasAccess','DELETE')")
   public DeleteRoleOutputDto delete(
       @PathVariable @NotEmpty String roleId) // todo: validate roleId format
-      throws NotFoundException, DuplicatedKeyException {
+      throws NotFoundException {
     Role deletedRole = deleteRolePort.delete(roleId);
     return new DeleteRoleOutputDto(deletedRole);
   }

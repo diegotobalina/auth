@@ -23,6 +23,10 @@ public class UpdateUserRepository implements UpdateUserPort {
   @Override
   public User update(User user) throws DuplicatedKeyException {
     List<User> updatedUsers = updateAll(List.of(user));
+    return getFirstFromList(updatedUsers);
+  }
+
+  private User getFirstFromList(List<User> updatedUsers) {
     return updatedUsers.stream().findFirst().get();
   }
 
