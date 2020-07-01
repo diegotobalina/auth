@@ -1,6 +1,7 @@
 package com.spring.auth.user.application;
 
 import com.spring.auth.anotations.components.UseCase;
+import com.spring.auth.events.publishers.UpdatedPasswordEventPublisher;
 import com.spring.auth.exceptions.application.DuplicatedKeyException;
 import com.spring.auth.exceptions.application.NotFoundException;
 import com.spring.auth.exceptions.application.WrongPasswordException;
@@ -17,6 +18,7 @@ public class UpdateUserPasswordUseCase implements UpdateUserPasswordPort {
 
   private UpdateUserPort updateUserPort;
   private FindUserPort findUserPort;
+  private UpdatedPasswordEventPublisher updatedPasswordEventPublisher;
 
   /**
    * @param user User which needs the password update
@@ -32,8 +34,7 @@ public class UpdateUserPasswordUseCase implements UpdateUserPasswordPort {
       throws DuplicatedKeyException, WrongPasswordException {
     if (!user.doPasswordsMatch(oldPassword))
       throw new WrongPasswordException("invalid old password");
-    user.updatePassword(newPassword);
-    return updateUserPort.update(user);
+    return update(user, newPassword);
   }
 
   /**
@@ -48,7 +49,9 @@ public class UpdateUserPasswordUseCase implements UpdateUserPasswordPort {
   @Override
   public User update(User user, String password) throws DuplicatedKeyException {
     user.updatePassword(password);
-    return updateUserPort.update(user);
+    User updatedUser = updateUserPort.update(user);
+    updatedPasswordEventPublisher.publish(updatedUser);
+    return updatedUser;
   }
 
   /**
