@@ -14,7 +14,9 @@ import java.util.stream.Collectors;
 public class AuthenticationUtil {
   public static boolean isAuthenticated() {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    return authentication != null && authentication.isAuthenticated();
+    return authentication != null
+        && authentication.isAuthenticated()
+        && !authentication.getPrincipal().equals("anonymousUser");
   }
 
   public static void authenticate(User user) {

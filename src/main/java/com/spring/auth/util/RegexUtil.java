@@ -1,6 +1,9 @@
 package com.spring.auth.util;
 
 import org.apache.commons.lang3.StringUtils;
+
+import java.nio.charset.StandardCharsets;
+
 /** @author diegotobalina created on 24/06/2020 */
 public interface RegexUtil {
 
@@ -30,6 +33,17 @@ public interface RegexUtil {
     String tokenWithoutPrefix = TokenUtil.removeBearerPrefix(token);
     String regex = "[0-9]{13}-[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}";
     return tokenWithoutPrefix.matches(regex);
+  }
+
+  static boolean isBase64(byte[] bytes) {
+    String string = new String(bytes, StandardCharsets.UTF_8);
+    return isBase64(string);
+  }
+
+  static boolean isBase64(String string) {
+    if (StringUtils.isBlank(string)) return false;
+    String regex = "^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)?$";
+    return string.matches(regex);
   }
 
   static boolean isValidUsername(String string) {

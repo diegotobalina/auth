@@ -12,5 +12,5 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 public class LogoutInputDto {
-  @SessionTokenConstraint private String token;
+  @SessionTokenConstraint private String session_token;
 }

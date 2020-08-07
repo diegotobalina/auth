@@ -13,15 +13,15 @@ import java.util.Date;
 @ToString
 public class AccessOutputDto {
 
-  private String token;
-  private Date issuedAt;
+  private String id_token;
+  private Date issued_at;
   private Date expiration;
-  private String userId;
+  private String user_id;
 
   public AccessOutputDto(TokenUtil.JwtWrapper jwtWrapper) {
-    this.token = TokenUtil.addBearerPrefix(jwtWrapper.getToken());
-    this.issuedAt = jwtWrapper.getIssuedAt();
+    this.id_token = TokenUtil.addBearerPrefix(jwtWrapper.getToken());
+    this.issued_at = jwtWrapper.getIssuedAt();
     this.expiration = jwtWrapper.getExpiration();
-    this.userId = jwtWrapper.getUserId();
+    this.user_id = jwtWrapper.getUserId();
   }
 }

@@ -26,7 +26,7 @@ public class LogoutController {
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void logout(@RequestBody @Valid final LogoutInputDto logoutInputDto)
       throws NotFoundException {
-    final String token = TokenUtil.removeBearerPrefix(logoutInputDto.getToken());
+    final String token = TokenUtil.removeBearerPrefix(logoutInputDto.getSession_token());
     logoutUserPort.logout(token);
   }
 }

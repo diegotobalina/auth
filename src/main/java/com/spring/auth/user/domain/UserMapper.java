@@ -7,6 +7,7 @@ import com.spring.auth.scope.domain.Scope;
 import com.spring.auth.scope.domain.ScopeJpa;
 import com.spring.auth.scope.domain.ScopeMapper;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,6 +23,10 @@ public abstract class UserMapper {
   }
 
   public static User parse(UserJpa userJpa) {
+    final Date createdAt = userJpa.getCreatedAt();
+    final Date lastModified = userJpa.getLastModified();
+    final String createdBy = userJpa.getCreatedBy();
+    final String lastModifiedBy = userJpa.getLastModifiedBy();
     final String id = userJpa.getId();
     final String username = userJpa.getUsername();
     final String email = userJpa.getEmail();
@@ -32,10 +37,31 @@ public abstract class UserMapper {
         userJpa.getScopes().stream().map(ScopeMapper::parse).collect(Collectors.toList());
     final Integer maxSessions = userJpa.getMaxSessions();
     boolean locked = userJpa.isLocked();
-    return new User(id, username, email, password, roles, scopes, maxSessions, locked, null);
+    boolean loggedWithGoogle = userJpa.isLoggedWithGoogle();
+    boolean emailVerified = userJpa.isEmailVerified();
+    return new User(
+        createdAt,
+        lastModified,
+        createdBy,
+        lastModifiedBy,
+        id,
+        username,
+        email,
+        password,
+        roles,
+        scopes,
+        maxSessions,
+        locked,
+        null,
+        loggedWithGoogle,
+        emailVerified);
   }
 
   public static UserJpa parse(User user) {
+    final Date createdAt = user.getCreatedAt();
+    final Date lastModified = user.getLastModified();
+    final String createdBy = user.getCreatedBy();
+    final String lastModifiedBy = user.getLastModifiedBy();
     final String id = user.getId();
     final String username = user.getUsername();
     final String email = user.getEmail();
@@ -46,6 +72,22 @@ public abstract class UserMapper {
         user.getScopes().stream().map(ScopeMapper::parse).collect(Collectors.toList());
     final Integer maxSessions = user.getMaxSessions();
     boolean locked = user.isLocked();
-    return new UserJpa(id, username, email, password, rolesJpa, scopesJpa, maxSessions, locked);
+    boolean loggedWithGoogle = user.isLoggedWithGoogle();
+    boolean emailVerified = user.isEmailVerified();
+    return new UserJpa(
+        createdAt,
+        lastModified,
+        createdBy,
+        lastModifiedBy,
+        id,
+        username,
+        email,
+        password,
+        rolesJpa,
+        scopesJpa,
+        maxSessions,
+        locked,
+        loggedWithGoogle,
+        emailVerified);
   }
 }

@@ -12,15 +12,23 @@ import java.util.Date;
 @ToString
 public class LoginOutputDto {
 
-  private String token;
-  private Date issuedAt;
-  private Date expiration;
-  private String userId;
+  private String session_token;
+  private Date session_issued_at;
+  private Date session_expiration;
+  private String session_user_id;
+  private String access_id_token;
+  private Date access_issued_at;
+  private Date access_expiration;
+  private String access_user_id;
 
-  public LoginOutputDto(Session session) {
-    this.token = TokenUtil.addBearerPrefix(session.getToken());
-    this.issuedAt = session.getIssuedAt();
-    this.expiration = session.getExpiration();
-    this.userId = session.getUserId();
+  public LoginOutputDto(Session session, TokenUtil.JwtWrapper access) {
+    this.session_token = TokenUtil.addBearerPrefix(session.getToken());
+    this.session_issued_at = session.getIssuedAt();
+    this.session_expiration = session.getExpiration();
+    this.session_user_id = session.getUserId();
+    this.access_id_token = TokenUtil.addBearerPrefix(access.getToken());
+    this.access_issued_at = access.getIssuedAt();
+    this.access_expiration = access.getExpiration();
+    this.access_user_id = access.getUserId();
   }
 }

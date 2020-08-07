@@ -10,13 +10,13 @@ import com.spring.auth.exceptions.application.GoogleGetInfoException;
 import com.spring.auth.google.application.ports.out.GoogleGetInfoPort;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.Collections;
-import java.util.Objects;
+import java.util.HashMap;
+import java.util.Map;
 
 /** @author diegotobalina created on 24/06/2020 */
 @Slf4j
@@ -26,15 +26,23 @@ public class GoogleGetInfoRepository implements GoogleGetInfoPort {
   @Value("${google.oauth2.client_id}")
   private String googleClientId;
 
-  private NetHttpTransport transport;
-  private JacksonFactory jsonFactory;
+  Map<String, NetHttpTransport> transportHashMap = new HashMap<>();
+  Map<String, JacksonFactory> jacksonFactoryMap = new HashMap<>();
 
   @Override
   public Payload get(String jwt)
       throws GeneralSecurityException, IOException, GoogleGetInfoException {
+    return this.get(jwt, this.googleClientId);
+  }
 
-    instanceSingleton();
-    GoogleIdTokenVerifier verifier = getVerifier();
+  @Override
+  public Payload get(String jwt, String googleClientId)
+      throws GeneralSecurityException, IOException, GoogleGetInfoException {
+    if (googleClientId == null || googleClientId.isEmpty())
+      googleClientId = this.googleClientId; // if empty google
+
+    instanceSingleton(googleClientId);
+    GoogleIdTokenVerifier verifier = getVerifier(googleClientId);
 
     GoogleIdToken idToken = verifier.verify(jwt);
     if (idToken == null) throw new GoogleGetInfoException("google failed login");
@@ -42,13 +50,17 @@ public class GoogleGetInfoRepository implements GoogleGetInfoPort {
     return idToken.getPayload();
   }
 
-  private void instanceSingleton() throws GeneralSecurityException, IOException {
-    if (Objects.isNull(transport)) transport = GoogleNetHttpTransport.newTrustedTransport();
-    if (Objects.isNull(jsonFactory)) jsonFactory = JacksonFactory.getDefaultInstance();
+  private void instanceSingleton(String googleClientId)
+      throws GeneralSecurityException, IOException {
+    if (!transportHashMap.containsKey(googleClientId))
+      transportHashMap.put(googleClientId, GoogleNetHttpTransport.newTrustedTransport());
+    if (!jacksonFactoryMap.containsKey(googleClientId))
+      jacksonFactoryMap.put(googleClientId, JacksonFactory.getDefaultInstance());
   }
 
-  private GoogleIdTokenVerifier getVerifier() {
-    return new GoogleIdTokenVerifier.Builder(transport, jsonFactory)
+  private GoogleIdTokenVerifier getVerifier(String googleClientId) {
+    return new GoogleIdTokenVerifier.Builder(
+            transportHashMap.get(googleClientId), jacksonFactoryMap.get(googleClientId))
         .setAudience(Collections.singletonList(googleClientId))
         .build();
   }

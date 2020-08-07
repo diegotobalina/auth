@@ -15,7 +15,7 @@ import java.util.List;
 @Setter
 @ToString
 @NoArgsConstructor
-public class FindAllRolesOutputDto {
+public class SearchRolesOutputDto {
 
   private String id;
   private String name;
@@ -23,7 +23,7 @@ public class FindAllRolesOutputDto {
   private String value;
   private List<String> scopes = new ArrayList<>();
 
-  public FindAllRolesOutputDto(Role role) {
+  public SearchRolesOutputDto(Role role) {
     this.id = role.getId();
     this.name = role.getName();
     this.description = role.getDescription();

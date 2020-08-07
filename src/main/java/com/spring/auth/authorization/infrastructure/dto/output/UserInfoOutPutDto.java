@@ -20,6 +20,8 @@ public class UserInfoOutPutDto {
   private String email;
   private List<String> roles;
   private List<String> scopes;
+  private boolean loggedWithGoogle;
+  private boolean emailVerified;
 
   public UserInfoOutPutDto(User user) {
     this.id = user.getId();
@@ -27,5 +29,7 @@ public class UserInfoOutPutDto {
     this.email = user.getEmail();
     this.roles = user.getRoles().stream().map(Role::getValue).collect(Collectors.toList());
     this.scopes = user.getScopes().stream().map(Scope::getValue).collect(Collectors.toList());
+    this.loggedWithGoogle = user.isLoggedWithGoogle();
+    this.emailVerified = user.isEmailVerified();
   }
 }

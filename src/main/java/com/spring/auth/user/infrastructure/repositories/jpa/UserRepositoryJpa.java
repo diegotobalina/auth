@@ -1,6 +1,9 @@
 package com.spring.auth.user.infrastructure.repositories.jpa;
 
 import com.spring.auth.user.domain.UserJpa;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

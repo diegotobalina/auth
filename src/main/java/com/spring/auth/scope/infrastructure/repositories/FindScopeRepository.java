@@ -6,7 +6,12 @@ import com.spring.auth.scope.domain.Scope;
 import com.spring.auth.scope.domain.ScopeJpa;
 import com.spring.auth.scope.domain.ScopeMapper;
 import com.spring.auth.scope.infrastructure.repositories.jpa.ScopeRepositoryJpa;
+import com.spring.auth.util.SearchUtil;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -18,6 +23,26 @@ import java.util.Optional;
 public class FindScopeRepository implements FindScopePort {
 
   private ScopeRepositoryJpa scopeRepositoryJpa;
+
+  @Override
+  public Page<Scope> search(String id,String name, String description, String value, int page, int size) {
+    ScopeJpa scopeJpa = new ScopeJpa();
+    scopeJpa.setId(id);
+    scopeJpa.setName(name);
+    scopeJpa.setDescription(description);
+    scopeJpa.setValue(value);
+
+    List<String> wantedFields = List.of("id","name", "description", "value");
+
+    Example<ScopeJpa> example = (Example<ScopeJpa>) SearchUtil.getExample(scopeJpa, wantedFields);
+    PageRequest pageRequest = PageRequest.of(page, size);
+    Page<ScopeJpa> pagedResult = scopeRepositoryJpa.findAll(example, pageRequest);
+
+    return new PageImpl<>(
+        ScopeMapper.parseScopeJpaList(pagedResult.getContent()),
+        pageRequest,
+        pagedResult.getTotalElements());
+  }
 
   @Override
   public List<Scope> findAllByIds(List<String> ids) {

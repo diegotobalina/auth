@@ -10,5 +10,5 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 public class UpdatePasswordAdminInputDto {
-  @PasswordConstraint private String newPassword; // new password for the user
+  @PasswordConstraint private String new_password; // new password for the user
 }

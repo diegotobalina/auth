@@ -3,11 +3,14 @@ package com.spring.auth.user.application.ports.out;
 import com.spring.auth.exceptions.application.InfiniteLoopException;
 import com.spring.auth.exceptions.application.NotFoundException;
 import com.spring.auth.user.domain.User;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
 /** @author diegotobalina created on 24/06/2020 */
 public interface FindUserPort {
+
+  Page<User> search(String id,String username, String email, int page, int size);
 
   List<User> findAll();
 

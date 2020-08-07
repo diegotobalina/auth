@@ -15,12 +15,17 @@ import com.spring.auth.user.domain.User;
 import com.spring.auth.util.TokenUtil;
 import org.springframework.beans.factory.annotation.Value;
 
+import java.util.List;
+
 /** @author diegotobalina created on 24/06/2020 */
 @UseCase
 public class AccessUseCase implements AccessPort {
 
   @Value("${server.auth.secret-key}")
   private String secretKey;
+
+  @Value(("${server.auth.secret-expiration}"))
+  private long expiration;
 
   private FindUserPort findUserPort;
   private FindSessionPort findSessionPort;
@@ -40,7 +45,8 @@ public class AccessUseCase implements AccessPort {
   }
 
   @Override
-  public TokenUtil.JwtWrapper access(String token)
+  public TokenUtil.JwtWrapper access(
+      String token, List<String> roleValues, List<String> scopeValues)
       throws NotFoundException, InvalidTokenException, LockedUserException {
     // findAll session that will ve used for the jwt
     Session session = findSessionPort.findByToken(token);
@@ -53,7 +59,7 @@ public class AccessUseCase implements AccessPort {
     // session used event
     publishSessionUsedEventPort.publish(session);
     // jwt generation
-    return TokenUtil.generateBearerJwt(user, secretKey);
+    return TokenUtil.generateBearerJwt(user, secretKey, expiration, roleValues, scopeValues);
   }
 
   private void checkValidSession(Session session) throws InvalidTokenException {

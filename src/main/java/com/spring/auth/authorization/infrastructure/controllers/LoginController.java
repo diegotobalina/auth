@@ -1,14 +1,12 @@
 package com.spring.auth.authorization.infrastructure.controllers;
 
 import com.spring.auth.anotations.components.controllers.AuthorizationController;
+import com.spring.auth.authorization.application.ports.in.AccessPort;
 import com.spring.auth.authorization.application.ports.in.LoginUserPort;
 import com.spring.auth.authorization.infrastructure.dto.input.LoginInputDto;
 import com.spring.auth.authorization.infrastructure.dto.output.LoginOutputDto;
-import com.spring.auth.exceptions.application.DuplicatedKeyException;
-import com.spring.auth.exceptions.application.LockedUserException;
-import com.spring.auth.exceptions.application.NotFoundException;
-import com.spring.auth.exceptions.application.WrongPasswordException;
 import com.spring.auth.session.domain.Session;
+import com.spring.auth.util.TokenUtil;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -20,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /** @author diegotobalina created on 24/06/2020 */
 @Slf4j
@@ -28,6 +27,7 @@ import javax.validation.Valid;
 public class LoginController {
 
   private LoginUserPort loginUserPort;
+  private AccessPort accessPort;
 
   @ApiResponses(
       value = {
@@ -40,12 +40,15 @@ public class LoginController {
   @ResponseStatus(HttpStatus.CREATED)
   @PostMapping("/login")
   public LoginOutputDto login(@RequestBody @Valid final LoginInputDto loginInputDto)
-      throws DuplicatedKeyException, NotFoundException, WrongPasswordException,
-          LockedUserException {
+      throws Exception {
     final String username = loginInputDto.getUsername();
     final String email = loginInputDto.getEmail();
     final String password = loginInputDto.getPassword();
     final Session session = loginUserPort.login(username, email, password);
-    return new LoginOutputDto(session);
+    List<String> roleValues = loginInputDto.getRoles();
+    List<String> scopeValues = loginInputDto.getScopes();
+    final TokenUtil.JwtWrapper access =
+        accessPort.access(session.getToken(), roleValues, scopeValues);
+    return new LoginOutputDto(session, access);
   }
 }

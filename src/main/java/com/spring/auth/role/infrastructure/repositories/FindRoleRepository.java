@@ -6,7 +6,15 @@ import com.spring.auth.role.domain.Role;
 import com.spring.auth.role.domain.RoleJpa;
 import com.spring.auth.role.domain.RoleMapper;
 import com.spring.auth.role.infrastructure.repositories.jpa.RoleRepositoryJpa;
+import com.spring.auth.scope.domain.Scope;
+import com.spring.auth.scope.domain.ScopeJpa;
+import com.spring.auth.scope.domain.ScopeMapper;
+import com.spring.auth.util.SearchUtil;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -18,6 +26,26 @@ import java.util.Optional;
 public class FindRoleRepository implements FindRolePort {
 
   private RoleRepositoryJpa roleRepositoryJpa;
+
+  @Override
+  public Page<Role> search(String id,String name, String description, String value, int page, int size) {
+    RoleJpa roleJpa = new RoleJpa();
+    roleJpa.setId(id);
+    roleJpa.setName(name);
+    roleJpa.setDescription(description);
+    roleJpa.setValue(value);
+
+    List<String> wantedFields = List.of("id","name", "description", "value");
+
+    Example<RoleJpa> example = (Example<RoleJpa>) SearchUtil.getExample(roleJpa, wantedFields);
+    PageRequest pageRequest = PageRequest.of(page, size);
+    Page<RoleJpa> pagedResult = roleRepositoryJpa.findAll(example, pageRequest);
+
+    return new PageImpl<>(
+            RoleMapper.parseRoleJpaList(pagedResult.getContent()),
+            pageRequest,
+            pagedResult.getTotalElements());
+  }
 
   @Override
   public List<Role> findAll() {

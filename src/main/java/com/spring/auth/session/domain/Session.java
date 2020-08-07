@@ -1,5 +1,6 @@
 package com.spring.auth.session.domain;
 
+import com.spring.auth.shared.domain.Auditable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,13 +14,31 @@ import java.util.UUID;
 @Getter
 @ToString
 @AllArgsConstructor
-public class Session implements Comparable<Session> {
+public class Session extends Auditable implements Comparable<Session> {
 
   private String id;
   private String token;
   private Date issuedAt;
   private Date expiration;
   private String userId;
+
+  public Session(
+      Date createdAt,
+      Date lastModified,
+      String createdBy,
+      String lastModifiedBy,
+      String id,
+      String token,
+      Date issuedAt,
+      Date expiration,
+      String userId) {
+    super(createdAt, lastModified, createdBy, lastModifiedBy);
+    this.id = id;
+    this.token = token;
+    this.issuedAt = issuedAt;
+    this.expiration = expiration;
+    this.userId = userId;
+  }
 
   public Session(final String userId) {
     this.token = generateToken();
