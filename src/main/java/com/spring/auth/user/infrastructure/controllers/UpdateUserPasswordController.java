@@ -56,8 +56,8 @@ public class UpdateUserPasswordController {
       final Principal principal, @RequestBody @Valid UpdatePasswordInputDto updatePasswordInputDto)
       throws DuplicatedKeyException, NotFoundException, WrongPasswordException {
     String userIdFromPrincipal = UserUtil.getUserIdFromPrincipal(principal);
-    String oldPassword = updatePasswordInputDto.getOldPassword();
-    String newPassword = updatePasswordInputDto.getNewPassword();
+    String oldPassword = updatePasswordInputDto.getOld_password();
+    String newPassword = updatePasswordInputDto.getNew_password();
     updateUserPasswordPort.update(userIdFromPrincipal, oldPassword, newPassword);
   }
 
@@ -86,7 +86,7 @@ public class UpdateUserPasswordController {
       @PathVariable String userId,
       @RequestBody @Valid UpdatePasswordAdminInputDto updatePasswordAdminInputDto)
       throws DuplicatedKeyException, NotFoundException {
-    String newPassword = updatePasswordAdminInputDto.getNewPassword();
+    String newPassword = updatePasswordAdminInputDto.getNew_password();
     updateUserPasswordPort.update(userId, newPassword);
   }
 }

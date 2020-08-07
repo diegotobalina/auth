@@ -3,12 +3,17 @@ package com.spring.auth.user.domain;
 import com.spring.auth.role.domain.Role;
 import com.spring.auth.scope.domain.Scope;
 import com.spring.auth.session.domain.Session;
-import lombok.*;
+import com.spring.auth.shared.domain.Auditable;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Matcher;
@@ -18,20 +23,22 @@ import java.util.regex.Pattern;
 @Getter
 @ToString
 @NoArgsConstructor
-@AllArgsConstructor
-public class User implements Serializable {
+public class User extends Auditable implements Serializable {
 
   private String id;
   private String username = "";
   private String email = "";
   private String password = "";
-  private List<Role> roles = new ArrayList<>();
-  private List<Scope> scopes = new ArrayList<>();
+  @Setter private List<Role> roles = new ArrayList<>();
+  @Setter private List<Scope> scopes = new ArrayList<>();
   private int maxSessions = 10;
   private boolean locked = false;
 
   // not loaded by default, call LoadUserSessionsPort
   @Setter private List<Session> sessions;
+
+  private boolean loggedWithGoogle = false;
+  private boolean emailVerified = false;
 
   public User(
       final String username,
@@ -56,6 +63,36 @@ public class User implements Serializable {
     this.username = username;
     this.email = email;
     this.setPassword(password);
+  }
+
+  public User(
+      Date createdAt,
+      Date lastModified,
+      String createdBy,
+      String lastModifiedBy,
+      String id,
+      String username,
+      String email,
+      String password,
+      List<Role> roles,
+      List<Scope> scopes,
+      int maxSessions,
+      boolean locked,
+      List<Session> sessions,
+      boolean loggedWithGoogle,
+      boolean emailVerified) {
+    super(createdAt, lastModified, createdBy, lastModifiedBy);
+    this.id = id;
+    this.username = username;
+    this.email = email;
+    this.password = password;
+    this.roles = roles;
+    this.scopes = scopes;
+    this.maxSessions = maxSessions;
+    this.locked = locked;
+    this.sessions = sessions;
+    this.loggedWithGoogle = loggedWithGoogle;
+    this.emailVerified = emailVerified;
   }
 
   public boolean doPasswordsMatch(final String password) {
@@ -162,5 +199,13 @@ public class User implements Serializable {
 
   public void unlock() {
     this.locked = false;
+  }
+
+  public void loginGoogle() {
+    this.loggedWithGoogle = true;
+  }
+
+  public void verifyEmail(Boolean emailVerified) {
+    this.emailVerified = emailVerified;
   }
 }

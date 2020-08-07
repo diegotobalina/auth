@@ -27,7 +27,7 @@ public class UserInfoController {
   @ApiOperation(
       value = "User info",
       notes =
-          "Devuelve la información de un usuario relacionado con un token, puede ser de acceso o de google")
+          "Devuelve la información de un usuario que ha iniciado sesión con un token, puede ser de cualquier token")
   @ApiImplicitParams({
     @ApiImplicitParam(
         name = "Authorization",

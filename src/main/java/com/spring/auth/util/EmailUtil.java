@@ -9,7 +9,6 @@ import javax.naming.directory.DirContext;
 import javax.naming.directory.InitialDirContext;
 import java.util.Hashtable;
 
-/** @author diegotobalina created on 28/06/2020 */
 @Slf4j
 public abstract class EmailUtil {
   public static boolean doEmailExists(String email) {

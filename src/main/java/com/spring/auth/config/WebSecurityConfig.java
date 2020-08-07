@@ -9,7 +9,6 @@ import com.spring.auth.google.application.ports.out.GoogleGetInfoPort;
 import com.spring.auth.util.RequestUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -58,11 +57,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     String loginEndpoint = String.format("%s/oauth2/login", apiContext);
     String logoutEndpoint = String.format("%s/oauth2/logout", apiContext);
     String tokenInfoEndpoint = String.format("%s/oauth2/tokenInfo", apiContext);
-    String usersEndpoint = String.format("%s/users", apiContext);
+    String cabllbackEndpoint = String.format("%s/oauth2/authorize", apiContext);
+    String authorizeUserInfo = String.format("%s/oauth2/authorize/userInfo", apiContext);
+    String registerEndpoint = String.format("%s/users", apiContext); // register endpoint
 
     http.antMatcher(apiContext)
         .authorizeRequests()
         .antMatchers(HttpMethod.POST, accessEndpoint)
+        .permitAll()
+        .antMatchers(HttpMethod.GET, authorizeUserInfo)
+        .permitAll()
+        .antMatchers(HttpMethod.POST, cabllbackEndpoint)
         .permitAll()
         .antMatchers(HttpMethod.POST, loginEndpoint)
         .permitAll()
@@ -70,7 +75,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .permitAll()
         .antMatchers(HttpMethod.GET, tokenInfoEndpoint)
         .permitAll()
-        .antMatchers(HttpMethod.POST, usersEndpoint)
+        .antMatchers(HttpMethod.POST, registerEndpoint)
         .permitAll()
         .antMatchers(HttpMethod.OPTIONS)
         .permitAll()

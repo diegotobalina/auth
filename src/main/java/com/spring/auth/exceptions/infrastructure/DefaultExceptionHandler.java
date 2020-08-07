@@ -23,6 +23,7 @@ public class DefaultExceptionHandler {
   @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
   private ErrorResponse exception(
       HttpServletRequest request, HttpServletResponse response, Exception ex) {
+    ex.printStackTrace();
     return ExceptionUtil.getErrorResponse(request, HttpStatus.INTERNAL_SERVER_ERROR, ex);
   }
 
@@ -38,6 +39,14 @@ public class DefaultExceptionHandler {
   @ExceptionHandler({ConstraintViolationException.class})
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   private ErrorResponse constraintViolationExceptionHandler(
+      HttpServletRequest request, HttpServletResponse response, Exception ex) {
+    return ExceptionUtil.getErrorResponse(request, HttpStatus.BAD_REQUEST, ex);
+  }
+
+  @ResponseBody
+  @ExceptionHandler({InvalidAuthorizeParamsException.class})
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  private ErrorResponse invalidCallbackParamsException(
       HttpServletRequest request, HttpServletResponse response, Exception ex) {
     return ExceptionUtil.getErrorResponse(request, HttpStatus.BAD_REQUEST, ex);
   }

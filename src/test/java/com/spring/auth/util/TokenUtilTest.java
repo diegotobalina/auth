@@ -90,10 +90,10 @@ class TokenUtilTest {
     Assert.assertEquals("id", jwtWrapper.getUserId());
 
     long issuedAtTime = jwtWrapper.getIssuedAt().getTime();
-    long expectedExpirationTime = issuedAtTime + (1000 * 60 * 5);
+    long expectedExpirationTime = issuedAtTime + (1000 * 5);
     Assert.assertEquals(expectedExpirationTime, jwtWrapper.getExpiration().getTime());
-    Assert.assertEquals("[value, value]", jwtWrapper.getRoles().toString());
-    Assert.assertEquals("[value, value]", jwtWrapper.getScopes().toString());
+    Assert.assertEquals("[ROLE_ADMIN, ROLE_USER]", jwtWrapper.getRoles().toString());
+    Assert.assertEquals("[READ, UPDATE]", jwtWrapper.getScopes().toString());
   }
 
   @Test
@@ -107,18 +107,23 @@ class TokenUtilTest {
     assertEquals(jwtWrapper.getToken(), values.getToken());
     assertEquals(jwtWrapper.getIssuedAt().toString(), values.getIssuedAt().toString());
     assertEquals(jwtWrapper.getExpiration().toString(), values.getExpiration().toString());
-    Assert.assertEquals("[value, value]", values.getRoles().toString());
-    Assert.assertEquals("[value, value]", values.getScopes().toString());
+    Assert.assertEquals("[ROLE_ADMIN, ROLE_USER]", values.getRoles().toString());
+    Assert.assertEquals("[READ, UPDATE]", values.getScopes().toString());
   }
 
   @SneakyThrows
   private TokenUtil.JwtWrapper jwtWrapper(String secretKey) {
-    List<Role> roles = Arrays.asList(instancer.role(), instancer.role());
-    List<Scope> scopes = Arrays.asList(instancer.scope(), instancer.scope());
+    List<Role> roles =
+        Arrays.asList(
+            new Role("ROLE_ADMIN", "ROLE_ADMIN", "ROLE_ADMIN"),
+            new Role("ROLE_USER", "ROLE_USER", "ROLE_USER"));
+    List<Scope> scopes =
+        Arrays.asList(new Scope("READ", "READ", "READ"), new Scope("UPDATE", "UPDATE", "UPDATE"));
     User user = instancer.user();
     objectFiller.replace(user, "roles", roles);
     objectFiller.replace(user, "scopes", scopes);
-    return TokenUtil.generateBearerJwt(user, secretKey);
+    return TokenUtil.generateBearerJwt(
+        user, secretKey, 5000, List.of("ROLE_ADMIN", "ROLE_USER"), List.of("READ", "UPDATE"));
   }
 
   @Test

@@ -10,9 +10,9 @@ import com.spring.auth.scope.infrastructure.repositories.jpa.ScopeRepositoryJpa;
 import com.spring.auth.user.application.ports.out.CreateUserPort;
 import com.spring.auth.user.domain.User;
 import com.spring.auth.user.infrastructure.repositories.jpa.UserRepositoryJpa;
-import com.spring.auth.util.UserUtil;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
@@ -23,15 +23,24 @@ import java.util.List;
 /** @author diegotobalina created on 24/06/2020 */
 @Slf4j
 @Component
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class DataLoader implements ApplicationRunner {
 
-  private CreateRolePort createRolePort;
-  private CreateScopePort createScopePort;
-  private CreateUserPort createUserPort;
-  private ScopeRepositoryJpa scopeRepositoryJpa;
-  private RoleRepositoryJpa roleRepositoryJpa;
-  private UserRepositoryJpa userRepositoryJpa;
+  @Value("${admin.username}")
+  String adminUsername;
+
+  @Value("${admin.email}")
+  String adminEmail;
+
+  @Value("${admin.password}")
+  String adminPassword;
+
+  private final CreateRolePort createRolePort;
+  private final CreateScopePort createScopePort;
+  private final CreateUserPort createUserPort;
+  private final ScopeRepositoryJpa scopeRepositoryJpa;
+  private final RoleRepositoryJpa roleRepositoryJpa;
+  private final UserRepositoryJpa userRepositoryJpa;
 
   public void run(final ApplicationArguments args) throws DuplicatedKeyException {
     if (!isDatabaseEmpty()) return;
@@ -64,16 +73,13 @@ public class DataLoader implements ApplicationRunner {
     Role createdRoleUser = createRolePort.create(roleUser);
 
     // adminUser creation
-    String adminUsername = "admin";
-    String adminEmail = "admin@admin.com";
-    String adminPassword = UserUtil.generateRandomPassword();
     User adminUser = new User(adminUsername, adminEmail, adminPassword);
-    adminUser.addRoles(Arrays.asList(createdRoleAdmin, createdRoleUser));
+    adminUser.addRoles(Arrays.asList(createdRoleAdmin));
     createUserPort.create(adminUser);
 
     String createdAdminMessage =
         String.format(
-            "Using generated admin account, username: %s, email %s, password: %s",
+            "Using generated admin account, username: %s, email %s, password: ******",
             adminUsername, adminEmail, adminPassword);
 
     System.out.println();

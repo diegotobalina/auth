@@ -9,4 +9,6 @@ import java.security.GeneralSecurityException;
 /** @author diegotobalina created on 24/06/2020 */
 public interface GoogleGetInfoPort {
   GoogleIdToken.Payload get(String jwt) throws GeneralSecurityException, IOException, GoogleGetInfoException;
+  GoogleIdToken.Payload get(String jwt,String googleClientId) throws GeneralSecurityException, IOException, GoogleGetInfoException;
+
 }

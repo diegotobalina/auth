@@ -4,10 +4,7 @@ import com.spring.auth.anotations.components.controllers.AuthorizationController
 import com.spring.auth.authorization.application.ports.in.TokenInfoPort;
 import com.spring.auth.authorization.domain.TokenInfo;
 import com.spring.auth.authorization.infrastructure.dto.output.TokenInfoOutputDto;
-import com.spring.auth.exceptions.application.GoogleGetInfoException;
-import com.spring.auth.exceptions.application.InvalidTokenException;
-import com.spring.auth.exceptions.application.NotFoundException;
-import com.spring.auth.exceptions.application.UnknownTokenFormatException;
+import com.spring.auth.exceptions.application.*;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,10 +31,13 @@ public class TokenInfoController {
           "Devuelve la información relacionada con un token, puede ser de sesión, de acceso o de google")
   @GetMapping("/tokenInfo")
   public TokenInfoOutputDto tokenInfo(
+      @RequestParam(value = "client_id", required = false) String clientId,
       @RequestParam @NotEmpty final String token) // todo: validate param
       throws NotFoundException, UnknownTokenFormatException, InvalidTokenException,
-          GeneralSecurityException, IOException, GoogleGetInfoException {
-    final TokenInfo tokenInfo = tokenInfoPort.tokenInfo(token);
+          GeneralSecurityException, IOException, GoogleGetInfoException,
+          EmailDoesNotExistsException, LockedUserException, DuplicatedKeyException,
+          InfiniteLoopException {
+    final TokenInfo tokenInfo = tokenInfoPort.tokenInfo(token, clientId);
     return new TokenInfoOutputDto(tokenInfo);
   }
 }

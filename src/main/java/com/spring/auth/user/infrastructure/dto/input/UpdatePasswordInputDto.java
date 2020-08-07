@@ -10,6 +10,6 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 public class UpdatePasswordInputDto {
-  @PasswordConstraint private String oldPassword; // old password of the user
-  @PasswordConstraint private String newPassword; // new password for the user
+  @PasswordConstraint private String old_password; // old password of the user
+  @PasswordConstraint private String new_password; // new password for the user
 }

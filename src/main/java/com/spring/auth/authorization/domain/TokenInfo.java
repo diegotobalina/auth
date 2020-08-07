@@ -14,7 +14,7 @@ public class TokenInfo {
   private String token;
   private Date issuedAt;
   private Date expiration;
-  private String userId;
+  private String user_id;
   private List<String> roles;
   private List<String> scopes;
 
@@ -22,7 +22,7 @@ public class TokenInfo {
     this.token = token;
     this.issuedAt = issuedAt;
     this.expiration = expiration;
-    this.userId = userId;
+    this.user_id = userId;
   }
 
   public TokenInfo(
@@ -35,7 +35,7 @@ public class TokenInfo {
     this.token = token;
     this.issuedAt = issuedAt;
     this.expiration = expiration;
-    this.userId = userId;
+    this.user_id = userId;
     this.roles = roles;
     this.scopes = scopes;
   }

@@ -3,29 +3,57 @@ Auth server using spring and Google login
 
 ## Actual version
 ````
-0.1.5.0
+0.2.0.0
 ````
 
-## General information
-Deployed app
+## Requirements
 ````
-http://auth.dwebservices.com/
+Needed mongodb database
+docker run -p 27017:27017 -e MONGO_INITDB_ROOT_USERNAME=mongo -e MONGO_INITDB_ROOT_PASSWORD=password --name mongo -d mongo
 ````
-Code formatter
-````
-https://github.com/google/google-java-format
-````
-Dependency manager
-````
-maven
-````
+
 ## Important info
+
+Login / Access / Authorize
+````
+scopes -> wanted scope for the generated jwt ( if empty will get all from the user )
+roles -> wanted roles for the generated jwt ( if empty will get all from the user )
+````
+
+Tokens
+````
+oauth2/authorize and google tokens generated with a google client_id are just accepted by /oauth2/tokenInfo 
+and /oauth2/authorize/userInfo endpoints, these tokens are for readonly external apps,
+NOT VALID for auth server administration
+
+** all other endpoints will return UNAUTHORIZED
+
+to get a full permission token you will need to follow one of the normal flows
+1.- login endpoint, access endpoint
+2.- get the token from google using the default google client_id
+````
+
+tokenInfo and authorize/userInfo endpoint
+````
+allowed tokens:
+
+* without client_id:
+- Bearer {session_token} ( from login endpoint )
+- Bearer {id_token} ( from access endpoint )
+- Google {google id_token} ( from google login button )
+
+* with client_id:
+- {id_token} ( from authorize endpoint, requires "client_id" param )
+- Google {google id_token} ( from google login button using Client.google_client_id, requires "client_id" param )
+````
 
 Default admin user
 ````
+Change default values in the application.properties 
+
 username: admin
 email: admin@admin.com
-password: <generated on first startup and showed in the logs>
+password: string
 ````
 Default user-role-scope relations
 ````
@@ -62,19 +90,31 @@ When a user is locked will not have permissions to call:
 - access use case
 - user info use case
 - google login use case
+- authorize use case
 
 ** can use another endpoints if have a valid jwt so the "lock" process will be completed when the current "access token" expires ( by default 5 min )
 ````
 
 
 ### Default calls security
+clients
+````
+GET /clients -> ROLE_ADMIN AND READ
+GET /clients/{clientId} -> ROLE_ADMIN AND READ
+POST /clients -> ROLE_ADMIN AND CREATE
+PUT /clients/{clientId} -> ROLE_ADMIN AND UPDATE
+DELETE /clients/{clientId} -> ROLE_ADMIN AND DELETE
+````
+
 oauth2
 ````
 POST /access -> authentication not required
 POST /login -> authentication not required
+POST /authorize -> authentication not required
 DELETE /logout -> authentication not required
 POST /tokenInfo -> authentication not required
 POST /userInfo -> ( ROLE_ADMIN OR ROLE_USER ) AND READ_USER
+POST /authorize/userInfo -> authentication not required
 ````
 
 roles
@@ -115,45 +155,6 @@ Current supported profiles
 - pro: used in the production enviroment
 ````
 
-## Application versioning
-Api version
-````
-application.properties -> api.version=X.X.X.X
-{major release}.{major change in a component}.{minor change in a component}.{resolved bugs}
-````
-Api url versioning
-````
-/api/v0/{resource}
-** vX must match with the major release version
-````
-
 ## Code Structure
 ![alt text](https://reflectoring.io/assets/img/posts/spring-hexagonal/hexagonal-architecture.png)
 ![alt text](https://miro.medium.com/max/1718/1*yR4C1B-YfMh5zqpbHzTyag.png)
-
-## Install and deploy
-Install Java ubuntu
-````
-sudo apt-get install openjdk-14-jdk
-````
-
-Deploy app in docker
-````
-sh deploy.sh
-````
-
-Deploy app in heroku
-````
-heroku login
-heroku create
-heroku config:set GOOGLE_CLIENT_ID=<client_id>
-heroku config:set MONGODB_URI=<mongodb_uri>
-git push heroku master
-heroku ps:scale web=1
-heroku open
-heroku logs --tail
-````
-See heroku logs
-````
-heroku logs --tail --app xbidi-auth --source app | ccze -o nolookups
-````

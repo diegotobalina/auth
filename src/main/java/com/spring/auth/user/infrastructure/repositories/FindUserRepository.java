@@ -7,8 +7,13 @@ import com.spring.auth.user.domain.User;
 import com.spring.auth.user.domain.UserJpa;
 import com.spring.auth.user.domain.UserMapper;
 import com.spring.auth.user.infrastructure.repositories.jpa.UserRepositoryJpa;
+import com.spring.auth.util.SearchUtil;
 import com.spring.auth.util.UserUtil;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -20,6 +25,25 @@ import java.util.Optional;
 public class FindUserRepository implements FindUserPort {
 
   private UserRepositoryJpa userRepositoryJpa;
+
+  @Override
+  public Page<User> search(String id, String username, String email, int page, int size) {
+    UserJpa userJpa = new UserJpa();
+    userJpa.setId(id);
+    userJpa.setUsername(username);
+    userJpa.setEmail(email);
+
+    List<String> wantedFields = List.of("id","username", "email");
+
+    Example<UserJpa> example = (Example<UserJpa>) SearchUtil.getExample(userJpa, wantedFields);
+    PageRequest pageRequest = PageRequest.of(page, size);
+    Page<UserJpa> pagedResult = userRepositoryJpa.findAll(example, pageRequest);
+
+    return new PageImpl<>(
+        UserMapper.parseUserJpaList(pagedResult.getContent()),
+        pageRequest,
+        pagedResult.getTotalElements());
+  }
 
   @Override
   public List<User> findAll() {

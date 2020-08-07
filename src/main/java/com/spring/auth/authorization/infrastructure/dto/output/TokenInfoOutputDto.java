@@ -18,17 +18,17 @@ import java.util.List;
 public class TokenInfoOutputDto {
 
   private String token;
-  private Date issuedAt;
+  private Date issued_at;
   private Date expiration;
-  private String userId;
+  private String user_id;
   private List<String> roles;
   private List<String> scopes;
 
   public TokenInfoOutputDto(TokenInfo tokenInfo) {
     this.token = tokenInfo.getToken();
-    this.issuedAt = tokenInfo.getIssuedAt();
+    this.issued_at = tokenInfo.getIssuedAt();
     this.expiration = tokenInfo.getExpiration();
-    this.userId = tokenInfo.getUserId();
+    this.user_id = tokenInfo.getUser_id();
     this.roles = tokenInfo.getRoles();
     this.scopes = tokenInfo.getScopes();
   }

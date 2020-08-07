@@ -16,5 +16,5 @@ import java.util.List;
 @NoArgsConstructor
 public class RemoveRolesFromUserInputDto {
   // if of the roles
-  @NotEmpty private List<String> roleIds = new ArrayList<>(); // todo: validate roleIds format
+  @NotEmpty private List<String> role_ids = new ArrayList<>(); // todo: validate roleIds format
 }

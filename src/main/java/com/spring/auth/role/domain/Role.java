@@ -1,6 +1,7 @@
 package com.spring.auth.role.domain;
 
 import com.spring.auth.scope.domain.Scope;
+import com.spring.auth.shared.domain.Auditable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,6 +9,7 @@ import lombok.ToString;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,13 +18,31 @@ import java.util.Optional;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class Role implements Serializable {
+public class Role extends Auditable implements Serializable {
 
   private String id;
   private String name;
   private String description;
   private String value;
   private List<Scope> scopes = new ArrayList<>();
+
+  public Role(
+      Date createdAt,
+      Date lastModified,
+      String createdBy,
+      String lastModifiedBy,
+      String id,
+      String name,
+      String description,
+      String value,
+      List<Scope> scopes) {
+    super(createdAt, lastModified, createdBy, lastModifiedBy);
+    this.id = id;
+    this.name = name;
+    this.description = description;
+    this.value = value;
+    this.scopes = scopes;
+  }
 
   public Role(final String value) {
     this.value = value;

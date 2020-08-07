@@ -43,17 +43,20 @@ public abstract class TokenUtil {
     return token.replace(GOOGLE_PREFIX, "");
   }
 
-  public static JwtWrapper generateBearerJwt(User user, String secretKey) {
-    Map<String, Object> claims = generateJwtClaims(user);
+  public static JwtWrapper generateBearerJwt(
+      User user,
+      String secretKey,
+      long expirationTime,
+      List<String> roleValues,
+      List<String> scopeValues) {
+    Map<String, Object> claims = generateJwtClaims(user, roleValues, scopeValues);
     String userId = user.getId();
     Date issuedAt = new Date(System.currentTimeMillis());
-    long expirationTime = (long) (1000 * 60 * 5); // 1s > 1m > 5m
     Date expiration = new Date(issuedAt.getTime() + expirationTime);
     byte[] secretKeyBytes = secretKey.getBytes();
     String jwt = generateBearerJwt(userId, claims, issuedAt, expiration, secretKeyBytes);
-    List<String> scopes =
-        user.getScopes().stream().map(Scope::getValue).collect(Collectors.toList());
-    List<String> roles = user.getRoles().stream().map(Role::getValue).collect(Collectors.toList());
+    List<String> scopes = scopeValues;
+    List<String> roles = roleValues;
     return new JwtWrapper(jwt, issuedAt, expiration, userId, roles, scopes);
   }
 
@@ -71,10 +74,27 @@ public abstract class TokenUtil {
     }
   }
 
-  private static Map<String, Object> generateJwtClaims(User user) {
+  private static Map<String, Object> generateJwtClaims(
+      User user, List<String> roleValues, List<String> scopeValues) {
     String userId = user.getId();
-    var scopes = user.getScopes().stream().map(Scope::getValue).collect(Collectors.toList());
-    var roles = user.getRoles().stream().map(Role::getValue).collect(Collectors.toList());
+    var scopes =
+        user.getScopes().stream()
+            .filter(
+                scope ->
+                    scopeValues == null
+                        || scopeValues.isEmpty()
+                        || scopeValues.contains(scope.getValue()))
+            .map(Scope::getValue)
+            .collect(Collectors.toList());
+    var roles =
+        user.getRoles().stream()
+            .filter(
+                role ->
+                    roleValues == null
+                        || roleValues.isEmpty()
+                        || roleValues.contains(role.getValue()))
+            .map(Role::getValue)
+            .collect(Collectors.toList());
     return generateJwtClaims(userId, scopes, roles);
   }
 

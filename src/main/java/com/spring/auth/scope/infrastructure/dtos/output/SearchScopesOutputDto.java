@@ -11,13 +11,13 @@ import lombok.ToString;
 @Setter
 @ToString
 @NoArgsConstructor
-public class FindAllScopesOutputDto {
+public class SearchScopesOutputDto {
   private String id;
   private String value;
   private String description;
   private String name;
 
-  public FindAllScopesOutputDto(Scope scope) {
+  public SearchScopesOutputDto(Scope scope) {
     this.id = scope.getId();
     this.value = scope.getValue();
     this.description = scope.getDescription();

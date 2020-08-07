@@ -53,7 +53,7 @@ public class RemoveRolesFromUserController {
       @PathVariable @NotEmpty String userId, // todo: validate userId format
       @RequestBody @Valid AddRolesToUserInputDto addRolesToUserInputDto)
       throws DuplicatedKeyException, NotFoundException {
-    List<String> roleIds = addRolesToUserInputDto.getRoleIds();
+    List<String> roleIds = addRolesToUserInputDto.getRole_ids();
     User updatedUser = removeRolesFromUserPort.remove(userId, roleIds);
     return new AddRolesToUserOutputDto(updatedUser);
   }
