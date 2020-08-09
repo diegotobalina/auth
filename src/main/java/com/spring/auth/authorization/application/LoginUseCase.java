@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 /** @author diegotobalina created on 24/06/2020 */
 @UseCase
 @AllArgsConstructor
-public class LoginUseCase implements LoginUserPort {
+  public class LoginUseCase implements LoginUserPort {
 
   private FindUserPort findUserPort;
   private CreateSessionPort createSessionPort;
