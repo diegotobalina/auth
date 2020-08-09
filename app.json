@@ -1,0 +1,49 @@
+{
+  "name": "Auth server",
+  "description": "",
+  "keywords": [
+    "java","spring","mongodb"
+  ],
+  "website": "",
+  "repository": "https://github.com/xBidi/auth",
+  "logo": "",
+  "success_url": "",
+  "scripts": {},
+  "env": {
+    "GOOGLE_CLIENT_ID": {
+      "description": "",
+      "value": "<code>.apps.googleusercontent.com"
+    },
+    "MONGODB_URI": {
+      "description": "",
+      "value": "mongodb+srv://<user>:<password>@<host>/<database>?retryWrites=true&w=majority"
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "free"
+    }
+  },
+  "image": "heroku/java",
+  "addons": [
+    {
+      "plan": "librato:development",
+      "as": "LIBRATO"
+    },
+    {
+      "plan": "papertrail:choklad",
+      "as": "PAPERTRAIL"
+    }
+  ],
+  "buildpacks": [
+    {
+      "url": "https://github.com/heroku/heroku-buildpack-java"
+    }
+  ],
+  "environments": {
+    "dev": {},
+    "pre": {},
+    "pro": {}
+  }
+}
