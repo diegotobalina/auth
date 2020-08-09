@@ -2,7 +2,6 @@ package com.spring.auth.swagger.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 import org.springframework.http.ResponseEntity;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -17,7 +16,6 @@ import java.security.Principal;
 import java.time.LocalDate;
 
 /** @author diegotobalina created on 24/06/2020 */
-@Profile("dev")
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
@@ -38,7 +36,8 @@ public class SwaggerConfig {
         .genericModelSubstitutes(ResponseEntity.class)
         .useDefaultResponseMessages(
             Boolean.parseBoolean(swaggerConfigProperties.getUseDefaultResponseMessages()))
-        .enableUrlTemplating(Boolean.parseBoolean(swaggerConfigProperties.getEnableUrlTemplating()));
+        .enableUrlTemplating(
+            Boolean.parseBoolean(swaggerConfigProperties.getEnableUrlTemplating()));
   }
 
   @Bean

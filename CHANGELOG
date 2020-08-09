@@ -1,6 +1,0 @@
-0.1.0.0 -> admins can lock users
-0.1.1.0 -> real email check in register use case
-0.1.2.0 -> session used event
-0.1.3.0 -> session created event
-0.1.4.0 -> custom logs requests property
-0.1.5.0 -> remove sessions when user receive a password change
