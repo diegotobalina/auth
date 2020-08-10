@@ -1,7 +1,7 @@
 pipeline {
   agent any
   stages {
-    stage('tests') {
+    stage('Test') {
       steps {
         sh '''
 # remove test image if exists
@@ -15,7 +15,7 @@ docker image build --no-cache -t auth_tests ./
       }
     }
 
-    stage('deploy') {
+    stage('Deploy') {
       steps {
         sh '''
 # remove older docker
