@@ -3,12 +3,13 @@ pipeline {
   stages {
     stage('tests') {
       steps {
-        sh '''if [[ "$(docker images -q auth 2> /dev/null)" != "" ]]; then
+        sh '''
+if [[ "$(docker images -q auth 2> /dev/null)" != "" ]]; then
   docker image rm auth
 fi
 
 
-docker image build -t auth ./
+docker image build –no-cache -t auth ./
 '''
       }
     }
