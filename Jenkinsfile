@@ -9,7 +9,7 @@ if [[ "$(docker images -q auth 2> /dev/null)" != "" ]]; then
 fi
 
 
-docker image build –no-cache -t auth ./
+docker image build --no-cache -t auth ./
 '''
       }
     }
