@@ -4,13 +4,16 @@ pipeline {
     stage('Test') {
       steps {
         sh '''
+
+name=auth_master_test
+
 # remove test image if exists
-if [[ "$(docker images -q auth_tests 2> /dev/null)" != "" ]]; then
-  docker image rm auth_tests
+if [[ "$(docker images -q $name 2> /dev/null)" != "" ]]; then
+  docker image rm $name
 fi
 
 # create test image
-docker image build --no-cache -t auth_tests ./
+docker image build --no-cache -t $name ./
 '''
       }
     }
@@ -18,22 +21,27 @@ docker image build --no-cache -t auth_tests ./
     stage('Deploy') {
       steps {
         sh '''
+
+name=auth_master
+external_port=8080
+internal_port=8080
+
 # remove older docker
-if docker ps --format \'{{.Names}}\' | egrep \'^auth$\' &> /dev/null; then
-    docker stop auth
-    docker rm auth
+if docker ps --format \'{{.Names}}\' | grep $name &> /dev/null; then
+    docker stop $name
+    docker rm $name
 fi
 
 # remove older image
-if [[ "$(docker images -q auth 2> /dev/null)" != "" ]]; then
-  docker image rm auth
+if [[ "$(docker images -q $name 2> /dev/null)" != "" ]]; then
+  docker image rm $name
 fi
 
 # create new image
-docker image build -t auth ./
+docker image build -t $name ./
 
 # create new docker
-docker run --restart always -p 8080:8080 -e GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID} -e MONGODB_URI=${MONGODB_URI} --name auth -d auth
+docker run --restart always -p $external_port:$internal_port -e GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID} -e MONGODB_URI=${MONGODB_URI} --name $name -d $name
 '''
       }
     }
