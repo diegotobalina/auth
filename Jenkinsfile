@@ -1,23 +1,11 @@
 pipeline {
-  agent {
-    docker {
-      image 'maven:3.6.3-openjdk-14-slim'
-    }
-
-  }
+  agent any
   stages {
-    stage('maven') {
+    stage('docker') {
       steps {
-        sh 'mvn clean package'
-      }
-    }
-
-    stage('run in docker') {
-      steps {
-        sh '''#!/usr/bin/env bash
-docker-compose build
-docker-compose down
-docker-compose up -d'''
+        sh '''docker image build -t auth ./
+docker run --restart always -p 8080:8080 -e GOOGLE_CLIENT_ID="google_id" -e MONGODB_URI="mongodb://mongo:password@192.168.1.228:27017/?retryWrites=true&w=majority" --name auth -d auth
+'''
       }
     }
 
