@@ -1,13 +1,13 @@
 package com.spring.auth.mongo.data;
 
 import com.spring.auth.exceptions.application.DuplicatedKeyException;
-import com.spring.auth.role.application.ports.out.CreateRolePort;
+import com.spring.auth.role.infrastructure.repositories.ports.CreateRolePort;
 import com.spring.auth.role.domain.Role;
 import com.spring.auth.role.infrastructure.repositories.jpa.RoleRepositoryJpa;
-import com.spring.auth.scope.application.ports.out.CreateScopePort;
+import com.spring.auth.scope.infrastructure.repositories.ports.CreateScopePort;
 import com.spring.auth.scope.domain.Scope;
 import com.spring.auth.scope.infrastructure.repositories.jpa.ScopeRepositoryJpa;
-import com.spring.auth.user.application.ports.out.CreateUserPort;
+import com.spring.auth.user.infrastructure.repositories.ports.CreateUserPort;
 import com.spring.auth.user.domain.User;
 import com.spring.auth.user.infrastructure.repositories.jpa.UserRepositoryJpa;
 import lombok.RequiredArgsConstructor;

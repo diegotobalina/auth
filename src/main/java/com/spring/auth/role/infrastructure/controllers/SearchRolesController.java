@@ -1,7 +1,7 @@
 package com.spring.auth.role.infrastructure.controllers;
 
 import com.spring.auth.anotations.components.controllers.RoleController;
-import com.spring.auth.role.application.ports.out.FindRolePort;
+import com.spring.auth.role.infrastructure.repositories.ports.FindRolePort;
 import com.spring.auth.role.domain.Role;
 import com.spring.auth.role.infrastructure.dtos.output.SearchRolesOutputDto;
 import com.spring.auth.shared.infrastructure.dto.output.PagedListOutputDto;

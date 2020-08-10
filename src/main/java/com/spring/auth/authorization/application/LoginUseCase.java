@@ -1,14 +1,14 @@
 package com.spring.auth.authorization.application;
 
 import com.spring.auth.anotations.components.UseCase;
-import com.spring.auth.authorization.application.ports.in.LoginUserPort;
+import com.spring.auth.authorization.application.ports.LoginUserPort;
 import com.spring.auth.exceptions.application.DuplicatedKeyException;
 import com.spring.auth.exceptions.application.LockedUserException;
 import com.spring.auth.exceptions.application.NotFoundException;
 import com.spring.auth.exceptions.application.WrongPasswordException;
-import com.spring.auth.session.application.ports.out.CreateSessionPort;
+import com.spring.auth.session.infrastructure.repositories.ports.CreateSessionPort;
 import com.spring.auth.session.domain.Session;
-import com.spring.auth.user.application.ports.out.FindUserPort;
+import com.spring.auth.user.infrastructure.repositories.ports.FindUserPort;
 import com.spring.auth.user.domain.User;
 import lombok.AllArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;

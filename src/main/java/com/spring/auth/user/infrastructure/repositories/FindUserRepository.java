@@ -2,7 +2,7 @@ package com.spring.auth.user.infrastructure.repositories;
 
 import com.spring.auth.exceptions.application.InfiniteLoopException;
 import com.spring.auth.exceptions.application.NotFoundException;
-import com.spring.auth.user.application.ports.out.FindUserPort;
+import com.spring.auth.user.infrastructure.repositories.ports.FindUserPort;
 import com.spring.auth.user.domain.User;
 import com.spring.auth.user.domain.UserJpa;
 import com.spring.auth.user.domain.UserMapper;

@@ -3,7 +3,7 @@ package com.spring.auth.user.infrastructure.controllers;
 import com.spring.auth.anotations.components.controllers.UserController;
 import com.spring.auth.exceptions.application.DuplicatedKeyException;
 import com.spring.auth.exceptions.application.NotFoundException;
-import com.spring.auth.user.application.ports.in.LockUserPort;
+import com.spring.auth.user.application.ports.LockUserPort;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;

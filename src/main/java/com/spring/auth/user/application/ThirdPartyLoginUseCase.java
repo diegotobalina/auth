@@ -2,11 +2,11 @@ package com.spring.auth.user.application;
 
 import com.spring.auth.anotations.components.UseCase;
 import com.spring.auth.exceptions.application.*;
-import com.spring.auth.user.application.ports.in.RegisterUserPort;
-import com.spring.auth.user.application.ports.in.ThirdPartyLoginPort;
-import com.spring.auth.user.application.ports.out.ExistsUserPort;
-import com.spring.auth.user.application.ports.out.FindUserPort;
-import com.spring.auth.user.application.ports.out.UpdateUserPort;
+import com.spring.auth.user.application.ports.RegisterUserPort;
+import com.spring.auth.user.application.ports.ThirdPartyLoginPort;
+import com.spring.auth.user.infrastructure.repositories.ports.ExistsUserPort;
+import com.spring.auth.user.infrastructure.repositories.ports.FindUserPort;
+import com.spring.auth.user.infrastructure.repositories.ports.UpdateUserPort;
 import com.spring.auth.user.domain.User;
 import com.spring.auth.util.UserUtil;
 import lombok.AllArgsConstructor;

@@ -3,11 +3,11 @@ package com.spring.auth.role.application;
 import com.spring.auth.anotations.components.UseCase;
 import com.spring.auth.exceptions.application.DuplicatedKeyException;
 import com.spring.auth.exceptions.application.NotFoundException;
-import com.spring.auth.role.application.ports.in.AddScopesToRolePort;
-import com.spring.auth.role.application.ports.out.FindRolePort;
-import com.spring.auth.role.application.ports.out.UpdateRolePort;
+import com.spring.auth.role.application.ports.AddScopesToRolePort;
+import com.spring.auth.role.infrastructure.repositories.ports.FindRolePort;
+import com.spring.auth.role.infrastructure.repositories.ports.UpdateRolePort;
 import com.spring.auth.role.domain.Role;
-import com.spring.auth.scope.application.ports.out.FindScopePort;
+import com.spring.auth.scope.infrastructure.repositories.ports.FindScopePort;
 import com.spring.auth.scope.domain.Scope;
 import lombok.AllArgsConstructor;
 

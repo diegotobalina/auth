@@ -3,7 +3,7 @@ package com.spring.auth.user.infrastructure.controllers;
 import com.spring.auth.anotations.components.controllers.UserController;
 import com.spring.auth.exceptions.application.DuplicatedKeyException;
 import com.spring.auth.exceptions.application.NotFoundException;
-import com.spring.auth.user.application.ports.in.AddRolesToUserPort;
+import com.spring.auth.user.application.ports.AddRolesToUserPort;
 import com.spring.auth.user.domain.User;
 import com.spring.auth.user.infrastructure.dto.input.AddRolesToUserInputDto;
 import com.spring.auth.user.infrastructure.dto.output.AddRolesToUserOutputDto;

@@ -3,13 +3,9 @@ package com.spring.auth.events.listeners;
 import com.spring.auth.anotations.components.CustomEventListener;
 import com.spring.auth.events.domain.SessionCreatedEvent;
 import com.spring.auth.exceptions.application.NotFoundException;
-import com.spring.auth.session.application.ports.in.DeleteOlderSessionByUserIdPort;
-import com.spring.auth.session.application.ports.out.CountSessionPort;
+import com.spring.auth.session.application.ports.RemoveIfMaxSessionsReachedPort;
 import com.spring.auth.session.domain.Session;
-import com.spring.auth.user.application.ports.out.FindUserPort;
-import com.spring.auth.user.domain.User;
 import lombok.AllArgsConstructor;
-import org.springframework.core.annotation.Order;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.transaction.event.TransactionalEventListener;
 
@@ -18,25 +14,16 @@ import org.springframework.transaction.event.TransactionalEventListener;
 @AllArgsConstructor
 public class SessionCreatedEventListener {
 
-  private FindUserPort findUserPort;
-  private DeleteOlderSessionByUserIdPort deleteOlderSessionByUserIdPort;
-  private CountSessionPort countSessionPort;
+  private RemoveIfMaxSessionsReachedPort removeIfMaxSessionsReachedPort;
 
   @Async
   @TransactionalEventListener
-  public void checkMaxUserSessions(SessionCreatedEvent sessionCreatedEvent)
-      throws NotFoundException {
+  public void eventListener(SessionCreatedEvent sessionCreatedEvent) throws NotFoundException {
     Session createdSession = sessionCreatedEvent.getSource();
-    // if the user can´t have more open sessions the oldest one will be deleted
-    String userId = createdSession.getUserId();
-    if (!canUserHaveMoreSessions(userId)) {
-      deleteOlderSessionByUserIdPort.delete(userId);
-    }
+    removeIfMaxSessionsReached(createdSession);
   }
 
-  private boolean canUserHaveMoreSessions(String userId) throws NotFoundException {
-    User user = findUserPort.findById(userId);
-    int sessionCount = countSessionPort.countAllByUserId(userId);
-    return user.canHaveMoreSessions(sessionCount);
+  private void removeIfMaxSessionsReached(Session createdSession) throws NotFoundException {
+    removeIfMaxSessionsReachedPort.remove(createdSession.getUserId());
   }
 }

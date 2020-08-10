@@ -1,7 +1,7 @@
 package com.spring.auth.client.infrastructure.repositories;
 
-import com.spring.auth.client.application.ports.out.CheckClientsConstraintsPort;
-import com.spring.auth.client.application.ports.out.UpdateClientPort;
+import com.spring.auth.client.infrastructure.repositories.ports.CheckClientsConstraintsPort;
+import com.spring.auth.client.infrastructure.repositories.ports.UpdateClientPort;
 import com.spring.auth.client.domain.Client;
 import com.spring.auth.client.domain.ClientJpa;
 import com.spring.auth.client.domain.ClientMapper;

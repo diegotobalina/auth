@@ -7,7 +7,7 @@ import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.spring.auth.exceptions.application.GoogleGetInfoException;
-import com.spring.auth.google.application.ports.out.GoogleGetInfoPort;
+import com.spring.auth.google.infrastructure.repositories.ports.GoogleGetInfoPort;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;

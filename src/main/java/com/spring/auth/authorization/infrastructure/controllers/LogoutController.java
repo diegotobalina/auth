@@ -1,7 +1,7 @@
 package com.spring.auth.authorization.infrastructure.controllers;
 
 import com.spring.auth.anotations.components.controllers.AuthorizationController;
-import com.spring.auth.authorization.application.ports.in.LogoutUserPort;
+import com.spring.auth.authorization.application.ports.LogoutUserPort;
 import com.spring.auth.authorization.infrastructure.dto.input.LogoutInputDto;
 import com.spring.auth.exceptions.application.NotFoundException;
 import com.spring.auth.util.TokenUtil;

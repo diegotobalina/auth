@@ -1,7 +1,7 @@
 package com.spring.auth.authorization.infrastructure.controllers;
 
 import com.spring.auth.anotations.components.controllers.AuthorizationController;
-import com.spring.auth.authorization.application.ports.in.AuthorizePort;
+import com.spring.auth.authorization.application.ports.AuthorizePort;
 import com.spring.auth.authorization.infrastructure.dto.input.LoginInputDto;
 import com.spring.auth.authorization.infrastructure.dto.output.AuthorizeOutputDto;
 import com.spring.auth.exceptions.application.*;

@@ -2,8 +2,8 @@ package com.spring.auth.role.infrastructure.repositories;
 
 import com.spring.auth.events.ports.PublishRolesUpdatedEventPort;
 import com.spring.auth.exceptions.application.DuplicatedKeyException;
-import com.spring.auth.role.application.ports.out.CheckRolesConstraintsPort;
-import com.spring.auth.role.application.ports.out.UpdateRolePort;
+import com.spring.auth.role.infrastructure.repositories.ports.CheckRolesConstraintsPort;
+import com.spring.auth.role.infrastructure.repositories.ports.UpdateRolePort;
 import com.spring.auth.role.domain.Role;
 import com.spring.auth.role.domain.RoleJpa;
 import com.spring.auth.role.domain.RoleMapper;

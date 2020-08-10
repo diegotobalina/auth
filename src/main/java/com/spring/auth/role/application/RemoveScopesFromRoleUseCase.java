@@ -3,10 +3,10 @@ package com.spring.auth.role.application;
 import com.spring.auth.anotations.components.UseCase;
 import com.spring.auth.exceptions.application.DuplicatedKeyException;
 import com.spring.auth.exceptions.application.NotFoundException;
-import com.spring.auth.role.application.ports.in.RemoveScopesFromRolePort;
-import com.spring.auth.role.application.ports.out.FindRolePort;
-import com.spring.auth.role.application.ports.out.UpdateRolePort;
+import com.spring.auth.role.application.ports.RemoveScopesFromRolePort;
 import com.spring.auth.role.domain.Role;
+import com.spring.auth.role.infrastructure.repositories.ports.FindRolePort;
+import com.spring.auth.role.infrastructure.repositories.ports.UpdateRolePort;
 import lombok.AllArgsConstructor;
 
 import java.util.List;
@@ -37,5 +37,11 @@ public class RemoveScopesFromRoleUseCase implements RemoveScopesFromRolePort {
       throws DuplicatedKeyException, NotFoundException {
     Role role = findRolePort.findById(roleId);
     return remove(role, scopes);
+  }
+
+  @Override
+  public List<Role> removeFromAll(String scopeId) throws DuplicatedKeyException {
+    List<Role> rolesWithTheScope = findRolePort.findAllByScopeId(scopeId);
+    return this.removeFromAll(rolesWithTheScope, List.of(scopeId));
   }
 }

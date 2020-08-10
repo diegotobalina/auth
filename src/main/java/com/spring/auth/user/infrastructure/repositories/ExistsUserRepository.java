@@ -1,6 +1,6 @@
 package com.spring.auth.user.infrastructure.repositories;
 
-import com.spring.auth.user.application.ports.out.ExistsUserPort;
+import com.spring.auth.user.infrastructure.repositories.ports.ExistsUserPort;
 import com.spring.auth.user.infrastructure.repositories.jpa.UserRepositoryJpa;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;

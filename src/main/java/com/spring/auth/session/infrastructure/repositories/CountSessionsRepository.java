@@ -1,6 +1,6 @@
 package com.spring.auth.session.infrastructure.repositories;
 
-import com.spring.auth.session.application.ports.out.CountSessionPort;
+import com.spring.auth.session.infrastructure.repositories.ports.CountSessionPort;
 import com.spring.auth.session.infrastructure.repositories.jpa.SessionRepositoryJpa;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;

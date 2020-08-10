@@ -2,10 +2,10 @@ package com.spring.auth.config;
 
 import com.spring.auth.exceptions.domain.ErrorResponse;
 import com.spring.auth.exceptions.util.ExceptionUtil;
-import com.spring.auth.filters.BearerAuthenticationFilter;
-import com.spring.auth.filters.GoogleAuthenticationFilter;
-import com.spring.auth.google.application.ports.in.GoogleLoginPort;
-import com.spring.auth.google.application.ports.out.GoogleGetInfoPort;
+import com.spring.auth.filters.auth.BearerAuthenticationFilter;
+import com.spring.auth.filters.auth.GoogleAuthenticationFilter;
+import com.spring.auth.google.application.ports.GoogleLoginPort;
+import com.spring.auth.google.infrastructure.repositories.ports.GoogleGetInfoPort;
 import com.spring.auth.util.RequestUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;

@@ -2,7 +2,7 @@ package com.spring.auth.scope.infrastructure.controllers;
 
 import com.spring.auth.anotations.components.controllers.ScopeController;
 import com.spring.auth.exceptions.application.DuplicatedKeyException;
-import com.spring.auth.scope.application.ports.out.CreateScopePort;
+import com.spring.auth.scope.infrastructure.repositories.ports.CreateScopePort;
 import com.spring.auth.scope.domain.Scope;
 import com.spring.auth.scope.infrastructure.dtos.input.CreateScopeInputDto;
 import com.spring.auth.scope.infrastructure.dtos.output.CreateScopeOutputDto;

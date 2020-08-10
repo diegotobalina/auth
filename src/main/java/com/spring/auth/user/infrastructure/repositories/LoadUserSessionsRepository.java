@@ -1,9 +1,9 @@
 package com.spring.auth.user.infrastructure.repositories;
 
-import com.spring.auth.session.application.ports.out.FindSessionPort;
+import com.spring.auth.session.infrastructure.repositories.ports.FindSessionPort;
 import com.spring.auth.session.domain.Session;
-import com.spring.auth.user.application.ports.out.LoadUserSessionsPort;
 import com.spring.auth.user.domain.User;
+import com.spring.auth.user.infrastructure.repositories.ports.LoadUserSessionsPort;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 

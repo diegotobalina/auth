@@ -1,7 +1,7 @@
 package com.spring.auth.session.infrastructure.repositories;
 
 import com.spring.auth.exceptions.application.NotFoundException;
-import com.spring.auth.session.application.ports.out.FindSessionPort;
+import com.spring.auth.session.infrastructure.repositories.ports.FindSessionPort;
 import com.spring.auth.session.domain.Session;
 import com.spring.auth.session.domain.SessionJpa;
 import com.spring.auth.session.domain.SessionMapper;

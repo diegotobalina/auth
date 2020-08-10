@@ -1,11 +1,11 @@
 package com.spring.auth.authorization.application;
 
 import com.spring.auth.anotations.components.UseCase;
-import com.spring.auth.authorization.application.ports.in.TokenInfoPort;
-import com.spring.auth.authorization.application.ports.in.UserInfoPort;
+import com.spring.auth.authorization.application.ports.TokenInfoPort;
+import com.spring.auth.authorization.application.ports.UserInfoPort;
 import com.spring.auth.authorization.domain.TokenInfo;
 import com.spring.auth.exceptions.application.*;
-import com.spring.auth.user.application.ports.out.FindUserPort;
+import com.spring.auth.user.infrastructure.repositories.ports.FindUserPort;
 import com.spring.auth.user.domain.User;
 import com.spring.auth.util.UserUtil;
 import lombok.AllArgsConstructor;

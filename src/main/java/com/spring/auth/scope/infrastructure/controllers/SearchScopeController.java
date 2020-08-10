@@ -1,7 +1,7 @@
 package com.spring.auth.scope.infrastructure.controllers;
 
 import com.spring.auth.anotations.components.controllers.ScopeController;
-import com.spring.auth.scope.application.ports.out.FindScopePort;
+import com.spring.auth.scope.infrastructure.repositories.ports.FindScopePort;
 import com.spring.auth.scope.domain.Scope;
 import com.spring.auth.scope.infrastructure.dtos.output.SearchScopesOutputDto;
 import com.spring.auth.shared.infrastructure.dto.output.PagedListOutputDto;

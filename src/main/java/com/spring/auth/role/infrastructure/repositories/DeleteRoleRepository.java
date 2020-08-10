@@ -2,8 +2,8 @@ package com.spring.auth.role.infrastructure.repositories;
 
 import com.spring.auth.events.ports.PublishRoleDeletedEventPort;
 import com.spring.auth.exceptions.application.NotFoundException;
-import com.spring.auth.role.application.ports.out.DeleteRolePort;
-import com.spring.auth.role.application.ports.out.FindRolePort;
+import com.spring.auth.role.infrastructure.repositories.ports.DeleteRolePort;
+import com.spring.auth.role.infrastructure.repositories.ports.FindRolePort;
 import com.spring.auth.role.domain.Role;
 import com.spring.auth.role.domain.RoleJpa;
 import com.spring.auth.role.domain.RoleMapper;

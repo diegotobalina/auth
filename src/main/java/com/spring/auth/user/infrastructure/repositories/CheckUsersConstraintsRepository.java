@@ -1,7 +1,7 @@
 package com.spring.auth.user.infrastructure.repositories;
 
 import com.spring.auth.exceptions.application.DuplicatedKeyException;
-import com.spring.auth.user.application.ports.out.CheckUsersConstraintsPort;
+import com.spring.auth.user.infrastructure.repositories.ports.CheckUsersConstraintsPort;
 import com.spring.auth.user.domain.User;
 import com.spring.auth.user.infrastructure.repositories.jpa.UserRepositoryJpa;
 import lombok.AllArgsConstructor;

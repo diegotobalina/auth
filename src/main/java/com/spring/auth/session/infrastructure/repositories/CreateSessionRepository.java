@@ -2,7 +2,7 @@ package com.spring.auth.session.infrastructure.repositories;
 
 import com.spring.auth.events.ports.PublishSessionCreatedEventPort;
 import com.spring.auth.exceptions.application.DuplicatedKeyException;
-import com.spring.auth.session.application.ports.out.CreateSessionPort;
+import com.spring.auth.session.infrastructure.repositories.ports.CreateSessionPort;
 import com.spring.auth.session.domain.Session;
 import com.spring.auth.session.domain.SessionJpa;
 import com.spring.auth.session.domain.SessionMapper;

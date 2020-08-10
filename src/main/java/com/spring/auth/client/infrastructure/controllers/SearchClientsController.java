@@ -1,7 +1,7 @@
 package com.spring.auth.client.infrastructure.controllers;
 
 import com.spring.auth.anotations.components.controllers.ClientController;
-import com.spring.auth.client.application.ports.out.FindClientPort;
+import com.spring.auth.client.infrastructure.repositories.ports.FindClientPort;
 import com.spring.auth.client.domain.Client;
 import com.spring.auth.client.infrastructure.dtos.output.ClientOutputDto;
 import com.spring.auth.shared.infrastructure.dto.output.PagedListOutputDto;

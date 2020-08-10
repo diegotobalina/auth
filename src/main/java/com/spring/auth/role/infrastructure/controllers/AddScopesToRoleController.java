@@ -3,7 +3,7 @@ package com.spring.auth.role.infrastructure.controllers;
 import com.spring.auth.anotations.components.controllers.RoleController;
 import com.spring.auth.exceptions.application.DuplicatedKeyException;
 import com.spring.auth.exceptions.application.NotFoundException;
-import com.spring.auth.role.application.ports.in.AddScopesToRolePort;
+import com.spring.auth.role.application.ports.AddScopesToRolePort;
 import com.spring.auth.role.domain.Role;
 import com.spring.auth.role.infrastructure.dtos.input.AddScopesToRoleInputDto;
 import com.spring.auth.role.infrastructure.dtos.output.AddScopesToRoleOutputDto;

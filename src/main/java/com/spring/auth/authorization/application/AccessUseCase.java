@@ -1,16 +1,16 @@
 package com.spring.auth.authorization.application;
 
 import com.spring.auth.anotations.components.UseCase;
-import com.spring.auth.authorization.application.ports.in.AccessPort;
+import com.spring.auth.authorization.application.ports.AccessPort;
 import com.spring.auth.events.ports.PublishSessionUsedEventPort;
 import com.spring.auth.exceptions.application.InvalidTokenException;
 import com.spring.auth.exceptions.application.LockedUserException;
 import com.spring.auth.exceptions.application.NotFoundException;
-import com.spring.auth.session.application.ports.out.DeleteSessionPort;
-import com.spring.auth.session.application.ports.out.FindSessionPort;
-import com.spring.auth.session.application.ports.out.RefreshSessionPort;
+import com.spring.auth.session.infrastructure.repositories.ports.DeleteSessionPort;
+import com.spring.auth.session.infrastructure.repositories.ports.FindSessionPort;
+import com.spring.auth.session.infrastructure.repositories.ports.RefreshSessionPort;
 import com.spring.auth.session.domain.Session;
-import com.spring.auth.user.application.ports.out.FindUserPort;
+import com.spring.auth.user.infrastructure.repositories.ports.FindUserPort;
 import com.spring.auth.user.domain.User;
 import com.spring.auth.util.TokenUtil;
 import org.springframework.beans.factory.annotation.Value;

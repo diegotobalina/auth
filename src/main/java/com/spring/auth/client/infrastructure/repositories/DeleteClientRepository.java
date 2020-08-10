@@ -1,7 +1,7 @@
 package com.spring.auth.client.infrastructure.repositories;
 
-import com.spring.auth.client.application.ports.out.DeleteClientPort;
-import com.spring.auth.client.application.ports.out.FindClientPort;
+import com.spring.auth.client.infrastructure.repositories.ports.DeleteClientPort;
+import com.spring.auth.client.infrastructure.repositories.ports.FindClientPort;
 import com.spring.auth.client.domain.Client;
 import com.spring.auth.client.infrastructure.repositories.jpa.ClientRepositoryJpa;
 import com.spring.auth.exceptions.application.DuplicatedKeyException;

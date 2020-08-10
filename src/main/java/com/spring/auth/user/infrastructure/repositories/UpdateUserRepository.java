@@ -1,8 +1,8 @@
 package com.spring.auth.user.infrastructure.repositories;
 
 import com.spring.auth.exceptions.application.DuplicatedKeyException;
-import com.spring.auth.user.application.ports.out.CheckUsersConstraintsPort;
-import com.spring.auth.user.application.ports.out.UpdateUserPort;
+import com.spring.auth.user.infrastructure.repositories.ports.CheckUsersConstraintsPort;
+import com.spring.auth.user.infrastructure.repositories.ports.UpdateUserPort;
 import com.spring.auth.user.domain.User;
 import com.spring.auth.user.domain.UserJpa;
 import com.spring.auth.user.domain.UserMapper;

@@ -2,7 +2,7 @@ package com.spring.auth.scope.infrastructure.controllers;
 
 import com.spring.auth.anotations.components.controllers.ScopeController;
 import com.spring.auth.exceptions.application.NotFoundException;
-import com.spring.auth.scope.application.ports.out.DeleteScopePort;
+import com.spring.auth.scope.infrastructure.repositories.ports.DeleteScopePort;
 import com.spring.auth.scope.domain.Scope;
 import com.spring.auth.scope.infrastructure.dtos.output.DeleteScopeOutputDto;
 import io.swagger.annotations.ApiImplicitParam;

@@ -2,13 +2,12 @@ package com.spring.auth.user.application;
 
 import com.spring.auth.anotations.components.UseCase;
 import com.spring.auth.events.ports.PublishUpdatedPasswordEventPort;
-import com.spring.auth.events.publishers.UpdatedPasswordEventPublisher;
 import com.spring.auth.exceptions.application.DuplicatedKeyException;
 import com.spring.auth.exceptions.application.NotFoundException;
 import com.spring.auth.exceptions.application.WrongPasswordException;
-import com.spring.auth.user.application.ports.in.UpdateUserPasswordPort;
-import com.spring.auth.user.application.ports.out.FindUserPort;
-import com.spring.auth.user.application.ports.out.UpdateUserPort;
+import com.spring.auth.user.application.ports.UpdateUserPasswordPort;
+import com.spring.auth.user.infrastructure.repositories.ports.FindUserPort;
+import com.spring.auth.user.infrastructure.repositories.ports.UpdateUserPort;
 import com.spring.auth.user.domain.User;
 import lombok.AllArgsConstructor;
 

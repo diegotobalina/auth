@@ -1,7 +1,7 @@
 package com.spring.auth.client.infrastructure.controllers;
 
 import com.spring.auth.anotations.components.controllers.ClientController;
-import com.spring.auth.client.application.ports.in.UpdateClientValues;
+import com.spring.auth.client.application.ports.UpdateClientValues;
 import com.spring.auth.client.domain.Client;
 import com.spring.auth.client.infrastructure.dtos.input.UpdateClientInputDto;
 import com.spring.auth.client.infrastructure.dtos.output.ClientOutputDto;

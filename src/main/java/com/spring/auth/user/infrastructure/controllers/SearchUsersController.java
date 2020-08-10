@@ -2,7 +2,7 @@ package com.spring.auth.user.infrastructure.controllers;
 
 import com.spring.auth.anotations.components.controllers.UserController;
 import com.spring.auth.shared.infrastructure.dto.output.PagedListOutputDto;
-import com.spring.auth.user.application.ports.out.FindUserPort;
+import com.spring.auth.user.infrastructure.repositories.ports.FindUserPort;
 import com.spring.auth.user.domain.User;
 import com.spring.auth.user.infrastructure.dto.output.SearchUsersOutputDto;
 import io.swagger.annotations.ApiImplicitParam;

@@ -1,9 +1,9 @@
 package com.spring.auth.client.application.usecases;
 
 import com.spring.auth.anotations.components.UseCase;
-import com.spring.auth.client.application.ports.in.UpdateClientValues;
-import com.spring.auth.client.application.ports.out.FindClientPort;
-import com.spring.auth.client.application.ports.out.UpdateClientPort;
+import com.spring.auth.client.application.ports.UpdateClientValues;
+import com.spring.auth.client.infrastructure.repositories.ports.FindClientPort;
+import com.spring.auth.client.infrastructure.repositories.ports.UpdateClientPort;
 import com.spring.auth.client.domain.Client;
 import com.spring.auth.exceptions.application.DuplicatedKeyException;
 import com.spring.auth.exceptions.application.NotFoundException;

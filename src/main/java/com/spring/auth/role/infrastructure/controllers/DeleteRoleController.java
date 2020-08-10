@@ -2,7 +2,7 @@ package com.spring.auth.role.infrastructure.controllers;
 
 import com.spring.auth.anotations.components.controllers.RoleController;
 import com.spring.auth.exceptions.application.NotFoundException;
-import com.spring.auth.role.application.ports.out.DeleteRolePort;
+import com.spring.auth.role.infrastructure.repositories.ports.DeleteRolePort;
 import com.spring.auth.role.domain.Role;
 import com.spring.auth.role.infrastructure.dtos.output.DeleteRoleOutputDto;
 import io.swagger.annotations.ApiImplicitParam;

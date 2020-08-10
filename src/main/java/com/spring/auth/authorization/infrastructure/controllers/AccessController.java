@@ -1,7 +1,7 @@
 package com.spring.auth.authorization.infrastructure.controllers;
 
 import com.spring.auth.anotations.components.controllers.AuthorizationController;
-import com.spring.auth.authorization.application.ports.in.AccessPort;
+import com.spring.auth.authorization.application.ports.AccessPort;
 import com.spring.auth.authorization.infrastructure.dto.input.AccessInputDto;
 import com.spring.auth.authorization.infrastructure.dto.output.AccessOutputDto;
 import com.spring.auth.exceptions.application.InvalidTokenException;

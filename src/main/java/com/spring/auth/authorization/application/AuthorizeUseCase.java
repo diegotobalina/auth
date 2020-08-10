@@ -1,14 +1,14 @@
 package com.spring.auth.authorization.application;
 
 import com.spring.auth.anotations.components.UseCase;
-import com.spring.auth.authorization.application.ports.in.AuthorizePort;
-import com.spring.auth.client.application.ports.out.FindClientPort;
+import com.spring.auth.authorization.application.ports.AuthorizePort;
+import com.spring.auth.client.infrastructure.repositories.ports.FindClientPort;
 import com.spring.auth.client.domain.Client;
 import com.spring.auth.exceptions.application.InvalidAuthorizeParamsException;
 import com.spring.auth.exceptions.application.LockedUserException;
 import com.spring.auth.exceptions.application.NotFoundException;
 import com.spring.auth.exceptions.application.WrongPasswordException;
-import com.spring.auth.user.application.ports.out.FindUserPort;
+import com.spring.auth.user.infrastructure.repositories.ports.FindUserPort;
 import com.spring.auth.user.domain.User;
 import com.spring.auth.util.TokenUtil;
 

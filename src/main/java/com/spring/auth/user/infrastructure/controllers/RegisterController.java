@@ -4,7 +4,7 @@ import com.spring.auth.anotations.components.controllers.UserController;
 import com.spring.auth.exceptions.application.DuplicatedKeyException;
 import com.spring.auth.exceptions.application.EmailDoesNotExistsException;
 import com.spring.auth.exceptions.application.NotFoundException;
-import com.spring.auth.user.application.ports.in.RegisterUserPort;
+import com.spring.auth.user.application.ports.RegisterUserPort;
 import com.spring.auth.user.domain.User;
 import com.spring.auth.user.infrastructure.dto.input.RegisterInputDto;
 import com.spring.auth.user.infrastructure.dto.output.RegisterOutputDto;

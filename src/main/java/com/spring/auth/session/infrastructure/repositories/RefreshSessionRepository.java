@@ -1,6 +1,6 @@
 package com.spring.auth.session.infrastructure.repositories;
 
-import com.spring.auth.session.application.ports.out.RefreshSessionPort;
+import com.spring.auth.session.infrastructure.repositories.ports.RefreshSessionPort;
 import com.spring.auth.session.domain.Session;
 import com.spring.auth.session.domain.SessionJpa;
 import com.spring.auth.session.domain.SessionMapper;

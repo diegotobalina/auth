@@ -1,7 +1,7 @@
 package com.spring.auth.session.application;
 
 import com.spring.auth.anotations.components.UseCase;
-import com.spring.auth.session.application.ports.in.DeleteOlderSessionByUserIdPort;
+import com.spring.auth.session.application.ports.DeleteOlderSessionByUserIdPort;
 import com.spring.auth.session.domain.SessionJpa;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Sort;

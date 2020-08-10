@@ -1,7 +1,7 @@
 package com.spring.auth.scope.infrastructure.repositories;
 
 import com.spring.auth.exceptions.application.NotFoundException;
-import com.spring.auth.scope.application.ports.out.FindScopePort;
+import com.spring.auth.scope.infrastructure.repositories.ports.FindScopePort;
 import com.spring.auth.scope.domain.Scope;
 import com.spring.auth.scope.domain.ScopeJpa;
 import com.spring.auth.scope.domain.ScopeMapper;

@@ -1,14 +1,11 @@
 package com.spring.auth.role.infrastructure.repositories;
 
 import com.spring.auth.exceptions.application.NotFoundException;
-import com.spring.auth.role.application.ports.out.FindRolePort;
+import com.spring.auth.role.infrastructure.repositories.ports.FindRolePort;
 import com.spring.auth.role.domain.Role;
 import com.spring.auth.role.domain.RoleJpa;
 import com.spring.auth.role.domain.RoleMapper;
 import com.spring.auth.role.infrastructure.repositories.jpa.RoleRepositoryJpa;
-import com.spring.auth.scope.domain.Scope;
-import com.spring.auth.scope.domain.ScopeJpa;
-import com.spring.auth.scope.domain.ScopeMapper;
 import com.spring.auth.util.SearchUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Example;
