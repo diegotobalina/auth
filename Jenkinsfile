@@ -5,7 +5,7 @@ pipeline {
       steps {
         sh '''
 # remove test image if exists
-if [[ "$(docker images -q auth 2> /dev/null)" != "" ]]; then
+if [[ "$(docker images -q auth_tests 2> /dev/null)" != "" ]]; then
   docker image rm auth_tests
 fi
 
@@ -19,7 +19,7 @@ docker image build --no-cache -t auth_tests ./
       steps {
         sh '''
 # remove older docker
-if ! docker ps --format \'{{.Names}}\' | egrep \'^nginx$\' &> /dev/null; then
+if ! docker ps --format \'{{.Names}}\' | egrep \'^auth$\' &> /dev/null; then
     docker stop auth
     docker rm auth
 fi
