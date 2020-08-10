@@ -19,7 +19,7 @@ docker image build --no-cache -t auth_tests ./
       steps {
         sh '''
 # remove older docker
-if ! docker ps --format \'{{.Names}}\' | egrep \'^auth$\' &> /dev/null; then
+if docker ps --format \'{{.Names}}\' | egrep \'^auth$\' &> /dev/null; then
     docker stop auth
     docker rm auth
 fi
