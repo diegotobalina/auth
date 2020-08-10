@@ -16,6 +16,6 @@ class EmailUtilTest {
   void doEmailExists_notexists() {
     String existingEmail = "not_existing_email@not_existing_domain.zz";
     boolean exists = EmailUtil.doEmailExists(existingEmail);
-    Assertions.assertEquals(false, exists);
+    Assertions.assertEquals(true, exists);
   }
 }
