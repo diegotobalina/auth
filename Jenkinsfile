@@ -40,7 +40,7 @@ docker run --restart always -p 8080:8080 -e GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
 
   }
   environment {
-    MONGODB_URI = 'mongodb://mongo:password@192.168.1.228:27017/?retryWrites=true&w=majority'
-    GOOGLE_CLIENT_ID = 'placeholder'
+    MONGODB_URI = 'credentials(\'MONGODB_URI\')'
+    GOOGLE_CLIENT_ID = 'credentials(\'GOOGLE_CLIENT_ID\')'
   }
 }
