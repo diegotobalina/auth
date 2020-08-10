@@ -3,8 +3,7 @@ pipeline {
   stages {
     stage('tests') {
       steps {
-        sh '''docker image rm auth
-docker image build -t auth ./
+        sh '''docker image build -t auth ./
 '''
       }
     }
