@@ -1,10 +1,5 @@
 pipeline {
-  agent {
-    dockerfile {
-      filename 'Dockerfile'
-    }
-
-  }
+  agent none
   stages {
     stage('maven') {
       steps {
@@ -12,9 +7,14 @@ pipeline {
       }
     }
 
-  }
-  environment {
-    GOOGLE_CLIENT_ID = 'google'
-    MONGODB_URI = 'mongodb://mongo:password@192.168.1.228:27017/?retryWrites=true&w=majority'
+    stage('run in docker') {
+      steps {
+        sh '''#!/usr/bin/env bash
+docker-compose build
+docker-compose down
+docker-compose up -d'''
+      }
+    }
+
   }
 }
