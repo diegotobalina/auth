@@ -23,4 +23,3 @@ Where is the wiki ?
 ````
 ./wiki folder
 ````
-
