@@ -19,7 +19,7 @@ class RequestUtilTest {
 
   @Test
   public void isApiRequest() {
-    HttpServletRequest request = new MockHttpServletRequest("GET", "/api/v0/test");
+    HttpServletRequest request = new MockHttpServletRequest("GET", "/api/v1/test");
     boolean apiRequest = RequestUtil.isApiRequest(request);
     assertTrue(apiRequest);
   }
